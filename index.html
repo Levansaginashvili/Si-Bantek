@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Si Bantek - Dashboard Sekolah</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="brand">
+                <h2>Si Bantek</h2>
+            </div>
+            <nav class="nav-menu">
+                <ul>
+                    <li class="active"><a href="#"><i class="fa-solid fa-house"></i> Beranda</a></li>
+                    <li><a href="#"><i class="fa-solid fa-table-cells"></i> RAB</a></li>
+                    <li><a href="#"><i class="fa-solid fa-envelope"></i> Pengadaan</a></li>
+                    <li><a href="#"><i class="fa-solid fa-cubes"></i> Inventaris</a></li>
+                    <li><a href="#"><i class="fa-solid fa-desktop"></i> Pelaporan</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+            </div>
+        </aside>
+        <div class="main-wrapper">
+            <header class="topbar">
+                <h1 class="page-title">Dashboard</h1>
+                <div class="user-profile">
+                    <div class="avatar">S</div>
+                    <span class="user-role">Sekolah</span>
+                </div>
+            </header>
+            <main class="content">
+                <section class="school-info">
+                    <h2>SMPN 1 (Contoh)</h2>
+                    <p class="npsn-text">NPSN 12345678 - Tahun anggaran 2026</p>
+                </section>
+                <section class="card steps-card">
+                    <div class="steps-container">
+                        <span class="step-pill step-active">1.Penetapan</span>
+                        <span class="step-pill step-active">2.Persiapan</span>
+                        <span class="step-pill step-pending">3.Verifikasi RAB</span>
+                        <span class="step-pill step-pending">4.Pengadaan</span>
+                        <span class="step-pill step-pending">5.Pelaporan</span>
+                    </div>
+                </section>
+                <section class="cards-grid">
+                    <div class="card info-card">
+                        <span class="card-label">Nilai Bantuan</span>
+                        <h3 class="card-value">Rp69.364.000</h3>
+                    </div>
+                    <div class="card info-card">
+                        <span class="card-label">Status RAB</span>
+                        <h3 class="card-value status-warning">Menunggu Verifikasi</h3>
+                    </div>
+                    <div class="card info-card">
+                        <span class="card-label">Batas Verifikasi</span>
+                        <h3 class="card-value">3 hari kerja</h3>
+                    </div>
+                </section>
+            </main>
+            <footer class="footer">
+                <div class="logo-kemendikdasmen">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Logo_Tut_Wuri_Handayani.png" alt="Tut Wuri Handayani">
+                    <span>Kemendikdasmen</span>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
