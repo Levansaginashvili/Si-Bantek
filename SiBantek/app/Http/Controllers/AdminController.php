@@ -61,6 +61,7 @@ class AdminController extends Controller
             User::create([
                 'name' => $validated['name'],
                 'nip' => $validated['nip'],
+                'email' => $validated['nip'] . '@sibantek.local',
                 'password' => Hash::make($validated['password']),
                 'role' => 'verifikator',
             ]);
@@ -85,6 +86,7 @@ class AdminController extends Controller
             User::create([
                 'name' => $validated['nama_sekolah'],
                 'npsn' => $validated['npsn'],
+                'email' => $validated['npsn'] . '@sibantek.local',
                 'password' => Hash::make($validated['password']),
                 'role' => 'sekolah',
                 'sekolah_id' => $sekolah->id,
