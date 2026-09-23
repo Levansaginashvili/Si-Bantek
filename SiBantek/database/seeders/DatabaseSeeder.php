@@ -13,17 +13,19 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // 1. Admin Account
+        // 1. Admin Account (Login: username = admin, password = password)
         User::create([
             'name' => 'Administrator Direktorat SMP',
+            'username' => 'admin',
             'email' => 'admin@kemendikdasmen.go.id',
             'password' => Hash::make('password'),
             'role' => 'admin',
         ]);
 
-        // 2. Verifikator Account
+        // 2. Verifikator Account (Login: NIP = 197803152003121002, password = password)
         User::create([
-            'name' => 'Verifikator Bantuan TIK',
+            'name' => 'Drs. Budi Santoso, M.Si.',
+            'nip' => '197803152003121002',
             'email' => 'verifikator@kemendikdasmen.go.id',
             'password' => Hash::make('password'),
             'role' => 'verifikator',
@@ -38,17 +40,14 @@ class DatabaseSeeder extends Seeder
             'alamat' => 'Jl. Pendidikan No. 3, Woyla Timur, Kab. Aceh Barat',
             'nama_kepsek' => 'Dr. H. Ahmad Fauzi, M.Pd.',
             'nip_kepsek' => '197508122002121001',
-            'nama_bendahara' => 'Siti Rahmah, S.Pd.',
-            'nip_bendahara' => '198204152009032005',
-            'no_rekening' => '0123456789',
-            'nama_bank' => 'Bank Aceh Syariah',
             'status_dana' => 'Belum Disalurkan',
             'status_dokumen' => 'Belum Lengkap',
         ]);
 
-        // 4. School User Account
+        // 4. Sekolah Account (Login: NPSN = 10110698, password = password)
         User::create([
-            'name' => 'Operator SMPN 3 Woyla Timur',
+            'name' => 'SMP NEGERI 3 WOYLA TIMUR',
+            'npsn' => '10110698',
             'email' => 'smpn3woylatimur@kemendikdasmen.go.id',
             'password' => Hash::make('password'),
             'role' => 'sekolah',

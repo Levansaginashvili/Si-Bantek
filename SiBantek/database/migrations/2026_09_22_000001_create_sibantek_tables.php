@@ -19,15 +19,16 @@ return new class extends Migration
             $table->string('nip_kepsek')->nullable();
             $table->string('nama_bendahara')->nullable();
             $table->string('nip_bendahara')->nullable();
-            $table->string('no_rekening')->nullable();
-            $table->string('nama_bank')->nullable();
             $table->enum('status_dana', ['Belum Disalurkan', 'Dana Sudah Disalurkan / Ditransfer'])->default('Belum Disalurkan');
             $table->enum('status_dokumen', ['Belum Lengkap', 'Lengkap'])->default('Belum Lengkap');
             $table->timestamps();
         });
 
         Schema::table('users', function (Blueprint $table) {
-            $table->enum('role', ['admin', 'verifikator', 'sekolah'])->default('sekolah')->after('email');
+            $table->string('username')->nullable()->unique()->after('name');
+            $table->string('nip')->nullable()->unique()->after('username');
+            $table->string('npsn')->nullable()->unique()->after('nip');
+            $table->enum('role', ['admin', 'verifikator', 'sekolah'])->default('sekolah')->after('npsn');
             $table->foreignId('sekolah_id')->nullable()->after('role')->constrained('sekolahs')->onDelete('cascade');
         });
 
@@ -48,7 +49,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('sekolah_id')->constrained('sekolahs')->onDelete('cascade');
             $table->string('merek_tipe_laptop');
-            $table->string('spesifikasi_ringkas')->default('4 Core / 8 Thread, 13-14 inch, RAM 8GB, SSD 256GB, OS GUI Legal');
+            $table->string('spesifikasi_ringkas')->default('4 Core / 8 Thread, Layar 14 inch, RAM 8GB, SSD 256GB, OS GUI Legal');
             $table->integer('jumlah_unit')->default(8);
             $table->decimal('harga_satuan', 12, 2)->default(8625000.00);
             $table->decimal('total_harga', 12, 2)->default(69000000.00);
@@ -77,7 +78,7 @@ return new class extends Migration
         
         Schema::table('users', function (Blueprint $table) {
             $table->dropForeign(['sekolah_id']);
-            $table->dropColumn(['role', 'sekolah_id']);
+            $table->dropColumn(['username', 'nip', 'npsn', 'role', 'sekolah_id']);
         });
 
         Schema::dropIfExists('sekolahs');

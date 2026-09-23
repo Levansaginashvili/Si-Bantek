@@ -21,8 +21,6 @@ class Sekolah extends Model
         'nip_kepsek',
         'nama_bendahara',
         'nip_bendahara',
-        'no_rekening',
-        'nama_bank',
         'status_dana',
         'status_dokumen',
     ];

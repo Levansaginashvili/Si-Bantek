@@ -1,10 +1,9 @@
 import React from 'react';
 import { useForm, Head } from '@inertiajs/react';
-import { Laptop } from 'lucide-react';
 
 export default function Login() {
     const { data, setData, post, processing, errors } = useForm({
-        email: '',
+        identity: '',
         password: '',
         remember: false,
     });
@@ -15,13 +14,17 @@ export default function Login() {
     };
 
     return (
-        <div className="flex min-h-screen flex-col justify-center bg-slate-50 py-12 sm:px-6 lg:px-8">
-            <Head title="Masuk - SI BANTEK 2026" />
+        <div className="flex min-h-screen flex-col justify-center bg-slate-50 py-12 sm:px-6 lg:px-8 font-sans">
+            <Head title="Masuk — SI BANTEK 2026" />
 
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="flex justify-center">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#1e2d5a]">
-                        <Laptop size={22} className="text-white" />
+                    <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-[#1e2d5a] p-2 shadow-sm">
+                        <img
+                            src="/logo.png"
+                            alt="Logo SiBantek"
+                            className="h-10 w-10 object-contain"
+                        />
                     </div>
                 </div>
                 <h2 className="mt-4 text-center text-2xl font-bold text-slate-900">
@@ -37,18 +40,18 @@ export default function Login() {
                     <form className="space-y-5" onSubmit={handleSubmit}>
                         <div>
                             <label className="block text-sm font-medium text-slate-700">
-                                Email
+                                Identitas Login
                             </label>
                             <input
-                                type="email"
+                                type="text"
                                 required
-                                value={data.email}
-                                onChange={(e) => setData('email', e.target.value)}
+                                value={data.identity}
+                                onChange={(e) => setData('identity', e.target.value)}
                                 className="mt-1.5 block w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:border-[#1e2d5a] focus:outline-none focus:ring-1 focus:ring-[#1e2d5a]"
-                                placeholder="email@kemendikdasmen.go.id"
+                                placeholder="Masukkan Username / NIP / NPSN"
                             />
-                            {errors.email && (
-                                <p className="mt-1 text-xs text-red-600">{errors.email}</p>
+                            {errors.identity && (
+                                <p className="mt-1 text-xs text-red-600">{errors.identity}</p>
                             )}
                         </div>
 

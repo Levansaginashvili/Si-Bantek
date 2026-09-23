@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useForm, Head } from '@inertiajs/react';
 import AppLayout from '../../Layouts/AppLayout';
-import { Download, Upload, Printer, X, CheckCircle, Clock, AlertCircle, FileText } from 'lucide-react';
+import { Download, Upload, Printer, X, CheckCircle, Clock, AlertCircle, Search } from 'lucide-react';
 
 interface Props {
     sekolah: {
@@ -67,6 +67,8 @@ type TabKey = 'dokumen' | 'rab' | 'profil';
 export default function SekolahDashboard({ sekolah }: Props) {
     const [tab, setTab] = useState<TabKey>('dokumen');
     const [uploadDocKey, setUploadDocKey] = useState<string | null>(null);
+    const [searchDocQuery, setSearchDocQuery] = useState('');
+    const [filterDocStatus, setFilterDocStatus] = useState('semua');
 
     const formProfil = useForm({
         alamat: sekolah.alamat ?? '',
@@ -81,6 +83,18 @@ export default function SekolahDashboard({ sekolah }: Props) {
     });
 
     const formUpload = useForm({ jenis_dokumen: '', file: null as File | null });
+
+    const filteredDocs = useMemo(() => {
+        return docItems.filter((item) => {
+            const doc = sekolah.dokumens.find((d) => d.jenis_dokumen === item.key);
+            const status = doc?.status ?? 'Belum Diunggah';
+
+            const matchesSearch = item.label.toLowerCase().includes(searchDocQuery.toLowerCase());
+            const matchesStatus = filterDocStatus === 'semua' || status === filterDocStatus;
+
+            return matchesSearch && matchesStatus;
+        });
+    }, [sekolah.dokumens, searchDocQuery, filterDocStatus]);
 
     const handleProfil = (e: React.FormEvent) => {
         e.preventDefault();
@@ -183,63 +197,105 @@ export default function SekolahDashboard({ sekolah }: Props) {
 
                     {/* Tab: Dokumen */}
                     {tab === 'dokumen' && (
-                        <div className="overflow-x-auto">
-                            <table className="min-w-full divide-y divide-slate-100 text-sm">
-                                <thead className="bg-slate-50">
-                                    <tr>
-                                        {['No', 'Nama Dokumen', 'Status', 'Catatan Revisi', 'Unduh Draft', 'Unggah'].map((h) => (
-                                            <th key={h} className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                                                {h}
-                                            </th>
-                                        ))}
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-slate-100 bg-white">
-                                    {docItems.map((item, idx) => {
-                                        const doc = sekolah.dokumens.find((d) => d.jenis_dokumen === item.key);
-                                        const status = doc?.status ?? 'Belum Diunggah';
-                                        return (
-                                            <tr key={item.key} className="hover:bg-slate-50 transition-colors">
-                                                <td className="px-5 py-3.5 text-slate-400">{idx + 1}</td>
-                                                <td className="px-5 py-3.5 font-medium text-slate-800 max-w-xs">{item.label}</td>
-                                                <td className="px-5 py-3.5">
-                                                    <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium ${statusClass[status] ?? 'bg-slate-100 text-slate-500'}`}>
-                                                        {statusIcon[status]}
-                                                        {status}
-                                                    </span>
-                                                </td>
-                                                <td className="px-5 py-3.5 text-xs text-red-600 max-w-xs">
-                                                    {doc?.catatan_revisi ?? '—'}
-                                                </td>
-                                                <td className="px-5 py-3.5">
-                                                    {item.pdfType ? (
-                                                        <a
-                                                            href={`/sekolah/dokumen/download/${item.pdfType}`}
-                                                            target="_blank"
-                                                            rel="noreferrer"
-                                                            className="inline-flex items-center gap-1 text-xs font-medium text-[#1e2d5a] underline"
-                                                        >
-                                                            <Download size={13} />
-                                                            Unduh Draft
-                                                        </a>
-                                                    ) : (
-                                                        <span className="text-xs text-slate-400">—</span>
-                                                    )}
-                                                </td>
-                                                <td className="px-5 py-3.5">
-                                                    <button
-                                                        onClick={() => setUploadDocKey(item.key)}
-                                                        className="inline-flex items-center gap-1 rounded bg-[#1e2d5a] px-2.5 py-1.5 text-xs font-semibold text-white hover:bg-[#162247] transition-colors"
-                                                    >
-                                                        <Upload size={12} />
-                                                        Unggah
-                                                    </button>
+                        <div>
+                            {/* Search & Filter bar */}
+                            <div className="border-b border-slate-100 px-5 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-slate-50">
+                                <span className="text-xs font-semibold text-slate-600">
+                                    Daftar 12 Berkas ({filteredDocs.length} ditampilkan)
+                                </span>
+
+                                <div className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
+                                    <div className="relative w-full sm:w-56">
+                                        <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                                        <input
+                                            type="text"
+                                            value={searchDocQuery}
+                                            onChange={(e) => setSearchDocQuery(e.target.value)}
+                                            placeholder="Cari nama dokumen..."
+                                            className="w-full rounded-lg border border-slate-300 pl-9 pr-3 py-1.5 text-xs text-slate-900 focus:border-[#1e2d5a] focus:outline-none focus:ring-1 focus:ring-[#1e2d5a]"
+                                        />
+                                    </div>
+
+                                    <select
+                                        value={filterDocStatus}
+                                        onChange={(e) => setFilterDocStatus(e.target.value)}
+                                        className="w-full sm:w-auto rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs text-slate-900 focus:border-[#1e2d5a] focus:outline-none focus:ring-1 focus:ring-[#1e2d5a]"
+                                    >
+                                        <option value="semua">Semua Status</option>
+                                        <option value="Disetujui">Disetujui</option>
+                                        <option value="Menunggu Verifikasi">Menunggu Verifikasi</option>
+                                        <option value="Revisi">Revisi</option>
+                                        <option value="Belum Diunggah">Belum Diunggah</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div className="overflow-x-auto">
+                                <table className="min-w-full divide-y divide-slate-100 text-sm">
+                                    <thead className="bg-slate-50">
+                                        <tr>
+                                            {['No', 'Nama Dokumen', 'Status', 'Catatan Revisi', 'Unduh Draft', 'Unggah'].map((h) => (
+                                                <th key={h} className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                                                    {h}
+                                                </th>
+                                            ))}
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-slate-100 bg-white">
+                                        {filteredDocs.length === 0 ? (
+                                            <tr>
+                                                <td colSpan={6} className="px-5 py-8 text-center text-sm text-slate-400">
+                                                    Tidak ada dokumen yang sesuai pencarian/filter.
                                                 </td>
                                             </tr>
-                                        );
-                                    })}
-                                </tbody>
-                            </table>
+                                        ) : (
+                                            filteredDocs.map((item, idx) => {
+                                                const doc = sekolah.dokumens.find((d) => d.jenis_dokumen === item.key);
+                                                const status = doc?.status ?? 'Belum Diunggah';
+                                                return (
+                                                    <tr key={item.key} className="hover:bg-slate-50 transition-colors">
+                                                        <td className="px-5 py-3.5 text-slate-400">{idx + 1}</td>
+                                                        <td className="px-5 py-3.5 font-medium text-slate-800 max-w-xs">{item.label}</td>
+                                                        <td className="px-5 py-3.5">
+                                                            <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium ${statusClass[status] ?? 'bg-slate-100 text-slate-500'}`}>
+                                                                {statusIcon[status]}
+                                                                {status}
+                                                            </span>
+                                                        </td>
+                                                        <td className="px-5 py-3.5 text-xs text-red-600 max-w-xs">
+                                                            {doc?.catatan_revisi ?? '—'}
+                                                        </td>
+                                                        <td className="px-5 py-3.5">
+                                                            {item.pdfType ? (
+                                                                <a
+                                                                    href={`/sekolah/dokumen/download/${item.pdfType}`}
+                                                                    target="_blank"
+                                                                    rel="noreferrer"
+                                                                    className="inline-flex items-center gap-1 text-xs font-medium text-[#1e2d5a] underline"
+                                                                >
+                                                                    <Download size={13} />
+                                                                    Unduh Draft
+                                                                </a>
+                                                            ) : (
+                                                                <span className="text-xs text-slate-400">—</span>
+                                                            )}
+                                                        </td>
+                                                        <td className="px-5 py-3.5">
+                                                            <button
+                                                                onClick={() => setUploadDocKey(item.key)}
+                                                                className="inline-flex items-center gap-1 rounded bg-[#1e2d5a] px-2.5 py-1.5 text-xs font-semibold text-white hover:bg-[#162247] transition-colors"
+                                                            >
+                                                                <Upload size={12} />
+                                                                Unggah
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     )}
 

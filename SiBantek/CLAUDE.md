@@ -1,4 +1,4 @@
-<laravel-boost-guidelines>
+    <laravel-boost-guidelines>
 # Laravel Application
 
 This repository contains a Laravel application. Complete the following setup before working on the user's request.

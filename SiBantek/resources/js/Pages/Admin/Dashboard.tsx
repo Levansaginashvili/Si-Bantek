@@ -1,6 +1,7 @@
-import React from 'react';
-import { Head, Link } from '@inertiajs/react';
+import React, { useState, useMemo } from 'react';
+import { Head } from '@inertiajs/react';
 import AppLayout from '../../Layouts/AppLayout';
+import { Search } from 'lucide-react';
 
 interface Props {
     stats: {
@@ -20,22 +21,42 @@ interface Props {
 }
 
 export default function Dashboard({ stats, sekolah_lengkap_list }: Props) {
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filterDana, setFilterDana] = useState('semua');
+
+    const filteredList = useMemo(() => {
+        return sekolah_lengkap_list.filter((s) => {
+            const matchesSearch =
+                s.nama_sekolah.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                s.npsn.includes(searchQuery) ||
+                s.kabupaten.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                s.provinsi.toLowerCase().includes(searchQuery.toLowerCase());
+
+            const matchesDana =
+                filterDana === 'semua' ||
+                (filterDana === 'disalurkan' && s.status_dana === 'Dana Sudah Disalurkan / Ditransfer') ||
+                (filterDana === 'belum' && s.status_dana === 'Belum Disalurkan');
+
+            return matchesSearch && matchesDana;
+        });
+    }, [sekolah_lengkap_list, searchQuery, filterDana]);
+
     return (
         <AppLayout title="Dashboard Admin">
             <Head title="Dashboard — SI BANTEK 2026" />
 
             <div className="space-y-6">
                 <div>
-                    <h2 className="text-xl font-bold text-slate-800">Monitoring Kelengkapan Dokumen</h2>
+                    <h2 className="text-xl font-bold text-slate-800">Sekolah dengan Dokumen Lengkap</h2>
                     <p className="mt-1 text-sm text-slate-500">
-                        Pantauan sekolah penerima bantuan yang telah menyelesaikan seluruh verifikasi. Akses ini bersifat hanya-baca.
+                        Pantauan sekolah penerima bantuan yang telah menyelesaikan seluruh verifikasi dokumen. Akses ini bersifat hanya-baca (read-only).
                     </p>
                 </div>
 
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                     {[
                         { label: 'Total Kuota Sekolah', value: 173, note: 'Target SK Kemendikdasmen 2026' },
-                        { label: 'Dokumen Lengkap', value: stats.sekolah_lengkap, note: 'Seluruh 12 berkas disetujui' },
+                        { label: 'Sekolah dengan Dokumen Lengkap', value: stats.sekolah_lengkap, note: 'Seluruh 12 berkas disetujui' },
                         { label: 'Dana Disalurkan', value: stats.dana_disalurkan, note: 'Status diperbarui verifikator' },
                     ].map((card) => (
                         <div
@@ -50,13 +71,37 @@ export default function Dashboard({ stats, sekolah_lengkap_list }: Props) {
                 </div>
 
                 <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-                    <div className="border-b border-slate-100 px-5 py-4">
+                    <div className="border-b border-slate-100 px-5 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                         <h3 className="text-sm font-semibold text-slate-800">
                             Sekolah dengan Dokumen Lengkap
                             <span className="ml-2 rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600">
-                                {sekolah_lengkap_list.length}
+                                {filteredList.length} dari {sekolah_lengkap_list.length}
                             </span>
                         </h3>
+
+                        {/* Search & Filter Bar */}
+                        <div className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
+                            <div className="relative w-full sm:w-64">
+                                <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                                <input
+                                    type="text"
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    placeholder="Cari NPSN, nama, daerah..."
+                                    className="w-full rounded-lg border border-slate-300 pl-9 pr-3 py-1.5 text-xs text-slate-900 focus:border-[#1e2d5a] focus:outline-none focus:ring-1 focus:ring-[#1e2d5a]"
+                                />
+                            </div>
+
+                            <select
+                                value={filterDana}
+                                onChange={(e) => setFilterDana(e.target.value)}
+                                className="w-full sm:w-auto rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs text-slate-900 focus:border-[#1e2d5a] focus:outline-none focus:ring-1 focus:ring-[#1e2d5a]"
+                            >
+                                <option value="semua">Semua Status Dana</option>
+                                <option value="disalurkan">Sudah Disalurkan</option>
+                                <option value="belum">Belum Disalurkan</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div className="overflow-x-auto">
@@ -71,14 +116,16 @@ export default function Dashboard({ stats, sekolah_lengkap_list }: Props) {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-100 bg-white">
-                                {sekolah_lengkap_list.length === 0 ? (
+                                {filteredList.length === 0 ? (
                                     <tr>
                                         <td colSpan={5} className="px-5 py-10 text-center text-sm text-slate-400">
-                                            Belum ada sekolah yang menyelesaikan seluruh verifikasi dokumen.
+                                            {searchQuery || filterDana !== 'semua'
+                                                ? 'Tidak ditemukan sekolah yang sesuai pencarian/filter.'
+                                                : 'Belum ada sekolah yang menyelesaikan seluruh verifikasi dokumen.'}
                                         </td>
                                     </tr>
                                 ) : (
-                                    sekolah_lengkap_list.map((s, idx) => (
+                                    filteredList.map((s, idx) => (
                                         <tr key={s.id} className="hover:bg-slate-50 transition-colors">
                                             <td className="px-5 py-3.5 text-slate-500">{idx + 1}</td>
                                             <td className="px-5 py-3.5 font-mono text-slate-700">{s.npsn}</td>
