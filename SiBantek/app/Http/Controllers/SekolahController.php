@@ -126,4 +126,21 @@ class SekolahController extends Controller
 
         return response($html)->header('Content-Type', 'text/html');
     }
+
+    public function viewDokumenFile(int $id)
+    {
+        $dokumen = Dokumen::findOrFail($id);
+
+        if (!$dokumen->file_path || !Storage::disk('public')->exists($dokumen->file_path)) {
+            abort(404, 'File dokumen tidak ditemukan.');
+        }
+
+        $fullPath = Storage::disk('public')->path($dokumen->file_path);
+        $mimeType = Storage::disk('public')->mimeType($dokumen->file_path) ?? 'application/pdf';
+
+        return response()->file($fullPath, [
+            'Content-Type' => $mimeType,
+            'Content-Disposition' => 'inline; filename="' . basename($dokumen->file_path) . '"',
+        ]);
+    }
 }

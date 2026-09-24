@@ -24,6 +24,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/dokumen/file/{id}', [SekolahController::class, 'viewDokumenFile'])->name('dokumen.file');
 
     Route::middleware('role:admin')->prefix('admin')->group(function () {
         Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');

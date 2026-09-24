@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useForm, Head } from '@inertiajs/react';
 import AppLayout from '../../Layouts/AppLayout';
-import { Download, Upload, Printer, X, CheckCircle, Clock, AlertCircle, Search } from 'lucide-react';
+import { Download, Upload, Printer, X, CheckCircle, Clock, AlertCircle, Search, FileText } from 'lucide-react';
 
 interface Props {
     sekolah: {
@@ -35,35 +35,37 @@ interface Props {
     };
 }
 
-const statusClass: Record<string, string> = {
-    'Disetujui': 'bg-emerald-50 text-emerald-700',
-    'Revisi': 'bg-red-50 text-red-700',
-    'Menunggu Verifikasi': 'bg-amber-50 text-amber-700',
-    'Belum Diunggah': 'bg-slate-100 text-slate-500',
+const statusStyle: Record<string, string> = {
+    'Disetujui': 'bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold',
+    'Revisi': 'bg-red-50 text-red-700 border border-red-200 font-semibold',
+    'Menunggu Verifikasi': 'bg-amber-50 text-amber-700 border border-amber-200 font-semibold',
+    'Belum Diunggah': 'bg-slate-100 text-slate-500 border border-slate-200 font-medium',
 };
 
 const statusIcon: Record<string, React.ReactNode> = {
-    'Disetujui': <CheckCircle size={12} />,
-    'Menunggu Verifikasi': <Clock size={12} />,
-    'Revisi': <AlertCircle size={12} />,
+    'Disetujui': <CheckCircle size={13} />,
+    'Menunggu Verifikasi': <Clock size={13} />,
+    'Revisi': <AlertCircle size={13} />,
 };
 
 const docItems = [
     { key: 'pks', label: 'Perjanjian Kerja Sama (PKS)', pdfType: 'pks' },
     { key: 'pakta_integritas', label: 'Pakta Integritas', pdfType: 'pakta_integritas' },
-    { key: 'sptjm', label: 'Surat Pernyataan Tanggung Jawab Mutlak (SPTJM)', pdfType: 'sptjm' },
-    { key: 'laporan_awal', label: 'Laporan Awal & Saldo Rekening', pdfType: null },
+    { key: 'sptjm', label: 'Surat Pernyataan (SPTJM)', pdfType: 'sptjm' },
+    { key: 'laporan_awal', label: 'Laporan Awal & Saldo', pdfType: null },
     { key: 'rab', label: 'Rencana Anggaran Biaya (RAB)', pdfType: 'rab' },
-    { key: 'perbandingan_siplah', label: 'Perbandingan SIPLah (Min. 2 Penyedia)', pdfType: null },
-    { key: 'invoice_siplah', label: 'Invoice / Faktur Pembelian SIPLah', pdfType: null },
+    { key: 'perbandingan_siplah', label: 'Perbandingan SIPLah', pdfType: null },
+    { key: 'invoice_siplah', label: 'Faktur Pembelian SIPLah', pdfType: null },
     { key: 'bast', label: 'Berita Acara Serah Terima (BAST)', pdfType: 'bast' },
-    { key: 'foto_fisik_laptop', label: 'Foto Fisik Perangkat (6 Sudut)', pdfType: null },
-    { key: 'buku_inventaris', label: 'Buku Inventaris & Stiker Label', pdfType: null },
-    { key: 'dokumentasi_pemanfaatan', label: 'Dokumentasi Pemanfaatan Pembelajaran', pdfType: null },
-    { key: 'lpj', label: 'Laporan Akhir & Pengantar LPJ', pdfType: null },
+    { key: 'foto_fisik_laptop', label: 'Foto Perangkat Laptop', pdfType: null },
+    { key: 'buku_inventaris', label: 'Buku Inventaris & Label', pdfType: null },
+    { key: 'dokumentasi_pemanfaatan', label: 'Dokumentasi Pemanfaatan', pdfType: null },
+    { key: 'lpj', label: 'Laporan LPJ', pdfType: null },
 ];
 
 type TabKey = 'dokumen' | 'rab' | 'profil';
+const fmt = (n: number) => new Intl.NumberFormat('id-ID').format(n);
+const PAGU = 69364000;
 
 export default function SekolahDashboard({ sekolah }: Props) {
     const [tab, setTab] = useState<TabKey>('dokumen');
@@ -86,14 +88,17 @@ export default function SekolahDashboard({ sekolah }: Props) {
 
     const formUpload = useForm({ jenis_dokumen: '', file: null as File | null });
 
+    const openUploadModal = (docKey: string) => {
+        setUploadDocKey(docKey);
+        formUpload.setData({ jenis_dokumen: docKey, file: null });
+    };
+
     const filteredDocs = useMemo(() => {
         return docItems.filter((item) => {
             const doc = sekolah.dokumens.find((d) => d.jenis_dokumen === item.key);
             const status = doc?.status ?? 'Belum Diunggah';
-
             const matchesSearch = item.label.toLowerCase().includes(searchDocQuery.toLowerCase());
             const matchesStatus = filterDocStatus === 'semua' || status === filterDocStatus;
-
             return matchesSearch && matchesStatus;
         });
     }, [sekolah.dokumens, searchDocQuery, filterDocStatus]);
@@ -111,7 +116,6 @@ export default function SekolahDashboard({ sekolah }: Props) {
     const handleUpload = (e: React.FormEvent) => {
         e.preventDefault();
         if (!uploadDocKey || !formUpload.data.file) return;
-        formUpload.setData('jenis_dokumen', uploadDocKey);
         formUpload.post('/sekolah/dokumen/upload', {
             onSuccess: () => { setUploadDocKey(null); formUpload.reset(); },
         });
@@ -119,6 +123,7 @@ export default function SekolahDashboard({ sekolah }: Props) {
 
     const docApproved = sekolah.dokumens.filter((d) => d.status === 'Disetujui').length;
     const totalBiaya = formRab.data.jumlah_unit * formRab.data.harga_satuan;
+    const sisaDana = PAGU - (sekolah.rab?.total_harga ?? 0);
 
     const tabs: { key: TabKey; label: string }[] = [
         { key: 'dokumen', label: 'Dokumen & Berkas' },
@@ -172,9 +177,9 @@ export default function SekolahDashboard({ sekolah }: Props) {
                         href="/sekolah/inventaris/label-pdf"
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-2 rounded-lg bg-[#1e2d5a] px-4 py-2.5 text-xs font-semibold text-white hover:bg-[#162247] transition-colors flex-shrink-0 ml-4"
+                        className="inline-flex items-center gap-2 rounded-lg bg-[#1e2d5a] px-4 py-2 text-xs font-semibold text-white hover:bg-[#162247] transition-colors flex-shrink-0 ml-4"
                     >
-                        <Printer size={15} />
+                        <Printer size={14} />
                         Cetak Label
                     </a>
                 </div>
@@ -205,10 +210,9 @@ export default function SekolahDashboard({ sekolah }: Props) {
                                 <span className="text-xs font-semibold text-slate-600">
                                     Daftar 12 Berkas ({filteredDocs.length} ditampilkan)
                                 </span>
-
                                 <div className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
                                     <div className="relative w-full sm:w-56">
-                                        <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                                        <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                                         <input
                                             type="text"
                                             value={searchDocQuery}
@@ -217,7 +221,6 @@ export default function SekolahDashboard({ sekolah }: Props) {
                                             className="w-full rounded-lg border border-slate-300 pl-9 pr-3 py-1.5 text-xs text-slate-900 focus:border-[#1e2d5a] focus:outline-none focus:ring-1 focus:ring-[#1e2d5a]"
                                         />
                                     </div>
-
                                     <select
                                         value={filterDocStatus}
                                         onChange={(e) => setFilterDocStatus(e.target.value)}
@@ -256,39 +259,53 @@ export default function SekolahDashboard({ sekolah }: Props) {
                                                 const status = doc?.status ?? 'Belum Diunggah';
                                                 return (
                                                     <tr key={item.key} className="hover:bg-slate-50 transition-colors">
-                                                        <td className="px-5 py-3.5 text-slate-400">{idx + 1}</td>
+                                                        <td className="px-5 py-3.5 text-slate-400 text-xs">{idx + 1}</td>
                                                         <td className="px-5 py-3.5 font-medium text-slate-800 max-w-xs">{item.label}</td>
                                                         <td className="px-5 py-3.5">
-                                                            <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium ${statusClass[status] ?? 'bg-slate-100 text-slate-500'}`}>
+                                                            <span className={`inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs ${statusStyle[status] ?? 'bg-slate-100 text-slate-500'}`}>
                                                                 {statusIcon[status]}
                                                                 {status}
                                                             </span>
                                                         </td>
-                                                        <td className="px-5 py-3.5 text-xs text-red-600 max-w-xs">
+                                                        <td className="px-5 py-3.5 text-xs text-red-600 max-w-xs font-medium">
                                                             {doc?.catatan_revisi ?? '—'}
                                                         </td>
                                                         <td className="px-5 py-3.5">
-                                                            {item.pdfType ? (
-                                                                <a
-                                                                    href={`/sekolah/dokumen/download/${item.pdfType}`}
-                                                                    target="_blank"
-                                                                    rel="noreferrer"
-                                                                    className="inline-flex items-center gap-1 text-xs font-medium text-[#1e2d5a] underline"
-                                                                >
-                                                                    <Download size={13} />
-                                                                    Unduh Draft
-                                                                </a>
-                                                            ) : (
-                                                                <span className="text-xs text-slate-400">—</span>
-                                                            )}
+                                                            <div className="flex flex-col gap-1.5">
+                                                                {item.pdfType && (
+                                                                    <a
+                                                                        href={`/sekolah/dokumen/download/${item.pdfType}`}
+                                                                        target="_blank"
+                                                                        rel="noreferrer"
+                                                                        className="inline-flex items-center gap-1 text-xs font-medium text-[#1e2d5a] hover:underline"
+                                                                    >
+                                                                        <Download size={12} />
+                                                                        Unduh Draft PDF
+                                                                    </a>
+                                                                )}
+                                                                {doc?.id && doc.file_path && (
+                                                                    <a
+                                                                        href={`/dokumen/file/${doc.id}`}
+                                                                        target="_blank"
+                                                                        rel="noreferrer"
+                                                                        className="inline-flex items-center gap-1 text-xs font-medium text-emerald-700 hover:underline"
+                                                                    >
+                                                                        <FileText size={12} />
+                                                                        Lihat Berkas Terunggah
+                                                                    </a>
+                                                                )}
+                                                                {!item.pdfType && !doc?.file_path && (
+                                                                    <span className="text-xs text-slate-300">—</span>
+                                                                )}
+                                                            </div>
                                                         </td>
                                                         <td className="px-5 py-3.5">
                                                             <button
-                                                                onClick={() => setUploadDocKey(item.key)}
-                                                                className="inline-flex items-center gap-1 rounded bg-[#1e2d5a] px-2.5 py-1.5 text-xs font-semibold text-white hover:bg-[#162247] transition-colors"
+                                                                onClick={() => openUploadModal(item.key)}
+                                                                className="inline-flex items-center gap-1.5 rounded-md border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:border-slate-400 transition-colors"
                                                             >
                                                                 <Upload size={12} />
-                                                                Unggah
+                                                                {doc?.file_path ? 'Unggah Ulang' : 'Unggah'}
                                                             </button>
                                                         </td>
                                                     </tr>
@@ -306,29 +323,38 @@ export default function SekolahDashboard({ sekolah }: Props) {
                         <div className="p-6">
                             {sekolah.rab && (
                                 <div className="mb-5 rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm">
-                                    <p className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-2">Status RAB Saat Ini</p>
-                                    <div className="flex flex-wrap gap-6">
+                                    <p className="text-xs font-bold text-slate-500 uppercase tracking-wide mb-3">Status RAB Saat Ini</p>
+                                    <div className="flex flex-wrap gap-6 items-center">
                                         <div>
-                                            <p className="text-xs text-slate-400">Merek / Tipe</p>
-                                            <p className="font-medium text-slate-800">{sekolah.rab.merek_tipe_laptop}</p>
+                                            <p className="text-xs text-slate-400 uppercase font-medium">Merek / Tipe</p>
+                                            <p className="font-bold text-slate-800 mt-0.5">{sekolah.rab.merek_tipe_laptop}</p>
                                         </div>
-                                        <div className="flex-1 min-w-[200px]">
-                                            <p className="text-xs text-slate-400">Spesifikasi</p>
-                                            <p className="font-medium text-slate-800">{sekolah.rab.spesifikasi_ringkas}</p>
-                                        </div>
-                                        <div>
-                                            <p className="text-xs text-slate-400">Total Anggaran</p>
-                                            <p className="font-medium text-slate-800">Rp {new Intl.NumberFormat('id-ID').format(sekolah.rab.total_harga)}</p>
+                                        <div className="flex-1 min-w-[180px]">
+                                            <p className="text-xs text-slate-400 uppercase font-medium">Spesifikasi</p>
+                                            <p className="font-medium text-slate-700 mt-0.5 text-xs leading-relaxed">{sekolah.rab.spesifikasi_ringkas}</p>
                                         </div>
                                         <div>
-                                            <p className="text-xs text-slate-400">Status</p>
-                                            <span className={`inline-block mt-0.5 rounded-full px-2.5 py-0.5 text-xs font-medium ${statusClass[sekolah.rab.status] ?? 'bg-slate-100 text-slate-500'}`}>
+                                            <p className="text-xs text-slate-400 uppercase font-medium">Total Anggaran</p>
+                                            <p className="font-bold text-[#1e2d5a] mt-0.5">Rp {fmt(sekolah.rab.total_harga)}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-xs text-slate-400 uppercase font-medium">Sisa Dana</p>
+                                            <p className={`font-bold mt-0.5 ${sisaDana >= 0 ? 'text-emerald-700' : 'text-red-600'}`}>
+                                                Rp {fmt(sisaDana)}
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p className="text-xs text-slate-400 uppercase font-medium">Status</p>
+                                            <span className={`inline-flex items-center gap-1.5 mt-0.5 px-2.5 py-1 text-xs rounded-md ${statusStyle[sekolah.rab.status] ?? 'bg-slate-100 text-slate-500'}`}>
+                                                {statusIcon[sekolah.rab.status]}
                                                 {sekolah.rab.status}
                                             </span>
                                         </div>
                                     </div>
                                     {sekolah.rab.catatan_revisi && (
-                                        <p className="mt-3 text-xs text-red-600">Catatan: {sekolah.rab.catatan_revisi}</p>
+                                        <p className="mt-3 text-xs text-red-600 font-semibold border-t border-slate-200 pt-3">
+                                            Catatan Revisi: {sekolah.rab.catatan_revisi}
+                                        </p>
                                     )}
                                 </div>
                             )}
@@ -357,10 +383,9 @@ export default function SekolahDashboard({ sekolah }: Props) {
                                         required
                                         value={formRab.data.spesifikasi_ringkas}
                                         onChange={(e) => formRab.setData('spesifikasi_ringkas', e.target.value)}
-                                        placeholder="Contoh: Intel Core i5 12 Core, Layar 14 inch, RAM 8GB DDR4, SSD 256GB, OS GUI Legal"
                                         className="block w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-sm focus:border-[#1e2d5a] focus:outline-none focus:ring-1 focus:ring-[#1e2d5a] resize-none"
                                     />
-                                    <p className="mt-1 text-[11px] text-slate-400">Min: 4 Core/8 Thread, layar 13-14 inch, RAM 8GB, SSD 256GB, OS GUI Legal berlisensi.</p>
+                                    <p className="mt-1 text-[11px] text-slate-400">Min: 4 Core/8 Thread, layar 13-14 inch, RAM 8GB, SSD 256GB, OS GUI Legal.</p>
                                     {formRab.errors.spesifikasi_ringkas && <p className="mt-1 text-xs text-red-600">{formRab.errors.spesifikasi_ringkas}</p>}
                                 </div>
 
@@ -391,17 +416,17 @@ export default function SekolahDashboard({ sekolah }: Props) {
 
                                 <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
                                     <p className="text-xs text-slate-500">Total Biaya RAB</p>
-                                    <p className={`mt-1 text-2xl font-bold ${totalBiaya > 69364000 ? 'text-red-600' : 'text-[#1e2d5a]'}`}>
-                                        Rp {new Intl.NumberFormat('id-ID').format(totalBiaya)}
+                                    <p className={`mt-1 text-2xl font-bold ${totalBiaya > PAGU ? 'text-red-600' : 'text-[#1e2d5a]'}`}>
+                                        Rp {fmt(totalBiaya)}
                                     </p>
-                                    {totalBiaya > 69364000 && (
-                                        <p className="mt-1 text-xs text-red-600">Melebihi nilai bantuan Rp 69.364.000</p>
+                                    {totalBiaya > PAGU && (
+                                        <p className="mt-1 text-xs text-red-600">Melebihi nilai bantuan Rp {fmt(PAGU)}</p>
                                     )}
                                 </div>
 
                                 <button
                                     type="submit"
-                                    disabled={formRab.processing || totalBiaya > 69364000}
+                                    disabled={formRab.processing || totalBiaya > PAGU}
                                     className="rounded-lg bg-[#1e2d5a] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#162247] disabled:opacity-70 transition-colors"
                                 >
                                     {formRab.processing ? 'Menyimpan...' : 'Simpan & Ajukan RAB'}
@@ -425,7 +450,6 @@ export default function SekolahDashboard({ sekolah }: Props) {
                                     />
                                     {formProfil.errors.alamat && <p className="mt-1 text-xs text-red-600">{formProfil.errors.alamat}</p>}
                                 </div>
-
                                 <div>
                                     <label className="block text-xs font-medium text-slate-600 mb-1">Nama Kepala Sekolah</label>
                                     <input
@@ -437,7 +461,6 @@ export default function SekolahDashboard({ sekolah }: Props) {
                                     />
                                     {formProfil.errors.nama_kepsek && <p className="mt-1 text-xs text-red-600">{formProfil.errors.nama_kepsek}</p>}
                                 </div>
-
                                 <div>
                                     <label className="block text-xs font-medium text-slate-600 mb-1">NIP Kepala Sekolah</label>
                                     <input
@@ -449,7 +472,6 @@ export default function SekolahDashboard({ sekolah }: Props) {
                                     />
                                     {formProfil.errors.nip_kepsek && <p className="mt-1 text-xs text-red-600">{formProfil.errors.nip_kepsek}</p>}
                                 </div>
-
                                 <button
                                     type="submit"
                                     disabled={formProfil.processing}
@@ -468,7 +490,12 @@ export default function SekolahDashboard({ sekolah }: Props) {
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
                     <div className="w-full max-w-md rounded-xl bg-white shadow-xl overflow-hidden">
                         <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
-                            <h3 className="text-base font-semibold text-slate-800">Unggah Berkas</h3>
+                            <div>
+                                <h3 className="text-sm font-semibold text-slate-800">Unggah Berkas</h3>
+                                <p className="text-xs text-slate-400 mt-0.5">
+                                    {docItems.find(d => d.key === uploadDocKey)?.label}
+                                </p>
+                            </div>
                             <button onClick={() => setUploadDocKey(null)} className="text-slate-400 hover:text-slate-600">
                                 <X size={18} />
                             </button>
@@ -494,7 +521,7 @@ export default function SekolahDashboard({ sekolah }: Props) {
                                 </button>
                                 <button
                                     type="submit"
-                                    disabled={formUpload.processing}
+                                    disabled={formUpload.processing || !formUpload.data.file}
                                     className="rounded-lg bg-[#1e2d5a] px-4 py-2 text-sm font-semibold text-white hover:bg-[#162247] disabled:opacity-70 transition-colors"
                                 >
                                     {formUpload.processing ? 'Mengunggah...' : 'Unggah'}

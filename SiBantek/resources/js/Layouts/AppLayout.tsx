@@ -60,7 +60,7 @@ export default function AppLayout({ children, title }: AppLayoutProps) {
     const Sidebar = ({ mobile = false }: { mobile?: boolean }) => (
         <div className="flex h-full flex-col bg-[#1e2d5a] text-white">
             <div className="flex h-16 items-center gap-3 border-b border-white/10 px-4">
-                <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-white p-1 shadow-sm border border-slate-200">
+                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-white p-0.5 shadow-md border border-slate-200">
                     <img
                         src="/logo.png"
                         alt="Logo Si Bantek"
@@ -113,7 +113,7 @@ export default function AppLayout({ children, title }: AppLayoutProps) {
                     <div className="min-w-0 flex-1">
                         <p className="truncate text-xs font-semibold text-white">{user?.name}</p>
                         <p className="text-[10px] uppercase tracking-wider text-white/50">
-                            Role: {user?.role === 'sekolah' ? 'Operator Sekolah' : user?.role === 'verifikator' ? 'Verifikator' : 'Admin'}
+                            {user?.role === 'sekolah' ? 'Operator Sekolah' : user?.role === 'verifikator' ? 'Verifikator' : 'Admin'}
                         </p>
                     </div>
                 </Link>

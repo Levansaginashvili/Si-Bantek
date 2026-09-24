@@ -19,7 +19,7 @@ export default function Login() {
 
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="flex justify-center">
-                    <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-white p-2 border border-slate-200 shadow-sm">
+                    <div className="flex h-28 w-28 items-center justify-center rounded-2xl bg-white p-1 shadow-md border border-slate-200">
                         <img
                             src="/logo.png"
                             alt="Logo Si Bantek"
@@ -45,6 +45,7 @@ export default function Login() {
                             <input
                                 type="text"
                                 required
+                                autoFocus
                                 value={data.identity}
                                 onChange={(e) => setData('identity', e.target.value)}
                                 className="mt-1.5 block w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:border-[#1e2d5a] focus:outline-none focus:ring-1 focus:ring-[#1e2d5a]"
