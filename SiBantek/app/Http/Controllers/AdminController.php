@@ -38,7 +38,7 @@ class AdminController extends Controller
     public function users(): Response
     {
         $users = User::with('sekolah:id,nama_sekolah,npsn')
-            ->select('id', 'name', 'username', 'nip', 'npsn', 'email', 'role', 'sekolah_id', 'created_at')
+            ->select('id', 'name', 'username', 'nip', 'npsn', 'email', 'role', 'status', 'catatan_nonaktif', 'sekolah_id', 'created_at')
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -64,6 +64,7 @@ class AdminController extends Controller
                 'email' => $validated['nip'] . '@sibantek.local',
                 'password' => Hash::make($validated['password']),
                 'role' => 'verifikator',
+                'status' => 'aktif',
             ]);
         } elseif ($role === 'sekolah') {
             $validated = $request->validate([
@@ -90,6 +91,7 @@ class AdminController extends Controller
                 'password' => Hash::make($validated['password']),
                 'role' => 'sekolah',
                 'sekolah_id' => $sekolah->id,
+                'status' => 'aktif',
             ]);
 
             // Initialize required documents & RAB for new school
@@ -108,8 +110,8 @@ class AdminController extends Controller
 
             Rab::create([
                 'sekolah_id' => $sekolah->id,
-                'merek_tipe_laptop' => 'Chromebook / Laptop Standar TIK 2026',
-                'spesifikasi_ringkas' => 'Processor 4 Core / 8 Thread, Layar 14 inch, RAM 8GB, SSD 256GB, OS GUI Legal',
+                'merek_tipe_laptop' => 'Chromebook / Laptop Standar TIK',
+                'spesifikasi_ringkas' => 'Processor 4 Core / 8 Thread, Layar 13-14 inch, RAM 8GB, SSD 256GB, OS GUI Legal',
                 'jumlah_unit' => 8,
                 'harga_satuan' => 8625000.00,
                 'total_harga' => 69000000.00,
@@ -118,5 +120,73 @@ class AdminController extends Controller
         }
 
         return redirect()->back()->with('success', 'Akun berhasil dibuat.');
+    }
+
+    public function updateUser(Request $request, int $id): RedirectResponse
+    {
+        $user = User::findOrFail($id);
+
+        if ($user->role === 'verifikator') {
+            $validated = $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'nip' => ['required', 'string', 'max:50', Rule::unique('users', 'nip')->ignore($user->id)],
+                'password' => ['nullable', 'string', 'min:8'],
+            ]);
+
+            $userData = [
+                'name' => $validated['name'],
+                'nip' => $validated['nip'],
+            ];
+
+            if (!empty($validated['password'])) {
+                $userData['password'] = Hash::make($validated['password']);
+            }
+
+            $user->update($userData);
+        } elseif ($user->role === 'sekolah') {
+            $validated = $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'npsn' => ['required', 'string', 'max:50', Rule::unique('users', 'npsn')->ignore($user->id)],
+                'password' => ['nullable', 'string', 'min:8'],
+            ]);
+
+            $userData = [
+                'name' => $validated['name'],
+                'npsn' => $validated['npsn'],
+            ];
+
+            if (!empty($validated['password'])) {
+                $userData['password'] = Hash::make($validated['password']);
+            }
+
+            $user->update($userData);
+
+            if ($user->sekolah_id) {
+                Sekolah::where('id', $user->sekolah_id)->update([
+                    'nama_sekolah' => $validated['name'],
+                    'npsn' => $validated['npsn'],
+                ]);
+            }
+        }
+
+        return redirect()->back()->with('success', 'Akun berhasil diperbarui.');
+    }
+
+    public function toggleStatusUser(Request $request, int $id): RedirectResponse
+    {
+        $user = User::findOrFail($id);
+
+        $validated = $request->validate([
+            'status' => ['required', 'in:aktif,nonaktif'],
+            'catatan_nonaktif' => ['nullable', 'string', 'max:500'],
+        ]);
+
+        $user->update([
+            'status' => $validated['status'],
+            'catatan_nonaktif' => $validated['status'] === 'nonaktif' ? ($validated['catatan_nonaktif'] ?? null) : null,
+        ]);
+
+        $msg = $validated['status'] === 'nonaktif' ? 'Akun telah dinonaktifkan.' : 'Akun berhasil diaktifkan kembali.';
+        return redirect()->back()->with('success', $msg);
     }
 }

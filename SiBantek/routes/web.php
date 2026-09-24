@@ -8,6 +8,9 @@ use App\Http\Controllers\VerifikatorController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+    if (Auth::check()) {
+        return redirect('/' . Auth::user()->role);
+    }
     return redirect('/login');
 });
 
@@ -26,6 +29,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
         Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
         Route::post('/users', [AdminController::class, 'storeUser'])->name('admin.users.store');
+        Route::post('/users/{id}', [AdminController::class, 'updateUser'])->name('admin.users.update');
+        Route::post('/users/{id}/status', [AdminController::class, 'toggleStatusUser'])->name('admin.users.status');
     });
 
     Route::middleware('role:verifikator')->prefix('verifikator')->group(function () {

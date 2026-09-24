@@ -39,6 +39,13 @@ class AuthController extends Controller
             ->first();
 
         if ($user && Hash::check($validated['password'], $user->password)) {
+            if ($user->status === 'nonaktif') {
+                $reason = $user->catatan_nonaktif ? " Catatan: {$user->catatan_nonaktif}" : "";
+                return back()->withErrors([
+                    'identity' => "Akun ini telah dinonaktifkan oleh Administrator.{$reason}",
+                ])->onlyInput('identity');
+            }
+
             Auth::login($user, $request->boolean('remember'));
             $request->session()->regenerate();
 

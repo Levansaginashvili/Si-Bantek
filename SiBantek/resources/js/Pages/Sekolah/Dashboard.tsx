@@ -25,6 +25,7 @@ interface Props {
         rab: {
             id: number;
             merek_tipe_laptop: string;
+            spesifikasi_ringkas: string;
             jumlah_unit: number;
             harga_satuan: number;
             total_harga: number;
@@ -78,6 +79,7 @@ export default function SekolahDashboard({ sekolah }: Props) {
 
     const formRab = useForm({
         merek_tipe_laptop: sekolah.rab?.merek_tipe_laptop ?? '',
+        spesifikasi_ringkas: sekolah.rab?.spesifikasi_ringkas ?? 'Processor 4 Core / 8 Thread, Layar 13-14 inch, RAM 8GB, SSD 256GB, OS GUI Legal',
         jumlah_unit: sekolah.rab?.jumlah_unit ?? 8,
         harga_satuan: sekolah.rab?.harga_satuan ?? 8625000,
     });
@@ -310,6 +312,10 @@ export default function SekolahDashboard({ sekolah }: Props) {
                                             <p className="text-xs text-slate-400">Merek / Tipe</p>
                                             <p className="font-medium text-slate-800">{sekolah.rab.merek_tipe_laptop}</p>
                                         </div>
+                                        <div className="flex-1 min-w-[200px]">
+                                            <p className="text-xs text-slate-400">Spesifikasi</p>
+                                            <p className="font-medium text-slate-800">{sekolah.rab.spesifikasi_ringkas}</p>
+                                        </div>
                                         <div>
                                             <p className="text-xs text-slate-400">Total Anggaran</p>
                                             <p className="font-medium text-slate-800">Rp {new Intl.NumberFormat('id-ID').format(sekolah.rab.total_harga)}</p>
@@ -339,6 +345,23 @@ export default function SekolahDashboard({ sekolah }: Props) {
                                         className="block w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-sm focus:border-[#1e2d5a] focus:outline-none focus:ring-1 focus:ring-[#1e2d5a]"
                                     />
                                     {formRab.errors.merek_tipe_laptop && <p className="mt-1 text-xs text-red-600">{formRab.errors.merek_tipe_laptop}</p>}
+                                </div>
+
+                                <div>
+                                    <label className="block text-xs font-medium text-slate-600 mb-1">
+                                        Spesifikasi Laptop
+                                        <span className="ml-1 font-normal text-slate-400">(sesuai rekomendasi minimum)</span>
+                                    </label>
+                                    <textarea
+                                        rows={3}
+                                        required
+                                        value={formRab.data.spesifikasi_ringkas}
+                                        onChange={(e) => formRab.setData('spesifikasi_ringkas', e.target.value)}
+                                        placeholder="Contoh: Intel Core i5 12 Core, Layar 14 inch, RAM 8GB DDR4, SSD 256GB, OS GUI Legal"
+                                        className="block w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-sm focus:border-[#1e2d5a] focus:outline-none focus:ring-1 focus:ring-[#1e2d5a] resize-none"
+                                    />
+                                    <p className="mt-1 text-[11px] text-slate-400">Min: 4 Core/8 Thread, layar 13-14 inch, RAM 8GB, SSD 256GB, OS GUI Legal berlisensi.</p>
+                                    {formRab.errors.spesifikasi_ringkas && <p className="mt-1 text-xs text-red-600">{formRab.errors.spesifikasi_ringkas}</p>}
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-4">

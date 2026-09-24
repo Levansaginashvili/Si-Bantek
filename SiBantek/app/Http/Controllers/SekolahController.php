@@ -51,6 +51,7 @@ class SekolahController extends Controller
 
         $validated = $request->validate([
             'merek_tipe_laptop' => ['required', 'string', 'max:255'],
+            'spesifikasi_ringkas' => ['required', 'string', 'max:1000'],
             'jumlah_unit' => ['required', 'integer', 'min:8'],
             'harga_satuan' => ['required', 'numeric', 'min:1000000', 'max:8625000'],
         ]);
@@ -64,7 +65,7 @@ class SekolahController extends Controller
             ['sekolah_id' => $sekolah->id],
             [
                 'merek_tipe_laptop' => $validated['merek_tipe_laptop'],
-                'spesifikasi_ringkas' => 'Processor 4 Core / 8 Thread, Layar 13-14 inch, RAM 8GB, SSD 256GB, OS GUI Legal',
+                'spesifikasi_ringkas' => $validated['spesifikasi_ringkas'],
                 'jumlah_unit' => $validated['jumlah_unit'],
                 'harga_satuan' => $validated['harga_satuan'],
                 'total_harga' => $totalHarga,

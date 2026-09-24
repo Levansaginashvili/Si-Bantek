@@ -15,20 +15,20 @@ export default function Login() {
 
     return (
         <div className="flex min-h-screen flex-col justify-center bg-slate-50 py-12 sm:px-6 lg:px-8 font-sans">
-            <Head title="Masuk — SI BANTEK 2026" />
+            <Head title="Masuk — Si Bantek" />
 
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="flex justify-center">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-[#1e2d5a] p-2 shadow-sm">
+                    <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-white p-2 border border-slate-200 shadow-sm">
                         <img
                             src="/logo.png"
-                            alt="Logo SiBantek"
-                            className="h-10 w-10 object-contain"
+                            alt="Logo Si Bantek"
+                            className="h-full w-full object-contain"
                         />
                     </div>
                 </div>
                 <h2 className="mt-4 text-center text-2xl font-bold text-slate-900">
-                    SI BANTEK 2026
+                    Si Bantek
                 </h2>
                 <p className="mt-1 text-center text-sm text-slate-500">
                     Sistem Bantuan Peralatan TIK SMP — Kemendikdasmen RI

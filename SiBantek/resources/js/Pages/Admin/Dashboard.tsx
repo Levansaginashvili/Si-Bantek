@@ -43,7 +43,7 @@ export default function Dashboard({ stats, sekolah_lengkap_list }: Props) {
 
     return (
         <AppLayout title="Dashboard Admin">
-            <Head title="Dashboard — SI BANTEK 2026" />
+            <Head title="Dashboard — Si Bantek" />
 
             <div className="space-y-6">
                 <div>
@@ -55,7 +55,7 @@ export default function Dashboard({ stats, sekolah_lengkap_list }: Props) {
 
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                     {[
-                        { label: 'Total Kuota Sekolah', value: 173, note: 'Target SK Kemendikdasmen 2026' },
+                        { label: 'Total Kuota Sekolah', value: 173, note: 'Target SK Kemendikdasmen' },
                         { label: 'Sekolah dengan Dokumen Lengkap', value: stats.sekolah_lengkap, note: 'Seluruh 12 berkas disetujui' },
                         { label: 'Dana Disalurkan', value: stats.dana_disalurkan, note: 'Status diperbarui verifikator' },
                     ].map((card) => (

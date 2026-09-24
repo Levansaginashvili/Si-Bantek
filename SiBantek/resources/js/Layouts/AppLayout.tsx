@@ -59,18 +59,16 @@ export default function AppLayout({ children, title }: AppLayoutProps) {
 
     const Sidebar = ({ mobile = false }: { mobile?: boolean }) => (
         <div className="flex h-full flex-col bg-[#1e2d5a] text-white">
-            <div className="flex h-16 items-center gap-3 border-b border-white/10 px-5">
-                <img
-                    src="/logo.png"
-                    alt="Logo SiBantek"
-                    className="h-8 w-8 object-contain rounded bg-white/10 p-0.5"
-                    onError={(e) => {
-                        // Fallback to Icon if image fails
-                        (e.target as HTMLElement).style.display = 'none';
-                    }}
-                />
+            <div className="flex h-16 items-center gap-3 border-b border-white/10 px-4">
+                <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-white p-1 shadow-sm border border-slate-200">
+                    <img
+                        src="/logo.png"
+                        alt="Logo Si Bantek"
+                        className="h-full w-full object-contain"
+                    />
+                </div>
                 <div>
-                    <p className="text-sm font-bold tracking-wide">SI BANTEK 2026</p>
+                    <p className="text-sm font-bold tracking-wide">Si Bantek</p>
                     <p className="text-[10px] text-white/50 leading-none">Kemendikdasmen RI</p>
                 </div>
                 {mobile && (
@@ -114,7 +112,9 @@ export default function AppLayout({ children, title }: AppLayoutProps) {
                     </div>
                     <div className="min-w-0 flex-1">
                         <p className="truncate text-xs font-semibold text-white">{user?.name}</p>
-                        <p className="text-[10px] uppercase tracking-wider text-white/50">Role: {user?.role}</p>
+                        <p className="text-[10px] uppercase tracking-wider text-white/50">
+                            Role: {user?.role === 'sekolah' ? 'Operator Sekolah' : user?.role === 'verifikator' ? 'Verifikator' : 'Admin'}
+                        </p>
                     </div>
                 </Link>
 

@@ -69,7 +69,7 @@ export default function ProfileEdit({ user, sekolah }: Props) {
 
     return (
         <AppLayout title="Profil Saya">
-            <Head title="Profil — SI BANTEK 2026" />
+            <Head title="Profil — Si Bantek" />
 
             <div className="space-y-6 max-w-2xl">
                 <div>

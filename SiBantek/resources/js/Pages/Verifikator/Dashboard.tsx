@@ -49,7 +49,7 @@ export default function VerifikatorDashboard({ sekolahs }: Props) {
 
     return (
         <AppLayout title="Dashboard Verifikator">
-            <Head title="Verifikasi Sekolah — SI BANTEK 2026" />
+            <Head title="Verifikasi Sekolah — Si Bantek" />
 
             <div className="space-y-6">
                 <div>

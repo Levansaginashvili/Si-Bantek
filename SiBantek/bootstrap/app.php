@@ -14,6 +14,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->redirectTo(
+            guests: '/login',
+            users: function () {
+                return Auth::check() ? '/' . Auth::user()->role : '/login';
+            }
+        );
         $middleware->web(append: [
             HandleInertiaRequests::class,
         ]);

@@ -10,7 +10,7 @@ interface TopbarProps {
 const roleLabels: Record<Role, string> = {
     admin: 'Administrator',
     verifikator: 'Verifikator',
-    sekolah: 'Sekolah',
+    sekolah: 'Operator Sekolah',
 };
 
 export function Topbar({ role, onMenuClick }: TopbarProps) {
@@ -31,7 +31,7 @@ export function Topbar({ role, onMenuClick }: TopbarProps) {
                     </p>
 
                     <p className="hidden text-xs text-slate-500 sm:block">
-                        Tahun Program 2026
+                        Kemendikdasmen RI
                     </p>
                 </div>
             </div>

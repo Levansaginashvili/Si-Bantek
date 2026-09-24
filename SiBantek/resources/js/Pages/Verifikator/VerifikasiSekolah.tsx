@@ -25,6 +25,7 @@ interface Props {
         rab: {
             id: number;
             merek_tipe_laptop: string;
+            spesifikasi_ringkas: string;
             jumlah_unit: number;
             harga_satuan: number;
             total_harga: number;
@@ -186,6 +187,10 @@ export default function VerifikasiSekolah({ sekolah }: Props) {
                                             <p className="mt-0.5 font-medium text-slate-800">{f.value}</p>
                                         </div>
                                     ))}
+                                </div>
+                                <div className="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-3">
+                                    <p className="text-xs text-slate-400">Spesifikasi Laptop</p>
+                                    <p className="mt-0.5 text-sm font-medium text-slate-800">{sekolah.rab.spesifikasi_ringkas}</p>
                                 </div>
                                 <div className="mt-4 flex gap-2">
                                     <button
