@@ -184,7 +184,7 @@ export default function UsersPage({ users }: Props) {
                         <table className="min-w-full divide-y divide-slate-100 text-sm">
                             <thead className="bg-slate-50">
                                 <tr>
-                                    {['No', 'Nama / Sekolah', 'Identitas Login', 'Role', 'Status', 'Aksi'].map((h) => (
+                                    {['No', 'Nama / Sekolah', 'Login', 'Role', 'Status', 'Aksi'].map((h) => (
                                         <th key={h} className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">
                                             {h}
                                         </th>

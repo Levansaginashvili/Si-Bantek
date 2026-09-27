@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useForm, Head, Link } from '@inertiajs/react';
 import AppLayout from '../../Layouts/AppLayout';
-import { ArrowLeft, FileText, X, CheckCircle, AlertTriangle, Clock, AlertCircle } from 'lucide-react';
+import { ArrowLeft, FileText, X, CheckCircle, AlertTriangle, Clock, AlertCircle, Info, Check, Upload } from 'lucide-react';
 
 interface Props {
     sekolah: {
@@ -49,20 +49,27 @@ const statusIcon: Record<string, React.ReactNode> = {
     'Revisi': <AlertCircle size={13} />,
 };
 
-const docLabels: Record<string, string> = {
-    pks: 'Perjanjian Kerja Sama (PKS)',
-    pakta_integritas: 'Pakta Integritas',
-    sptjm: 'Surat Pernyataan (SPTJM)',
-    laporan_awal: 'Laporan Awal & Saldo',
-    rab: 'Rencana Anggaran Biaya (RAB)',
-    perbandingan_siplah: 'Perbandingan SIPLah',
-    invoice_siplah: 'Faktur Pembelian SIPLah',
-    bast: 'Berita Acara Serah Terima (BAST)',
-    foto_fisik_laptop: 'Foto Perangkat Laptop',
-    buku_inventaris: 'Buku Inventaris & Label',
-    dokumentasi_pemanfaatan: 'Dokumentasi Pemanfaatan',
-    lpj: 'Laporan LPJ',
-};
+interface DocDefinition {
+    key: string;
+    label: string;
+    stage: number;
+    stageName: string;
+}
+
+const docDefinitions: DocDefinition[] = [
+    { key: 'pks', label: 'Perjanjian Kerja Sama (PKS)', stage: 1, stageName: '1. Persiapan & RAB' },
+    { key: 'pakta_integritas', label: 'Pakta Integritas', stage: 1, stageName: '1. Persiapan & RAB' },
+    { key: 'sptjm', label: 'Surat Pernyataan (SPTJM)', stage: 1, stageName: '1. Persiapan & RAB' },
+    { key: 'rab', label: 'Rencana Anggaran Biaya (RAB)', stage: 1, stageName: '1. Persiapan & RAB' },
+    { key: 'laporan_awal', label: 'Laporan Awal & Saldo Bank', stage: 2, stageName: '2. Pencairan Dana' },
+    { key: 'perbandingan_siplah', label: 'Perbandingan Produk SIPLah', stage: 3, stageName: '3. Pengadaan SIPLah' },
+    { key: 'invoice_siplah', label: 'Faktur Pembelian SIPLah', stage: 3, stageName: '3. Pengadaan SIPLah' },
+    { key: 'bast', label: 'Berita Acara Serah Terima (BAST)', stage: 4, stageName: '4. Penerimaan & Pelabelan' },
+    { key: 'foto_fisik_laptop', label: 'Foto Perangkat Laptop (6 Sudut)', stage: 4, stageName: '4. Penerimaan & Pelabelan' },
+    { key: 'buku_inventaris', label: 'Buku Inventaris & Label Aset', stage: 4, stageName: '4. Penerimaan & Pelabelan' },
+    { key: 'dokumentasi_pemanfaatan', label: 'Foto Pemanfaatan Pembelajaran', stage: 5, stageName: '5. LPJ & Pemanfaatan' },
+    { key: 'lpj', label: 'Laporan Akhir LPJ', stage: 5, stageName: '5. LPJ & Pemanfaatan' },
+];
 
 const PAGU = 69364000;
 const fmt = (n: number) => new Intl.NumberFormat('id-ID').format(n);
@@ -70,23 +77,17 @@ const fmt = (n: number) => new Intl.NumberFormat('id-ID').format(n);
 export default function VerifikasiSekolah({ sekolah }: Props) {
     const [revisiTarget, setRevisiTarget] = useState<{ type: 'dokumen' | 'rab'; id?: number; name?: string } | null>(null);
     const [catatanRevisi, setCatatanRevisi] = useState('');
-
-    // Konfirmasi persetujuan dokumen/RAB
     const [confirmApproveTarget, setConfirmApproveTarget] = useState<{ type: 'dokumen' | 'rab'; id?: number; title: string } | null>(null);
-
-    // Konfirmasi perubahan status dana
     const [confirmDana, setConfirmDana] = useState<string | null>(null);
 
     const formDana = useForm({ status_dana: sekolah.status_dana });
     const formDoc = useForm({ dokumen_id: 0, status: '', catatan_revisi: '' });
     const formRab = useForm({ status: '', catatan_revisi: '' });
 
-    // Dana: tampilkan modal konfirmasi dulu
     const handleDanaClick = (val: string) => {
         setConfirmDana(val);
     };
 
-    // Dana: eksekusi setelah konfirmasi
     const processDana = () => {
         if (!confirmDana) return;
         formDana.setData('status_dana', confirmDana);
@@ -127,8 +128,33 @@ export default function VerifikasiSekolah({ sekolah }: Props) {
 
     const totalRab = sekolah.rab?.total_harga ?? 0;
     const sisaDana = PAGU - totalRab;
-
+    const rabApproved = sekolah.rab?.status === 'Disetujui';
     const sudahDisalurkan = sekolah.status_dana === 'Dana Sudah Disalurkan / Ditransfer';
+
+    // Calculate current active stage for this school
+    const currentStage = useMemo(() => {
+        if (!rabApproved) return 1;
+        if (!sudahDisalurkan) return 2;
+        const siplahDone = sekolah.dokumens.some(d => d.jenis_dokumen === 'invoice_siplah' && d.status === 'Disetujui');
+        if (!siplahDone) return 3;
+        const bastDone = sekolah.dokumens.some(d => d.jenis_dokumen === 'bast' && d.status === 'Disetujui');
+        if (!bastDone) return 4;
+        return 5;
+    }, [rabApproved, sudahDisalurkan, sekolah.dokumens]);
+
+    const initialDocs = ['pks', 'pakta_integritas', 'sptjm'];
+    const initialDocsApproved = initialDocs.every(k =>
+        sekolah.dokumens.some(d => d.jenis_dokumen === k && d.status === 'Disetujui')
+    );
+    const canDisalurkan = rabApproved && initialDocsApproved;
+
+    const stagesList = [
+        { num: 1, title: 'Persiapan & RAB', desc: 'Verifikasi Berkas Awal & RAB' },
+        { num: 2, title: 'Penyaluran Dana', desc: 'Transfer Dana Bantuan' },
+        { num: 3, title: 'Pengadaan SIPLah', desc: 'Order & Pembelian' },
+        { num: 4, title: 'Penerimaan & Aset', desc: 'BAST & Pelabelan QR' },
+        { num: 5, title: 'Pemanfaatan & LPJ', desc: 'Laporan Pertanggungjawaban' },
+    ];
 
     return (
         <AppLayout title={sekolah.nama_sekolah}>
@@ -150,7 +176,7 @@ export default function VerifikasiSekolah({ sekolah }: Props) {
                             <div className="flex items-center gap-3 flex-wrap">
                                 <h2 className="text-xl font-bold text-slate-800">{sekolah.nama_sekolah}</h2>
                                 <span className={`px-2.5 py-1 text-xs rounded-md ${sekolah.status_dokumen === 'Lengkap' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold' : 'bg-slate-100 text-slate-600 border border-slate-200 font-medium'}`}>
-                                    {sekolah.status_dokumen === 'Lengkap' ? '✓ Berkas Lengkap (12/12)' : 'Berkas Belum Lengkap'}
+                                    {sekolah.status_dokumen === 'Lengkap' ? 'Berkas Lengkap (12/12)' : 'Berkas Belum Lengkap'}
                                 </span>
                             </div>
                             <p className="mt-1 text-sm text-slate-500">NPSN: {sekolah.npsn} — {sekolah.kabupaten}, {sekolah.provinsi}</p>
@@ -172,13 +198,20 @@ export default function VerifikasiSekolah({ sekolah }: Props) {
                             </span>
                             <div className="mt-3">
                                 {!sudahDisalurkan ? (
-                                    <button
-                                        onClick={() => handleDanaClick('Dana Sudah Disalurkan / Ditransfer')}
-                                        disabled={formDana.processing}
-                                        className="w-full rounded-lg bg-[#1e2d5a] px-3 py-2 text-xs font-semibold text-white hover:bg-[#162247] transition-colors disabled:opacity-70"
-                                    >
-                                        Tandai: Dana Sudah Ditransfer
-                                    </button>
+                                    <>
+                                        <button
+                                            onClick={() => handleDanaClick('Dana Sudah Disalurkan / Ditransfer')}
+                                            disabled={formDana.processing || !canDisalurkan}
+                                            className="w-full rounded-lg bg-[#1e2d5a] px-3 py-2 text-xs font-semibold text-white hover:bg-[#162247] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                        >
+                                            Tandai: Dana Sudah Ditransfer
+                                        </button>
+                                        {!canDisalurkan && (
+                                            <p className="mt-2 text-[11px] text-amber-800 bg-amber-50 p-2 rounded border border-amber-200 leading-tight">
+                                                Dana belum dapat disalurkan. RAB Laptop dan 3 Berkas Awal (PKS, Pakta Integritas, SPTJM) harus disetujui terlebih dahulu.
+                                            </p>
+                                        )}
+                                    </>
                                 ) : (
                                     <button
                                         onClick={() => handleDanaClick('Belum Disalurkan')}
@@ -190,6 +223,53 @@ export default function VerifikasiSekolah({ sekolah }: Props) {
                                 )}
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                {/* 5-Step Visual Workflow Stepper for Verifikator */}
+                <div className="rounded-xl border border-slate-200 bg-white shadow-sm p-5">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
+                        Status Alur Program Sekolah Ini
+                    </h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-5 gap-2">
+                        {stagesList.map((stg) => {
+                            const isDone = stg.num < currentStage;
+                            const isCurrent = stg.num === currentStage;
+
+                            return (
+                                <div
+                                    key={stg.num}
+                                    className={`flex flex-col p-3 rounded-lg border text-left transition-all ${
+                                        isCurrent
+                                            ? 'border-[#1e2d5a] bg-slate-50 ring-1 ring-[#1e2d5a]'
+                                            : isDone
+                                            ? 'border-emerald-200 bg-emerald-50/50'
+                                            : 'border-slate-200 bg-white opacity-60'
+                                    }`}
+                                >
+                                    <div className="flex items-center justify-between mb-1">
+                                        <span className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold ${
+                                            isDone
+                                                ? 'bg-emerald-600 text-white'
+                                                : isCurrent
+                                                ? 'bg-[#1e2d5a] text-white'
+                                                : 'bg-slate-200 text-slate-600'
+                                        }`}>
+                                            {isDone ? <Check size={12} /> : stg.num}
+                                        </span>
+                                        {isCurrent && (
+                                            <span className="text-[10px] font-bold text-[#1e2d5a] uppercase bg-slate-200 px-1.5 py-0.5 rounded">
+                                                Tahap Aktif
+                                            </span>
+                                        )}
+                                    </div>
+                                    <p className={`text-xs font-bold ${isCurrent ? 'text-[#1e2d5a]' : isDone ? 'text-emerald-800' : 'text-slate-700'}`}>
+                                        {stg.title}
+                                    </p>
+                                    <p className="text-[11px] text-slate-400 mt-0.5 leading-tight">{stg.desc}</p>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
 
@@ -237,6 +317,16 @@ export default function VerifikasiSekolah({ sekolah }: Props) {
                                     <p className="mt-1 text-sm text-slate-700">{sekolah.rab.spesifikasi_ringkas}</p>
                                 </div>
 
+                                 {sisaDana > 0 && (
+                                    <div className="mt-3 rounded-lg border border-blue-200 bg-blue-50 px-4 py-3 text-xs text-blue-800 flex items-start gap-2">
+                                        <Info size={15} className="flex-shrink-0 mt-0.5" />
+                                        <div>
+                                            <span className="font-bold">Ket. Sisa Dana Bantuan: </span>
+                                            Terdapat sisa alokasi anggaran sebesar <span className="font-bold">Rp {fmt(sisaDana)}</span>. Sisa dana ini wajib disetorkan kembali oleh sekolah ke Kas Negara melalui Kode Billing SIMPONI/MPN setelah seluruh pengadaan selesai.
+                                        </div>
+                                    </div>
+                                )}
+
                                 {sekolah.rab.catatan_revisi && (
                                     <div className="mt-3 rounded-lg border border-red-100 bg-red-50 px-4 py-3 text-xs text-red-700">
                                         <span className="font-bold">Catatan Revisi: </span>{sekolah.rab.catatan_revisi}
@@ -275,7 +365,7 @@ export default function VerifikasiSekolah({ sekolah }: Props) {
                     </div>
                 </div>
 
-                {/* Documents Table */}
+                {/* Documents Table Grouped by Stage */}
                 <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
                     <div className="border-b border-slate-100 bg-slate-50 px-5 py-3.5">
                         <h3 className="text-sm font-bold text-slate-800">Daftar Berkas Dokumen (12)</h3>
@@ -284,7 +374,7 @@ export default function VerifikasiSekolah({ sekolah }: Props) {
                         <table className="min-w-full divide-y divide-slate-100 text-sm">
                             <thead className="bg-slate-50">
                                 <tr>
-                                    {['No', 'Nama Dokumen', 'Berkas Upload', 'Status', 'Catatan Revisi', 'Aksi'].map((h) => (
+                                    {['No', 'Tahap Program', 'Nama Dokumen', 'Berkas Upload', 'Status', 'Catatan Revisi', 'Aksi Verifikator'].map((h) => (
                                         <th key={h} className="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">
                                             {h}
                                         </th>
@@ -292,15 +382,20 @@ export default function VerifikasiSekolah({ sekolah }: Props) {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-100 bg-white">
-                                {Object.entries(docLabels).map(([key, label], idx) => {
-                                    const doc = sekolah.dokumens.find((d) => d.jenis_dokumen === key);
+                                {docDefinitions.map((item, idx) => {
+                                    const doc = sekolah.dokumens.find((d) => d.jenis_dokumen === item.key);
                                     const status = doc?.status ?? 'Belum Diunggah';
                                     const isDisetujui = status === 'Disetujui';
 
                                     return (
-                                        <tr key={key} className="hover:bg-slate-50 transition-colors">
+                                        <tr key={item.key} className="hover:bg-slate-50 transition-colors">
                                             <td className="px-5 py-3.5 text-xs text-slate-400">{idx + 1}</td>
-                                            <td className="px-5 py-3.5 font-medium text-slate-800 max-w-xs">{label}</td>
+                                            <td className="px-5 py-3.5 text-xs">
+                                                <span className="inline-block rounded bg-slate-100 px-2 py-0.5 font-medium text-slate-600">
+                                                    {item.stageName}
+                                                </span>
+                                            </td>
+                                            <td className="px-5 py-3.5 font-medium text-slate-800 max-w-xs">{item.label}</td>
                                             <td className="px-5 py-3.5">
                                                 {doc?.id && doc.file_path ? (
                                                     <a
@@ -335,13 +430,13 @@ export default function VerifikasiSekolah({ sekolah }: Props) {
                                                     ) : (
                                                         <div className="flex gap-1.5">
                                                             <button
-                                                                onClick={() => setConfirmApproveTarget({ type: 'dokumen', id: doc.id, title: label })}
+                                                                onClick={() => setConfirmApproveTarget({ type: 'dokumen', id: doc.id, title: item.label })}
                                                                 className="rounded-md bg-[#1e2d5a] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#162247] transition-colors"
                                                             >
                                                                 Setujui
                                                             </button>
                                                             <button
-                                                                onClick={() => { setRevisiTarget({ type: 'dokumen', id: doc.id, name: label }); setCatatanRevisi(''); }}
+                                                                onClick={() => { setRevisiTarget({ type: 'dokumen', id: doc.id, name: item.label }); setCatatanRevisi(''); }}
                                                                 className="rounded-md border border-red-200 bg-white px-3 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-50 transition-colors"
                                                             >
                                                                 Revisi
@@ -382,7 +477,7 @@ export default function VerifikasiSekolah({ sekolah }: Props) {
                                 }
                             </p>
                             <p className="text-xs text-slate-400 bg-slate-50 rounded-lg p-3 border border-slate-200">
-                                Pastikan transfer sudah dikonfirmasi sebelum mengubah status ini.
+                                Pastikan transfer telah diproses dan dikonfirmasi sebelum mengubah status ini.
                             </p>
                             <div className="flex justify-end gap-2 pt-1">
                                 <button

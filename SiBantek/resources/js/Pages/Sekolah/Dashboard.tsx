@@ -49,18 +49,18 @@ const statusIcon: Record<string, React.ReactNode> = {
 };
 
 const docItems = [
-    { key: 'pks', label: 'Perjanjian Kerja Sama (PKS)', pdfType: 'pks' },
-    { key: 'pakta_integritas', label: 'Pakta Integritas', pdfType: 'pakta_integritas' },
-    { key: 'sptjm', label: 'Surat Pernyataan (SPTJM)', pdfType: 'sptjm' },
-    { key: 'laporan_awal', label: 'Laporan Awal & Saldo', pdfType: null },
-    { key: 'rab', label: 'Rencana Anggaran Biaya (RAB)', pdfType: 'rab' },
-    { key: 'perbandingan_siplah', label: 'Perbandingan SIPLah', pdfType: null },
-    { key: 'invoice_siplah', label: 'Faktur Pembelian SIPLah', pdfType: null },
-    { key: 'bast', label: 'Berita Acara Serah Terima (BAST)', pdfType: 'bast' },
-    { key: 'foto_fisik_laptop', label: 'Foto Perangkat Laptop', pdfType: null },
-    { key: 'buku_inventaris', label: 'Buku Inventaris & Label', pdfType: null },
-    { key: 'dokumentasi_pemanfaatan', label: 'Dokumentasi Pemanfaatan', pdfType: null },
-    { key: 'lpj', label: 'Laporan LPJ', pdfType: null },
+    { key: 'pks', label: 'Perjanjian Kerja Sama (PKS)', stage: 1, stageName: '1. Persiapan & RAB', pdfType: 'pks' },
+    { key: 'pakta_integritas', label: 'Pakta Integritas', stage: 1, stageName: '1. Persiapan & RAB', pdfType: 'pakta_integritas' },
+    { key: 'sptjm', label: 'Surat Pernyataan (SPTJM)', stage: 1, stageName: '1. Persiapan & RAB', pdfType: 'sptjm' },
+    { key: 'rab', label: 'Rencana Anggaran Biaya (RAB)', stage: 1, stageName: '1. Persiapan & RAB', pdfType: 'rab' },
+    { key: 'laporan_awal', label: 'Laporan Awal & Saldo Bank', stage: 2, stageName: '2. Penyaluran Dana', pdfType: 'laporan_awal' },
+    { key: 'perbandingan_siplah', label: 'Perbandingan SIPLah', stage: 3, stageName: '3. Pengadaan SIPLah', pdfType: 'perbandingan_siplah' },
+    { key: 'invoice_siplah', label: 'Faktur Pembelian SIPLah', stage: 3, stageName: '3. Pengadaan SIPLah', pdfType: 'invoice_siplah' },
+    { key: 'bast', label: 'Berita Acara Serah Terima (BAST)', stage: 4, stageName: '4. Penerimaan & Pelabelan', pdfType: 'bast' },
+    { key: 'foto_fisik_laptop', label: 'Foto Perangkat Laptop', stage: 4, stageName: '4. Penerimaan & Pelabelan', pdfType: 'foto_fisik_laptop' },
+    { key: 'buku_inventaris', label: 'Buku Inventaris & Label', stage: 4, stageName: '4. Penerimaan & Pelabelan', pdfType: 'buku_inventaris' },
+    { key: 'dokumentasi_pemanfaatan', label: 'Dokumentasi Pemanfaatan', stage: 5, stageName: '5. LPJ & Pemanfaatan', pdfType: 'dokumentasi_pemanfaatan' },
+    { key: 'lpj', label: 'Laporan LPJ', stage: 5, stageName: '5. LPJ & Pemanfaatan', pdfType: 'lpj' },
 ];
 
 type TabKey = 'dokumen' | 'rab' | 'profil';
@@ -93,15 +93,31 @@ export default function SekolahDashboard({ sekolah }: Props) {
         formUpload.setData({ jenis_dokumen: docKey, file: null });
     };
 
+    const rabApproved = sekolah.rab?.status === 'Disetujui';
+    const danaDisalurkan = sekolah.status_dana === 'Dana Sudah Disalurkan / Ditransfer';
+
+    const currentStage = useMemo(() => {
+        if (!rabApproved) return 1;
+        if (!danaDisalurkan) return 2;
+        const siplahDone = sekolah.dokumens.some(d => d.jenis_dokumen === 'invoice_siplah' && d.status === 'Disetujui');
+        if (!siplahDone) return 3;
+        const bastDone = sekolah.dokumens.some(d => d.jenis_dokumen === 'bast' && d.status === 'Disetujui');
+        if (!bastDone) return 4;
+        return 5;
+    }, [rabApproved, danaDisalurkan, sekolah.dokumens]);
+
+    const [filterStage, setFilterStage] = useState<string>(String(currentStage));
+
     const filteredDocs = useMemo(() => {
         return docItems.filter((item) => {
             const doc = sekolah.dokumens.find((d) => d.jenis_dokumen === item.key);
             const status = doc?.status ?? 'Belum Diunggah';
             const matchesSearch = item.label.toLowerCase().includes(searchDocQuery.toLowerCase());
             const matchesStatus = filterDocStatus === 'semua' || status === filterDocStatus;
-            return matchesSearch && matchesStatus;
+            const matchesStage = filterStage === 'semua' || item.stage === parseInt(filterStage);
+            return matchesSearch && matchesStatus && matchesStage;
         });
-    }, [sekolah.dokumens, searchDocQuery, filterDocStatus]);
+    }, [sekolah.dokumens, searchDocQuery, filterDocStatus, filterStage]);
 
     const handleProfil = (e: React.FormEvent) => {
         e.preventDefault();
@@ -211,7 +227,19 @@ export default function SekolahDashboard({ sekolah }: Props) {
                                     Daftar 12 Berkas ({filteredDocs.length} ditampilkan)
                                 </span>
                                 <div className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
-                                    <div className="relative w-full sm:w-56">
+                                    <select
+                                        value={filterStage}
+                                        onChange={(e) => setFilterStage(e.target.value)}
+                                        className="w-full sm:w-auto rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs text-slate-900 focus:border-[#1e2d5a] focus:outline-none focus:ring-1 focus:ring-[#1e2d5a]"
+                                    >
+                                        <option value="semua">Semua Tahap (1-5)</option>
+                                        <option value="1">Tahap 1: Persiapan & RAB {currentStage === 1 ? '(Tahap Berjalan)' : ''}</option>
+                                        <option value="2">Tahap 2: Penyaluran Dana {currentStage === 2 ? '(Tahap Berjalan)' : ''}</option>
+                                        <option value="3">Tahap 3: Pengadaan SIPLah {currentStage === 3 ? '(Tahap Berjalan)' : ''}</option>
+                                        <option value="4">Tahap 4: Penerimaan & Aset {currentStage === 4 ? '(Tahap Berjalan)' : ''}</option>
+                                        <option value="5">Tahap 5: LPJ & Pemanfaatan {currentStage === 5 ? '(Tahap Berjalan)' : ''}</option>
+                                    </select>
+                                    <div className="relative w-full sm:w-48">
                                         <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                                         <input
                                             type="text"

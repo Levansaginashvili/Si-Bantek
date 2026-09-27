@@ -90,11 +90,69 @@ class VerifikatorController extends Controller
             'status_dana' => ['required', Rule::in(['Belum Disalurkan', 'Dana Sudah Disalurkan / Ditransfer'])],
         ]);
 
-        $sekolah = Sekolah::findOrFail($id);
+        $sekolah = Sekolah::with(['dokumens', 'rab'])->findOrFail($id);
+
+        if ($validated['status_dana'] === 'Dana Sudah Disalurkan / Ditransfer') {
+            // Syarat 1: RAB harus Disetujui
+            if (!$sekolah->rab || $sekolah->rab->status !== 'Disetujui') {
+                return back()->with('error', 'Dana belum dapat disalurkan karena RAB Laptop sekolah ini belum Disetujui oleh Verifikator!');
+            }
+
+            // Syarat 2: 3 Berkas Administrasi Awal (PKS, Pakta Integritas, SPTJM) harus Disetujui
+            $initialDocs = ['pks', 'pakta_integritas', 'sptjm'];
+            $approvedDocKeys = $sekolah->dokumens->where('status', 'Disetujui')->pluck('jenis_dokumen')->toArray();
+
+            foreach ($initialDocs as $docKey) {
+                if (!in_array($docKey, $approvedDocKeys)) {
+                    return back()->with('error', 'Dana belum dapat disalurkan karena 3 Berkas Administrasi Awal (PKS, Pakta Integritas, SPTJM) belum lengkap disetujui!');
+                }
+            }
+        }
+
         $sekolah->update([
             'status_dana' => $validated['status_dana'],
         ]);
 
         return redirect()->back()->with('success', 'Status penyaluran dana berhasil diperbarui.');
+    }
+
+    public function uploadDokumen(Request $request, int $id): RedirectResponse
+    {
+        $validated = $request->validate([
+            'jenis_dokumen' => ['required', 'string'],
+            'file' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'],
+        ]);
+
+        $sekolah = Sekolah::findOrFail($id);
+        $path = $request->file('file')->store("dokumen/{$sekolah->npsn}", 'public');
+
+        Dokumen::updateOrCreate(
+            [
+                'sekolah_id' => $sekolah->id,
+                'jenis_dokumen' => $validated['jenis_dokumen'],
+            ],
+            [
+                'file_path' => $path,
+                'status' => 'Menunggu Verifikasi',
+                'catatan_revisi' => null,
+            ]
+        );
+
+        $sekolah->updateStatusDokumen();
+
+        return redirect()->back()->with('success', 'Dokumen berhasil diunggah oleh Verifikator.');
+    }
+
+    public function uploadTemplate(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'jenis_dokumen' => ['required', 'string'],
+            'file' => ['required', 'file', 'mimes:pdf', 'max:10240'],
+        ]);
+
+        // Stores custom template PDF in public disk under templates/{jenis_dokumen}.pdf
+        $request->file('file')->storeAs('templates', "{$validated['jenis_dokumen']}.pdf", 'public');
+
+        return redirect()->back()->with('success', 'Format template PDF berhasil diperbarui untuk seluruh sekolah.');
     }
 }

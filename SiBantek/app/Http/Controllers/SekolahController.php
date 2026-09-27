@@ -106,14 +106,51 @@ class SekolahController extends Controller
         return redirect()->back()->with('success', 'Dokumen berhasil diunggah.');
     }
 
-    public function downloadPdf(string $type, PdfService $pdfService): HttpResponse
+    /**
+     * Unduh atau lihat format PDF dokumen resmi.
+     * Mengutamakan file template kustom yang diunggah oleh Verifikator di Dashboard (jika ada),
+     * atau kembali ke file PDF default pada folder SiBantek_doc.
+     */
+    public function downloadPdf(string $type): \Symfony\Component\HttpFoundation\Response
     {
-        $user = Auth::user();
-        $sekolah = Sekolah::with('rab')->findOrFail($user->sekolah_id);
+        $pdfMap = [
+            'pks' => 'PerjanjianKerjasama.pdf',
+            'pakta_integritas' => 'PaktaIntegritas.pdf',
+            'sptjm' => 'SPTJM.pdf',
+            'rab' => 'RAB.pdf',
+            'laporan_awal' => 'LaporanAwal.pdf',
+            'perbandingan_siplah' => 'PerbandinganProduk.pdf',
+            'invoice_siplah' => 'Spesifikasi.pdf',
+            'bast' => 'BAST.pdf',
+            'foto_fisik_laptop' => 'DokumentasiBarang.pdf',
+            'buku_inventaris' => 'IdentifikasiAlat.pdf',
+            'dokumentasi_pemanfaatan' => 'PengantarLaporan.pdf',
+            'lpj' => 'LaporanAkhir.pdf',
+        ];
 
-        $html = $pdfService->generateHtml($type, $sekolah, $sekolah->rab);
+        $filename = $pdfMap[$type] ?? "{$type}.pdf";
 
-        return response($html)->header('Content-Type', 'text/html');
+        // 1. Cek apakah ada template kustom yang diunggah oleh Verifikator untuk seluruh sekolah
+        if (Storage::disk('public')->exists("templates/{$type}.pdf")) {
+            $customPath = Storage::disk('public')->path("templates/{$type}.pdf");
+            return response()->file($customPath, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="' . $filename . '"',
+            ]);
+        }
+
+        // 2. Jika belum ada template kustom, gunakan file PDF default dari folder SiBantek_doc
+        if (isset($pdfMap[$type])) {
+            $defaultPath = base_path('SiBantek_doc/' . $pdfMap[$type]);
+            if (file_exists($defaultPath)) {
+                return response()->file($defaultPath, [
+                    'Content-Type' => 'application/pdf',
+                    'Content-Disposition' => 'inline; filename="' . $pdfMap[$type] . '"',
+                ]);
+            }
+        }
+
+        abort(404, 'Format template PDF tidak ditemukan.');
     }
 
     public function downloadLabels(LabelStickerService $labelService): HttpResponse

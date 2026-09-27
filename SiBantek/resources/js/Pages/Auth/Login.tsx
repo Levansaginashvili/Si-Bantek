@@ -40,7 +40,7 @@ export default function Login() {
                     <form className="space-y-5" onSubmit={handleSubmit}>
                         <div>
                             <label className="block text-sm font-medium text-slate-700">
-                                Identitas Login
+                                Login
                             </label>
                             <input
                                 type="text"

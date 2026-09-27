@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/dokumen/file/{id}', [SekolahController::class, 'viewDokumenFile'])->name('dokumen.file');
+    Route::get('/dokumen/download/{type}', [SekolahController::class, 'downloadPdf'])->name('dokumen.download');
 
     Route::middleware('role:admin')->prefix('admin')->group(function () {
         Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
@@ -40,6 +41,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/sekolah/{id}/dokumen', [VerifikatorController::class, 'verifyDokumen'])->name('verifikator.dokumen.verify');
         Route::post('/sekolah/{id}/rab', [VerifikatorController::class, 'verifyRab'])->name('verifikator.rab.verify');
         Route::post('/sekolah/{id}/status-dana', [VerifikatorController::class, 'updateStatusDana'])->name('verifikator.status-dana.update');
+        Route::post('/sekolah/{id}/dokumen/upload', [VerifikatorController::class, 'uploadDokumen'])->name('verifikator.dokumen.upload');
+        Route::post('/template/upload', [VerifikatorController::class, 'uploadTemplate'])->name('verifikator.template.upload');
     });
 
     Route::middleware('role:sekolah')->prefix('sekolah')->group(function () {

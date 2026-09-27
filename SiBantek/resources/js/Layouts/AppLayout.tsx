@@ -113,7 +113,7 @@ export default function AppLayout({ children, title }: AppLayoutProps) {
                     <div className="min-w-0 flex-1">
                         <p className="truncate text-xs font-semibold text-white">{user?.name}</p>
                         <p className="text-[10px] uppercase tracking-wider text-white/50">
-                            {user?.role === 'sekolah' ? 'Operator Sekolah' : user?.role === 'verifikator' ? 'Verifikator' : 'Admin'}
+                            {user?.role === 'sekolah' ? 'Sekolah' : user?.role === 'verifikator' ? 'Verifikator' : 'Admin'}
                         </p>
                     </div>
                 </Link>
