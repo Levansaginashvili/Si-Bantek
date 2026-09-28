@@ -29,14 +29,17 @@ const docDefinitions: DocDefinition[] = [
     { key: 'pakta_integritas', label: 'Pakta Integritas', stageName: '1. Persiapan & RAB' },
     { key: 'sptjm', label: 'Surat Pernyataan (SPTJM)', stageName: '1. Persiapan & RAB' },
     { key: 'rab', label: 'Rencana Anggaran Biaya (RAB)', stageName: '1. Persiapan & RAB' },
-    { key: 'laporan_awal', label: 'Laporan Awal & Saldo Bank', stageName: '2. Pencairan Dana' },
+    { key: 'laporan_awal', label: 'Laporan Awal', stageName: '2. Penyaluran Dana' },
     { key: 'perbandingan_siplah', label: 'Perbandingan Produk SIPLah', stageName: '3. Pengadaan SIPLah' },
-    { key: 'invoice_siplah', label: 'Faktur Pembelian SIPLah', stageName: '3. Pengadaan SIPLah' },
-    { key: 'bast', label: 'Berita Acara Serah Terima (BAST)', stageName: '4. Penerimaan & Pelabelan' },
-    { key: 'foto_fisik_laptop', label: 'Foto Perangkat Laptop (6 Sudut)', stageName: '4. Penerimaan & Pelabelan' },
-    { key: 'buku_inventaris', label: 'Buku Inventaris & Label Aset', stageName: '4. Penerimaan & Pelabelan' },
-    { key: 'dokumentasi_pemanfaatan', label: 'Foto Pemanfaatan Pembelajaran', stageName: '5. LPJ & Pemanfaatan' },
-    { key: 'lpj', label: 'Laporan Akhir LPJ', stageName: '5. LPJ & Pemanfaatan' },
+    { key: 'surat_pemesanan_siplah', label: 'Surat Pemesanan SIPLah', stageName: '3. Pengadaan SIPLah' },
+    { key: 'invoice_siplah', label: 'Invoice / Faktur SIPLah', stageName: '3. Pengadaan SIPLah' },
+    { key: 'bast', label: 'Berita Acara Serah Terima (BAST)', stageName: '4. Penerimaan Barang' },
+    { key: 'buku_inventaris', label: 'Buku Inventaris', stageName: '5. Inventarisasi' },
+    { key: 'dokumentasi_pemanfaatan', label: 'Dokumentasi Pemanfaatan', stageName: '6. Pemanfaatan' },
+    { key: 'laporan_akhir', label: 'Laporan Akhir', stageName: '7. Pelaporan & LPJ' },
+    { key: 'pengantar_lpj', label: 'Pengantar Laporan Pertanggungjawaban', stageName: '7. Pelaporan & LPJ' },
+    { key: 'lpj', label: 'Laporan Pertanggungjawaban Penggunaan Dana', stageName: '7. Pelaporan & LPJ' },
+    { key: 'bukti_setor_sisa_dana', label: 'Bukti Setor Sisa Dana (jika ada)', stageName: '7. Pelaporan & LPJ' },
 ];
 
 type MainTab = 'sekolah' | 'template';
@@ -182,7 +185,7 @@ export default function VerifikatorDashboard({ sekolahs }: Props) {
                                         className="w-full sm:w-auto rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs text-slate-900 focus:border-[#1e2d5a] focus:outline-none"
                                     >
                                         <option value="semua">Semua Status Dokumen</option>
-                                        <option value="lengkap">Lengkap (12/12)</option>
+                                        <option value="lengkap">Lengkap (15/15)</option>
                                         <option value="belum">Belum Lengkap</option>
                                     </select>
                                 </div>
@@ -232,10 +235,10 @@ export default function VerifikatorDashboard({ sekolahs }: Props) {
                                                             <div className="h-1.5 w-24 overflow-hidden rounded-full bg-slate-200">
                                                                 <div
                                                                     className="h-full rounded-full bg-[#1e2d5a]"
-                                                                    style={{ width: `${(s.dokumen_disetujui / 12) * 100}%` }}
+                                                                    style={{ width: `${(s.dokumen_disetujui / 15) * 100}%` }}
                                                                 />
                                                             </div>
-                                                            <span className="text-xs font-semibold text-slate-600">{s.dokumen_disetujui}/12</span>
+                                                            <span className="text-xs font-semibold text-slate-600">{s.dokumen_disetujui}/15</span>
                                                         </div>
                                                         {s.dokumen_menunggu > 0 && (
                                                             <div className="mt-0.5 flex items-center gap-1 text-[11px] text-amber-600">
@@ -268,7 +271,7 @@ export default function VerifikatorDashboard({ sekolahs }: Props) {
                             <div className="border-b border-slate-100 px-5 py-3 flex items-center justify-between bg-slate-50">
                                 <div>
                                     <h3 className="text-sm font-semibold text-slate-800">
-                                        Daftar 12 Berkas Dokumen
+                                        Daftar 15 Berkas Dokumen
                                     </h3>
                                     <p className="text-xs text-slate-500 mt-0.5">
                                         Jika Verifikator mengunggah berkas PDF baru di sini, seluruh akun sekolah akan otomatis mengunduh berkas terbaru ini.

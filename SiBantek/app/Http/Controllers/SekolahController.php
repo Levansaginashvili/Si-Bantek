@@ -7,7 +7,6 @@ use App\Models\InventarisLaptop;
 use App\Models\Rab;
 use App\Models\Sekolah;
 use App\Services\LabelStickerService;
-use App\Services\PdfService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
@@ -113,44 +112,34 @@ class SekolahController extends Controller
      */
     public function downloadPdf(string $type): \Symfony\Component\HttpFoundation\Response
     {
-        $pdfMap = [
-            'pks' => 'PerjanjianKerjasama.pdf',
-            'pakta_integritas' => 'PaktaIntegritas.pdf',
-            'sptjm' => 'SPTJM.pdf',
-            'rab' => 'RAB.pdf',
-            'laporan_awal' => 'LaporanAwal.pdf',
-            'perbandingan_siplah' => 'PerbandinganProduk.pdf',
-            'invoice_siplah' => 'Spesifikasi.pdf',
-            'bast' => 'BAST.pdf',
-            'foto_fisik_laptop' => 'DokumentasiBarang.pdf',
-            'buku_inventaris' => 'IdentifikasiAlat.pdf',
-            'dokumentasi_pemanfaatan' => 'PengantarLaporan.pdf',
-            'lpj' => 'LaporanAkhir.pdf',
+        // Map document type keys to static PDF files in SiBantek_doc/
+        $fileMap = [
+            'pks'                => 'PerjanjianKerjasama.pdf',   // Lampiran III
+            'pakta_integritas'   => 'PaktaIntegritas.pdf',       // Lampiran V
+            'sptjm'              => 'SPTJM.pdf',                 // Lampiran VI
+            'rab'                => 'RAB.pdf',                    // Lampiran IV
+            'laporan_awal'       => 'LaporanAwal.pdf',           // Lampiran X
+            'perbandingan_siplah'=> 'PerbandinganProduk.pdf',    // Lampiran VIII
+            'bast'               => 'BAST.pdf',                  // Lampiran VII
+            'laporan_akhir'      => 'LaporanAkhir.pdf',          // Lampiran XI
+            'pengantar_lpj'      => 'PengantarLaporan.pdf',      // Lampiran XII
+            'lpj'                => 'LaporanPenggunaanDana.pdf', // Lampiran XIII
         ];
 
-        $filename = $pdfMap[$type] ?? "{$type}.pdf";
-
-        // 1. Cek apakah ada template kustom yang diunggah oleh Verifikator untuk seluruh sekolah
-        if (Storage::disk('public')->exists("templates/{$type}.pdf")) {
-            $customPath = Storage::disk('public')->path("templates/{$type}.pdf");
-            return response()->file($customPath, [
-                'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'inline; filename="' . $filename . '"',
-            ]);
+        if (!isset($fileMap[$type])) {
+            abort(404, 'Format dokumen tidak ditemukan.');
         }
 
-        // 2. Jika belum ada template kustom, gunakan file PDF default dari folder SiBantek_doc
-        if (isset($pdfMap[$type])) {
-            $defaultPath = base_path('SiBantek_doc/' . $pdfMap[$type]);
-            if (file_exists($defaultPath)) {
-                return response()->file($defaultPath, [
-                    'Content-Type' => 'application/pdf',
-                    'Content-Disposition' => 'inline; filename="' . $pdfMap[$type] . '"',
-                ]);
-            }
+        $filePath = base_path('SiBantek_doc/' . $fileMap[$type]);
+
+        if (!file_exists($filePath)) {
+            abort(404, 'File dokumen tidak ditemukan.');
         }
 
-        abort(404, 'Format template PDF tidak ditemukan.');
+        return response()->file($filePath, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="' . $fileMap[$type] . '"',
+        ]);
     }
 
     public function downloadLabels(LabelStickerService $labelService): HttpResponse

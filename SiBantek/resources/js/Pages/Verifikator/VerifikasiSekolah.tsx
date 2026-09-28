@@ -57,18 +57,28 @@ interface DocDefinition {
 }
 
 const docDefinitions: DocDefinition[] = [
+    // Tahap 1 — Persiapan & RAB
     { key: 'pks', label: 'Perjanjian Kerja Sama (PKS)', stage: 1, stageName: '1. Persiapan & RAB' },
     { key: 'pakta_integritas', label: 'Pakta Integritas', stage: 1, stageName: '1. Persiapan & RAB' },
     { key: 'sptjm', label: 'Surat Pernyataan (SPTJM)', stage: 1, stageName: '1. Persiapan & RAB' },
     { key: 'rab', label: 'Rencana Anggaran Biaya (RAB)', stage: 1, stageName: '1. Persiapan & RAB' },
-    { key: 'laporan_awal', label: 'Laporan Awal & Saldo Bank', stage: 2, stageName: '2. Pencairan Dana' },
+    // Tahap 2 — Penyaluran Dana
+    { key: 'laporan_awal', label: 'Laporan Awal', stage: 2, stageName: '2. Penyaluran Dana' },
+    // Tahap 3 — Pengadaan SIPLah
     { key: 'perbandingan_siplah', label: 'Perbandingan Produk SIPLah', stage: 3, stageName: '3. Pengadaan SIPLah' },
-    { key: 'invoice_siplah', label: 'Faktur Pembelian SIPLah', stage: 3, stageName: '3. Pengadaan SIPLah' },
-    { key: 'bast', label: 'Berita Acara Serah Terima (BAST)', stage: 4, stageName: '4. Penerimaan & Pelabelan' },
-    { key: 'foto_fisik_laptop', label: 'Foto Perangkat Laptop (6 Sudut)', stage: 4, stageName: '4. Penerimaan & Pelabelan' },
-    { key: 'buku_inventaris', label: 'Buku Inventaris & Label Aset', stage: 4, stageName: '4. Penerimaan & Pelabelan' },
-    { key: 'dokumentasi_pemanfaatan', label: 'Foto Pemanfaatan Pembelajaran', stage: 5, stageName: '5. LPJ & Pemanfaatan' },
-    { key: 'lpj', label: 'Laporan Akhir LPJ', stage: 5, stageName: '5. LPJ & Pemanfaatan' },
+    { key: 'surat_pemesanan_siplah', label: 'Surat Pemesanan SIPLah', stage: 3, stageName: '3. Pengadaan SIPLah' },
+    { key: 'invoice_siplah', label: 'Invoice / Faktur SIPLah', stage: 3, stageName: '3. Pengadaan SIPLah' },
+    // Tahap 4 — Penerimaan Barang
+    { key: 'bast', label: 'Berita Acara Serah Terima (BAST)', stage: 4, stageName: '4. Penerimaan Barang' },
+    // Tahap 5 — Inventarisasi
+    { key: 'buku_inventaris', label: 'Buku Inventaris', stage: 5, stageName: '5. Inventarisasi' },
+    // Tahap 6 — Pemanfaatan
+    { key: 'dokumentasi_pemanfaatan', label: 'Dokumentasi Pemanfaatan', stage: 6, stageName: '6. Pemanfaatan' },
+    // Tahap 7 — Pelaporan & LPJ
+    { key: 'laporan_akhir', label: 'Laporan Akhir', stage: 7, stageName: '7. Pelaporan & LPJ' },
+    { key: 'pengantar_lpj', label: 'Pengantar Laporan Pertanggungjawaban', stage: 7, stageName: '7. Pelaporan & LPJ' },
+    { key: 'lpj', label: 'Laporan Pertanggungjawaban Penggunaan Dana', stage: 7, stageName: '7. Pelaporan & LPJ' },
+    { key: 'bukti_setor_sisa_dana', label: 'Bukti Setor Sisa Dana (jika ada)', stage: 7, stageName: '7. Pelaporan & LPJ' },
 ];
 
 const PAGU = 69364000;
@@ -139,7 +149,11 @@ export default function VerifikasiSekolah({ sekolah }: Props) {
         if (!siplahDone) return 3;
         const bastDone = sekolah.dokumens.some(d => d.jenis_dokumen === 'bast' && d.status === 'Disetujui');
         if (!bastDone) return 4;
-        return 5;
+        const inventarisDone = sekolah.dokumens.some(d => d.jenis_dokumen === 'buku_inventaris' && d.status === 'Disetujui');
+        if (!inventarisDone) return 5;
+        const pemanfaatanDone = sekolah.dokumens.some(d => d.jenis_dokumen === 'dokumentasi_pemanfaatan' && d.status === 'Disetujui');
+        if (!pemanfaatanDone) return 6;
+        return 7;
     }, [rabApproved, sudahDisalurkan, sekolah.dokumens]);
 
     const initialDocs = ['pks', 'pakta_integritas', 'sptjm'];
@@ -152,8 +166,10 @@ export default function VerifikasiSekolah({ sekolah }: Props) {
         { num: 1, title: 'Persiapan & RAB', desc: 'Verifikasi Berkas Awal & RAB' },
         { num: 2, title: 'Penyaluran Dana', desc: 'Transfer Dana Bantuan' },
         { num: 3, title: 'Pengadaan SIPLah', desc: 'Order & Pembelian' },
-        { num: 4, title: 'Penerimaan & Aset', desc: 'BAST & Pelabelan QR' },
-        { num: 5, title: 'Pemanfaatan & LPJ', desc: 'Laporan Pertanggungjawaban' },
+        { num: 4, title: 'Penerimaan Barang', desc: 'BAST Penerimaan' },
+        { num: 5, title: 'Inventarisasi', desc: 'Pencatatan & Pelabelan Aset' },
+        { num: 6, title: 'Pemanfaatan', desc: 'Penggunaan Perangkat' },
+        { num: 7, title: 'Pelaporan & LPJ', desc: 'Laporan Pertanggungjawaban' },
     ];
 
     return (

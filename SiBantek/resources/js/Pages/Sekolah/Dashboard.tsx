@@ -49,18 +49,28 @@ const statusIcon: Record<string, React.ReactNode> = {
 };
 
 const docItems = [
+    // Tahap 1 — Persiapan & RAB (Lampiran III, V, VI, IV)
     { key: 'pks', label: 'Perjanjian Kerja Sama (PKS)', stage: 1, stageName: '1. Persiapan & RAB', pdfType: 'pks' },
     { key: 'pakta_integritas', label: 'Pakta Integritas', stage: 1, stageName: '1. Persiapan & RAB', pdfType: 'pakta_integritas' },
     { key: 'sptjm', label: 'Surat Pernyataan (SPTJM)', stage: 1, stageName: '1. Persiapan & RAB', pdfType: 'sptjm' },
     { key: 'rab', label: 'Rencana Anggaran Biaya (RAB)', stage: 1, stageName: '1. Persiapan & RAB', pdfType: 'rab' },
-    { key: 'laporan_awal', label: 'Laporan Awal & Saldo Bank', stage: 2, stageName: '2. Penyaluran Dana', pdfType: 'laporan_awal' },
-    { key: 'perbandingan_siplah', label: 'Perbandingan SIPLah', stage: 3, stageName: '3. Pengadaan SIPLah', pdfType: 'perbandingan_siplah' },
-    { key: 'invoice_siplah', label: 'Faktur Pembelian SIPLah', stage: 3, stageName: '3. Pengadaan SIPLah', pdfType: 'invoice_siplah' },
-    { key: 'bast', label: 'Berita Acara Serah Terima (BAST)', stage: 4, stageName: '4. Penerimaan & Pelabelan', pdfType: 'bast' },
-    { key: 'foto_fisik_laptop', label: 'Foto Perangkat Laptop', stage: 4, stageName: '4. Penerimaan & Pelabelan', pdfType: 'foto_fisik_laptop' },
-    { key: 'buku_inventaris', label: 'Buku Inventaris & Label', stage: 4, stageName: '4. Penerimaan & Pelabelan', pdfType: 'buku_inventaris' },
-    { key: 'dokumentasi_pemanfaatan', label: 'Dokumentasi Pemanfaatan', stage: 5, stageName: '5. LPJ & Pemanfaatan', pdfType: 'dokumentasi_pemanfaatan' },
-    { key: 'lpj', label: 'Laporan LPJ', stage: 5, stageName: '5. LPJ & Pemanfaatan', pdfType: 'lpj' },
+    // Tahap 2 — Penyaluran Dana (Lampiran X)
+    { key: 'laporan_awal', label: 'Laporan Awal', stage: 2, stageName: '2. Penyaluran Dana', pdfType: 'laporan_awal' },
+    // Tahap 3 — Pengadaan SIPLah (Lampiran VIII + upload)
+    { key: 'perbandingan_siplah', label: 'Perbandingan Produk SIPLah', stage: 3, stageName: '3. Pengadaan SIPLah', pdfType: 'perbandingan_siplah' },
+    { key: 'surat_pemesanan_siplah', label: 'Surat Pemesanan SIPLah', stage: 3, stageName: '3. Pengadaan SIPLah', pdfType: null },
+    { key: 'invoice_siplah', label: 'Invoice / Faktur SIPLah', stage: 3, stageName: '3. Pengadaan SIPLah', pdfType: null },
+    // Tahap 4 — Penerimaan Barang (Lampiran VII)
+    { key: 'bast', label: 'Berita Acara Serah Terima (BAST)', stage: 4, stageName: '4. Penerimaan Barang', pdfType: 'bast' },
+    // Tahap 5 — Inventarisasi
+    { key: 'buku_inventaris', label: 'Buku Inventaris', stage: 5, stageName: '5. Inventarisasi', pdfType: null },
+    // Tahap 6 — Pemanfaatan
+    { key: 'dokumentasi_pemanfaatan', label: 'Dokumentasi Pemanfaatan', stage: 6, stageName: '6. Pemanfaatan', pdfType: null },
+    // Tahap 7 — Pelaporan & LPJ (Lampiran XI, XII, XIII + upload)
+    { key: 'laporan_akhir', label: 'Laporan Akhir', stage: 7, stageName: '7. Pelaporan & LPJ', pdfType: 'laporan_akhir' },
+    { key: 'pengantar_lpj', label: 'Pengantar Laporan Pertanggungjawaban', stage: 7, stageName: '7. Pelaporan & LPJ', pdfType: 'pengantar_lpj' },
+    { key: 'lpj', label: 'Laporan Pertanggungjawaban Penggunaan Dana', stage: 7, stageName: '7. Pelaporan & LPJ', pdfType: 'lpj' },
+    { key: 'bukti_setor_sisa_dana', label: 'Bukti Setor Sisa Dana (jika ada)', stage: 7, stageName: '7. Pelaporan & LPJ', pdfType: null },
 ];
 
 type TabKey = 'dokumen' | 'rab' | 'profil';
@@ -103,7 +113,11 @@ export default function SekolahDashboard({ sekolah }: Props) {
         if (!siplahDone) return 3;
         const bastDone = sekolah.dokumens.some(d => d.jenis_dokumen === 'bast' && d.status === 'Disetujui');
         if (!bastDone) return 4;
-        return 5;
+        const inventarisDone = sekolah.dokumens.some(d => d.jenis_dokumen === 'buku_inventaris' && d.status === 'Disetujui');
+        if (!inventarisDone) return 5;
+        const pemanfaatanDone = sekolah.dokumens.some(d => d.jenis_dokumen === 'dokumentasi_pemanfaatan' && d.status === 'Disetujui');
+        if (!pemanfaatanDone) return 6;
+        return 7;
     }, [rabApproved, danaDisalurkan, sekolah.dokumens]);
 
     const [filterStage, setFilterStage] = useState<string>(String(currentStage));
@@ -177,7 +191,7 @@ export default function SekolahDashboard({ sekolah }: Props) {
                             </div>
                             <div>
                                 <p className="text-xs text-slate-400 uppercase tracking-wide">Kelengkapan Berkas</p>
-                                <p className="mt-0.5 font-semibold text-slate-700">{docApproved} / 12 dokumen disetujui</p>
+                                <p className="mt-0.5 font-semibold text-slate-700">{docApproved} / 15 dokumen disetujui</p>
                             </div>
                         </div>
                     </div>
@@ -224,7 +238,7 @@ export default function SekolahDashboard({ sekolah }: Props) {
                             {/* Search & Filter bar */}
                             <div className="border-b border-slate-100 px-5 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-slate-50">
                                 <span className="text-xs font-semibold text-slate-600">
-                                    Daftar 12 Berkas ({filteredDocs.length} ditampilkan)
+                                    Daftar 15 Berkas ({filteredDocs.length} ditampilkan)
                                 </span>
                                 <div className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
                                     <select
@@ -232,12 +246,14 @@ export default function SekolahDashboard({ sekolah }: Props) {
                                         onChange={(e) => setFilterStage(e.target.value)}
                                         className="w-full sm:w-auto rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs text-slate-900 focus:border-[#1e2d5a] focus:outline-none focus:ring-1 focus:ring-[#1e2d5a]"
                                     >
-                                        <option value="semua">Semua Tahap (1-5)</option>
+                                        <option value="semua">Semua Tahap (1-7)</option>
                                         <option value="1">Tahap 1: Persiapan & RAB {currentStage === 1 ? '(Tahap Berjalan)' : ''}</option>
                                         <option value="2">Tahap 2: Penyaluran Dana {currentStage === 2 ? '(Tahap Berjalan)' : ''}</option>
                                         <option value="3">Tahap 3: Pengadaan SIPLah {currentStage === 3 ? '(Tahap Berjalan)' : ''}</option>
-                                        <option value="4">Tahap 4: Penerimaan & Aset {currentStage === 4 ? '(Tahap Berjalan)' : ''}</option>
-                                        <option value="5">Tahap 5: LPJ & Pemanfaatan {currentStage === 5 ? '(Tahap Berjalan)' : ''}</option>
+                                        <option value="4">Tahap 4: Penerimaan Barang {currentStage === 4 ? '(Tahap Berjalan)' : ''}</option>
+                                        <option value="5">Tahap 5: Inventarisasi {currentStage === 5 ? '(Tahap Berjalan)' : ''}</option>
+                                        <option value="6">Tahap 6: Pemanfaatan {currentStage === 6 ? '(Tahap Berjalan)' : ''}</option>
+                                        <option value="7">Tahap 7: Pelaporan & LPJ {currentStage === 7 ? '(Tahap Berjalan)' : ''}</option>
                                     </select>
                                     <div className="relative w-full sm:w-48">
                                         <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />

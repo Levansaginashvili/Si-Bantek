@@ -47,19 +47,24 @@ class Sekolah extends Model
 
     public function updateStatusDokumen(): void
     {
+        // Tabel 5.1 Panlak — Dokumen Pendukung Laporan
+        // No. 11 (Bukti Setor Sisa Dana) bersifat opsional
         $requiredTypes = [
             'pks',
             'pakta_integritas',
             'sptjm',
-            'laporan_awal',
             'rab',
+            'laporan_awal',
             'perbandingan_siplah',
+            'surat_pemesanan_siplah',
             'invoice_siplah',
             'bast',
-            'foto_fisik_laptop',
             'buku_inventaris',
             'dokumentasi_pemanfaatan',
+            'laporan_akhir',
+            'pengantar_lpj',
             'lpj',
+            // 'bukti_setor_sisa_dana' — opsional, tidak wajib
         ];
 
         $approvedCount = $this->dokumens()
