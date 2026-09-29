@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sekolah;
-use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +24,7 @@ class ProfileController extends Controller
                 'name' => $user->name,
                 'username' => $user->username,
                 'nip' => $user->nip,
+                'jabatan' => $user->jabatan,
                 'npsn' => $user->npsn,
                 'email' => $user->email,
                 'role' => $user->role,
@@ -46,7 +46,7 @@ class ProfileController extends Controller
 
             $user->name = $validated['name'];
             $user->username = $validated['username'];
-            if (!empty($validated['password'])) {
+            if (! empty($validated['password'])) {
                 $user->password = Hash::make($validated['password']);
             }
             $user->save();
@@ -54,12 +54,14 @@ class ProfileController extends Controller
             $validated = $request->validate([
                 'name' => ['required', 'string', 'max:255'],
                 'nip' => ['required', 'string', 'max:50', Rule::unique('users')->ignore($user->id)],
+                'jabatan' => ['nullable', 'string', 'max:255'],
                 'password' => ['nullable', 'string', 'min:8'],
             ]);
 
             $user->name = $validated['name'];
             $user->nip = $validated['nip'];
-            if (!empty($validated['password'])) {
+            $user->jabatan = $validated['jabatan'] ?? null;
+            if (! empty($validated['password'])) {
                 $user->password = Hash::make($validated['password']);
             }
             $user->save();
@@ -70,16 +72,25 @@ class ProfileController extends Controller
                 'provinsi' => ['required', 'string', 'max:255'],
                 'kabupaten' => ['required', 'string', 'max:255'],
                 'alamat' => ['required', 'string', 'max:500'],
+                'rt' => ['nullable', 'string', 'max:10'],
+                'rw' => ['nullable', 'string', 'max:10'],
+                'nomor_bangunan' => ['nullable', 'string', 'max:20'],
+                'desa_kelurahan' => ['nullable', 'string', 'max:100'],
+                'kecamatan' => ['nullable', 'string', 'max:100'],
+                'kode_pos' => ['nullable', 'string', 'max:10'],
                 'nama_kepsek' => ['required', 'string', 'max:255'],
                 'nip_kepsek' => ['required', 'string', 'max:50'],
                 'nama_bendahara' => ['nullable', 'string', 'max:255'],
                 'nip_bendahara' => ['nullable', 'string', 'max:50'],
+                'no_telepon' => ['nullable', 'string', 'max:20'],
+                'email_sekolah' => ['nullable', 'email', 'max:255'],
+                'nama_ketua_komite' => ['nullable', 'string', 'max:255'],
                 'password' => ['nullable', 'string', 'min:8'],
             ]);
 
             $user->name = $validated['nama_sekolah'];
             $user->npsn = $validated['npsn'];
-            if (!empty($validated['password'])) {
+            if (! empty($validated['password'])) {
                 $user->password = Hash::make($validated['password']);
             }
             $user->save();
@@ -92,10 +103,19 @@ class ProfileController extends Controller
                     'provinsi' => $validated['provinsi'],
                     'kabupaten' => $validated['kabupaten'],
                     'alamat' => $validated['alamat'],
+                    'rt' => $validated['rt'] ?? null,
+                    'rw' => $validated['rw'] ?? null,
+                    'nomor_bangunan' => $validated['nomor_bangunan'] ?? null,
+                    'desa_kelurahan' => $validated['desa_kelurahan'] ?? null,
+                    'kecamatan' => $validated['kecamatan'] ?? null,
+                    'kode_pos' => $validated['kode_pos'] ?? null,
                     'nama_kepsek' => $validated['nama_kepsek'],
                     'nip_kepsek' => $validated['nip_kepsek'],
                     'nama_bendahara' => $validated['nama_bendahara'] ?? null,
                     'nip_bendahara' => $validated['nip_bendahara'] ?? null,
+                    'no_telepon' => $validated['no_telepon'] ?? null,
+                    'email_sekolah' => $validated['email_sekolah'] ?? null,
+                    'nama_ketua_komite' => $validated['nama_ketua_komite'] ?? null,
                 ]);
             }
         }

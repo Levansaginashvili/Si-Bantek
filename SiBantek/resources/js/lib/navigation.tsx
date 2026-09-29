@@ -187,7 +187,7 @@ export const navigationByRole: Record<Role, NavigationGroup[]> = {
             label: 'AKUN',
             items: [
                 {
-                    label: 'Profil',
+                    label: 'Profile',
                     href: '/verifikator/profil',
                     icon: UserCog,
                 },
@@ -207,10 +207,10 @@ export const navigationByRole: Record<Role, NavigationGroup[]> = {
             ],
         },
         {
-            label: 'PROFIL SEKOLAH',
+            label: 'PROFILE SEKOLAH',
             items: [
                 {
-                    label: 'Profil',
+                    label: 'Profile',
                     href: '/sekolah/profil',
                     icon: Building2,
                 },

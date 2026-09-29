@@ -16,6 +16,7 @@ class AuthController extends Controller
     {
         if (Auth::check()) {
             $role = Auth::user()->role;
+
             return redirect("/{$role}");
         }
 
@@ -40,7 +41,8 @@ class AuthController extends Controller
 
         if ($user && Hash::check($validated['password'], $user->password)) {
             if ($user->status === 'nonaktif') {
-                $reason = $user->catatan_nonaktif ? " Catatan: {$user->catatan_nonaktif}" : "";
+                $reason = $user->catatan_nonaktif ? " Catatan: {$user->catatan_nonaktif}" : '';
+
                 return back()->withErrors([
                     'identity' => "Akun ini telah dinonaktifkan oleh Administrator.{$reason}",
                 ])->onlyInput('identity');

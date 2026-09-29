@@ -17,7 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->redirectTo(
             guests: '/login',
             users: function () {
-                return Auth::check() ? '/' . Auth::user()->role : '/login';
+                return Auth::check() ? '/'.Auth::user()->role : '/login';
             }
         );
         $middleware->web(append: [
@@ -29,7 +29,6 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
-            fn (Request $request) =>
-                $request->is('api/*') || $request->expectsJson(),
+            fn (Request $request) => $request->is('api/*') || $request->expectsJson(),
         );
     })->create();

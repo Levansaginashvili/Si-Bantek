@@ -9,10 +9,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            if (!Schema::hasColumn('users', 'status')) {
+            if (! Schema::hasColumn('users', 'status')) {
                 $table->enum('status', ['aktif', 'nonaktif'])->default('aktif')->after('sekolah_id');
             }
-            if (!Schema::hasColumn('users', 'catatan_nonaktif')) {
+            if (! Schema::hasColumn('users', 'catatan_nonaktif')) {
                 $table->text('catatan_nonaktif')->nullable()->after('status');
             }
         });

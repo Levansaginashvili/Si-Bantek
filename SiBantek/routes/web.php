@@ -9,8 +9,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     if (Auth::check()) {
-        return redirect('/' . Auth::user()->role);
+        return redirect('/'.Auth::user()->role);
     }
+
     return redirect('/login');
 });
 
@@ -32,7 +33,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
         Route::post('/users', [AdminController::class, 'storeUser'])->name('admin.users.store');
         Route::post('/users/{id}', [AdminController::class, 'updateUser'])->name('admin.users.update');
-        Route::post('/users/{id}/status', [AdminController::class, 'toggleStatusUser'])->name('admin.users.status');
+        Route::get('/users/export-csv', [AdminController::class, 'exportAccountsCsv'])->name('admin.users.export.csv');
+        Route::get('/users/export-excel', [AdminController::class, 'exportAccountsExcel'])->name('admin.users.export.excel');
+        Route::delete('/users/{id}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy');
     });
 
     Route::middleware('role:verifikator')->prefix('verifikator')->group(function () {
@@ -42,7 +45,6 @@ Route::middleware('auth')->group(function () {
         Route::post('/sekolah/{id}/rab', [VerifikatorController::class, 'verifyRab'])->name('verifikator.rab.verify');
         Route::post('/sekolah/{id}/status-dana', [VerifikatorController::class, 'updateStatusDana'])->name('verifikator.status-dana.update');
         Route::post('/sekolah/{id}/dokumen/upload', [VerifikatorController::class, 'uploadDokumen'])->name('verifikator.dokumen.upload');
-        Route::post('/template/upload', [VerifikatorController::class, 'uploadTemplate'])->name('verifikator.template.upload');
     });
 
     Route::middleware('role:sekolah')->prefix('sekolah')->group(function () {
@@ -50,6 +52,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/profil', [SekolahController::class, 'updateProfil'])->name('sekolah.profil.update');
         Route::post('/rab', [SekolahController::class, 'updateRab'])->name('sekolah.rab.update');
         Route::post('/dokumen/upload', [SekolahController::class, 'uploadDokumen'])->name('sekolah.dokumen.upload');
+        Route::delete('/dokumen/{id}', [SekolahController::class, 'deleteDokumen'])->name('sekolah.dokumen.delete');
         Route::get('/dokumen/download/{type}', [SekolahController::class, 'downloadPdf'])->name('sekolah.dokumen.download');
         Route::get('/inventaris/label-pdf', [SekolahController::class, 'downloadLabels'])->name('sekolah.inventaris.labels');
     });

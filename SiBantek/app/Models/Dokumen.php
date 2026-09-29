@@ -14,12 +14,14 @@ class Dokumen extends Model
         'sekolah_id',
         'jenis_dokumen',
         'file_path',
+        'meta',
         'status',
         'catatan_revisi',
         'verified_at',
     ];
 
     protected $casts = [
+        'meta' => 'array',
         'verified_at' => 'datetime',
     ];
 

@@ -1,7 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { useForm, Head, Link } from '@inertiajs/react';
 import AppLayout from '../../Layouts/AppLayout';
-import { ArrowLeft, FileText, X, CheckCircle, AlertTriangle, Clock, AlertCircle, Info, Check, Upload } from 'lucide-react';
+import { ArrowLeft, FileText, X, CheckCircle, AlertTriangle, Clock, AlertCircle, Info, Check, Upload, Eye, Download } from 'lucide-react';
+import DocxViewer from '../../Components/DocxViewer';
 
 interface Props {
     sekolah: {
@@ -89,6 +90,7 @@ export default function VerifikasiSekolah({ sekolah }: Props) {
     const [catatanRevisi, setCatatanRevisi] = useState('');
     const [confirmApproveTarget, setConfirmApproveTarget] = useState<{ type: 'dokumen' | 'rab'; id?: number; title: string } | null>(null);
     const [confirmDana, setConfirmDana] = useState<string | null>(null);
+    const [previewModalDoc, setPreviewModalDoc] = useState<{ id: number; title: string; filePath: string; status: string; catatanRevisi?: string | null } | null>(null);
 
     const formDana = useForm({ status_dana: sekolah.status_dana });
     const formDoc = useForm({ dokumen_id: 0, status: '', catatan_revisi: '' });
@@ -140,6 +142,10 @@ export default function VerifikasiSekolah({ sekolah }: Props) {
     const sisaDana = PAGU - totalRab;
     const rabApproved = sekolah.rab?.status === 'Disetujui';
     const sudahDisalurkan = sekolah.status_dana === 'Dana Sudah Disalurkan / Ditransfer';
+    const hasSisaDana = sisaDana > 0 && rabApproved;
+    const isUangPas = sisaDana <= 0 && rabApproved;
+    const targetTotalDocs = hasSisaDana ? 15 : 14;
+    const buktiSetorDoc = sekolah.dokumens.find(d => d.jenis_dokumen === 'bukti_setor_sisa_dana');
 
     // Calculate current active stage for this school
     const currentStage = useMemo(() => {
@@ -192,8 +198,28 @@ export default function VerifikasiSekolah({ sekolah }: Props) {
                             <div className="flex items-center gap-3 flex-wrap">
                                 <h2 className="text-xl font-bold text-slate-800">{sekolah.nama_sekolah}</h2>
                                 <span className={`px-2.5 py-1 text-xs rounded-md ${sekolah.status_dokumen === 'Lengkap' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold' : 'bg-slate-100 text-slate-600 border border-slate-200 font-medium'}`}>
-                                    {sekolah.status_dokumen === 'Lengkap' ? 'Berkas Lengkap (12/12)' : 'Berkas Belum Lengkap'}
+                                    {sekolah.status_dokumen === 'Lengkap' ? 'Berkas Lengkap' : 'Berkas Belum Lengkap'}
                                 </span>
+                                {hasSisaDana && (
+                                    <span className={`px-2.5 py-1 text-xs rounded-md font-semibold ${
+                                        buktiSetorDoc?.status === 'Disetujui'
+                                            ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                                            : buktiSetorDoc?.status === 'Menunggu Verifikasi'
+                                            ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                                            : 'bg-red-50 text-red-700 border border-red-200'
+                                    }`}>
+                                        {buktiSetorDoc?.status === 'Disetujui'
+                                            ? `Sisa Rp ${fmt(sisaDana)} (Sudah Dikembalikan)`
+                                            : buktiSetorDoc?.status === 'Menunggu Verifikasi'
+                                            ? `Sisa Rp ${fmt(sisaDana)} (Menunggu Verifikasi Bukti Setor)`
+                                            : `Sisa Rp ${fmt(sisaDana)} (Belum Dikembalikan)`}
+                                    </span>
+                                )}
+                                {isUangPas && (
+                                    <span className="px-2.5 py-1 text-xs rounded-md font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                        Uang Pas (Rp 0 Sisa Dana)
+                                    </span>
+                                )}
                             </div>
                             <p className="mt-1 text-sm text-slate-500">NPSN: {sekolah.npsn} — {sekolah.kabupaten}, {sekolah.provinsi}</p>
                             {sekolah.nama_kepsek && (
@@ -247,7 +273,7 @@ export default function VerifikasiSekolah({ sekolah }: Props) {
                     <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
                         Status Alur Program Sekolah Ini
                     </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-5 gap-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-7 gap-2">
                         {stagesList.map((stg) => {
                             const isDone = stg.num < currentStage;
                             const isCurrent = stg.num === currentStage;
@@ -383,8 +409,8 @@ export default function VerifikasiSekolah({ sekolah }: Props) {
 
                 {/* Documents Table Grouped by Stage */}
                 <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-                    <div className="border-b border-slate-100 bg-slate-50 px-5 py-3.5">
-                        <h3 className="text-sm font-bold text-slate-800">Daftar Berkas Dokumen (12)</h3>
+                    <div className="border-b border-slate-100 bg-slate-50 px-5 py-3.5 flex items-center justify-between">
+                        <h3 className="text-sm font-bold text-slate-800">Daftar Berkas Dokumen ({targetTotalDocs})</h3>
                     </div>
                     <div className="overflow-x-auto">
                         <table className="min-w-full divide-y divide-slate-100 text-sm">
@@ -400,8 +426,17 @@ export default function VerifikasiSekolah({ sekolah }: Props) {
                             <tbody className="divide-y divide-slate-100 bg-white">
                                 {docDefinitions.map((item, idx) => {
                                     const doc = sekolah.dokumens.find((d) => d.jenis_dokumen === item.key);
-                                    const status = doc?.status ?? 'Belum Diunggah';
-                                    const isDisetujui = status === 'Disetujui';
+                                    const isSisaDoc = item.key === 'bukti_setor_sisa_dana';
+                                    const docNotNeeded = isSisaDoc && isUangPas;
+
+                                    let status = doc?.status ?? 'Belum Diunggah';
+                                    if (docNotNeeded) {
+                                        status = 'Tidak Diperlukan (Uang Pas)';
+                                    } else if (isSisaDoc && hasSisaDana && status === 'Belum Diunggah') {
+                                        status = 'Belum Diunggah (Wajib)';
+                                    }
+
+                                    const isDisetujui = doc?.status === 'Disetujui';
 
                                     return (
                                         <tr key={item.key} className="hover:bg-slate-50 transition-colors">
@@ -411,33 +446,60 @@ export default function VerifikasiSekolah({ sekolah }: Props) {
                                                     {item.stageName}
                                                 </span>
                                             </td>
-                                            <td className="px-5 py-3.5 font-medium text-slate-800 max-w-xs">{item.label}</td>
+                                            <td className="px-5 py-3.5 font-medium text-slate-800 max-w-xs">
+                                                <div>{item.label}</div>
+                                                {isSisaDoc && hasSisaDana && (
+                                                    <span className="text-[11px] font-semibold text-red-600 block mt-0.5">
+                                                        Wajib setor sisa dana Rp {fmt(sisaDana)} ke Kas Negara
+                                                    </span>
+                                                )}
+                                                {isSisaDoc && isUangPas && (
+                                                    <span className="text-[11px] text-emerald-600 block mt-0.5">
+                                                        Uang pas (Rp 0 sisa dana)
+                                                    </span>
+                                                )}
+                                            </td>
                                             <td className="px-5 py-3.5">
                                                 {doc?.id && doc.file_path ? (
-                                                    <a
-                                                        href={`/dokumen/file/${doc.id}`}
-                                                        target="_blank"
-                                                        rel="noreferrer"
-                                                        className="inline-flex items-center gap-1.5 rounded-md border border-slate-300 bg-white px-2.5 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setPreviewModalDoc({
+                                                            id: doc.id,
+                                                            title: item.label,
+                                                            filePath: doc.file_path!,
+                                                            status: doc.status,
+                                                            catatanRevisi: doc.catatan_revisi,
+                                                        })}
+                                                        className="inline-flex items-center gap-1.5 rounded-md border border-slate-300 bg-white px-2.5 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:border-slate-400 transition-colors shadow-2xs cursor-pointer"
                                                     >
-                                                        <FileText size={13} />
-                                                        Lihat Berkas
-                                                    </a>
+                                                        <Eye size={13} className="text-[#1e2d5a]" />
+                                                        Pratinjau / Lihat
+                                                    </button>
+                                                ) : docNotNeeded ? (
+                                                    <span className="text-xs text-slate-400 italic">—</span>
                                                 ) : (
                                                     <span className="text-xs text-slate-300 italic">Belum diunggah</span>
                                                 )}
                                             </td>
                                             <td className="px-5 py-3.5">
-                                                <span className={`inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs ${statusStyle[status] ?? 'bg-slate-100 text-slate-500'}`}>
-                                                    {statusIcon[status]}
+                                                <span className={`inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs ${
+                                                    docNotNeeded
+                                                        ? 'bg-slate-100 text-slate-600 border border-slate-200'
+                                                        : status === 'Belum Diunggah (Wajib)'
+                                                        ? 'bg-red-50 text-red-700 border border-red-200 font-semibold'
+                                                        : statusStyle[doc?.status ?? 'Belum Diunggah'] ?? 'bg-slate-100 text-slate-500'
+                                                }`}>
+                                                    {docNotNeeded ? <CheckCircle size={13} /> : statusIcon[doc?.status ?? '']}
                                                     {status}
                                                 </span>
                                             </td>
                                             <td className="px-5 py-3.5 text-xs text-red-600 max-w-xs font-medium">
-                                                {doc?.catatan_revisi ?? '—'}
+                                                {docNotNeeded ? 'Dana bantuan habis sesuai RAB' : (doc?.catatan_revisi ?? '—')}
                                             </td>
                                             <td className="px-5 py-3.5">
-                                                {doc?.file_path ? (
+                                                {docNotNeeded ? (
+                                                    <span className="text-xs text-slate-400 italic">—</span>
+                                                ) : doc?.file_path ? (
                                                     isDisetujui ? (
                                                         <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1.5 rounded-md">
                                                             <CheckCircle size={13} />
@@ -599,6 +661,86 @@ export default function VerifikasiSekolah({ sekolah }: Props) {
                                     Kirim Catatan Revisi
                                 </button>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Document Preview Modal */}
+            {previewModalDoc && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-2 sm:p-5 backdrop-blur-sm">
+                    <div className="flex flex-col w-full max-w-5xl max-h-[94vh] rounded-2xl bg-white shadow-2xl overflow-hidden border border-slate-200 animate-in fade-in zoom-in-95 duration-150">
+                        {/* Header */}
+                        <div className="flex items-center justify-between border-b border-slate-100 px-5 sm:px-6 py-3.5 bg-slate-50 flex-shrink-0">
+                            <div className="min-w-0 pr-3">
+                                <div className="flex items-center gap-2 flex-wrap">
+                                    <h3 className="text-sm font-bold text-slate-800 truncate">{previewModalDoc.title}</h3>
+                                    <span className={`inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[11px] font-semibold ${statusStyle[previewModalDoc.status] ?? 'bg-slate-100 text-slate-700'}`}>
+                                        {statusIcon[previewModalDoc.status]}
+                                        {previewModalDoc.status}
+                                    </span>
+                                </div>
+                                {previewModalDoc.catatanRevisi && (
+                                    <p className="text-xs text-red-600 font-medium mt-1">Catatan: {previewModalDoc.catatanRevisi}</p>
+                                )}
+                            </div>
+                            <div className="flex items-center gap-2 flex-shrink-0">
+                                <a
+                                    href={`/dokumen/file/${previewModalDoc.id}`}
+                                    download
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-100 transition-colors shadow-xs"
+                                >
+                                    <Download size={13} />
+                                    Unduh File
+                                </a>
+                                <button
+                                    onClick={() => setPreviewModalDoc(null)}
+                                    className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-200 hover:text-slate-700 transition-colors"
+                                >
+                                    <X size={18} />
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Content Viewer */}
+                        <div className="flex-1 overflow-auto bg-slate-100 p-2 sm:p-4 flex items-center justify-center min-h-[60vh]">
+                            {previewModalDoc.filePath.toLowerCase().endsWith('.pdf') ? (
+                                <iframe
+                                    src={`/dokumen/file/${previewModalDoc.id}#toolbar=1`}
+                                    className="w-full h-[72vh] rounded-lg border border-slate-200 bg-white shadow-inner"
+                                    title={previewModalDoc.title}
+                                />
+                            ) : previewModalDoc.filePath.toLowerCase().endsWith('.docx') ? (
+                                <div className="w-full h-full max-h-[75vh] overflow-auto">
+                                    <DocxViewer
+                                        url={`/dokumen/file/${previewModalDoc.id}`}
+                                        downloadUrl={`/dokumen/file/${previewModalDoc.id}`}
+                                    />
+                                </div>
+                            ) : previewModalDoc.filePath.match(/\.(jpg|jpeg|png|webp|gif)$/i) ? (
+                                <div className="flex items-center justify-center w-full h-full py-2">
+                                    <img
+                                        src={`/dokumen/file/${previewModalDoc.id}`}
+                                        alt={previewModalDoc.title}
+                                        className="max-h-[72vh] max-w-full rounded-lg shadow-md object-contain border border-slate-200 bg-white"
+                                    />
+                                </div>
+                            ) : (
+                                <div className="text-center py-12 px-6 max-w-md mx-auto bg-white rounded-xl shadow-sm border border-slate-200">
+                                    <FileText size={48} className="mx-auto text-slate-400 mb-3" />
+                                    <h4 className="text-sm font-bold text-slate-800">Berkas Dokumen ({previewModalDoc.filePath.split('.').pop()?.toUpperCase()})</h4>
+                                    <p className="text-xs text-slate-500 mt-1 mb-4">Format berkas ini dapat dibuka secara langsung menggunakan aplikasi di perangkat Anda.</p>
+                                    <a
+                                        href={`/dokumen/file/${previewModalDoc.id}`}
+                                        className="inline-flex items-center gap-1.5 rounded-lg bg-[#1e2d5a] px-4 py-2 text-xs font-semibold text-white hover:bg-[#162247] transition-colors shadow-sm"
+                                    >
+                                        <Download size={14} />
+                                        Unduh & Buka Berkas
+                                    </a>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

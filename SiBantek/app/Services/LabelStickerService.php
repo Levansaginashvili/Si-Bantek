@@ -15,7 +15,7 @@ class LabelStickerService
 
         $stickers = '';
         for ($i = 1; $i <= $totalUnit; $i++) {
-            $unitCode = sprintf("LAP-2026-%03d", $i);
+            $unitCode = sprintf('LAP-2026-%03d', $i);
             $qrData = urlencode("ASSET|{$npsn}|{$unitCode}");
             $qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=100x100&data={$qrData}";
 

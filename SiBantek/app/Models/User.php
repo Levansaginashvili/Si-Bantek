@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DatabaseFactories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,13 +10,14 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\DatabaseFactories\UserFactory> */
+    /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
     protected $fillable = [
         'name',
         'username',
         'nip',
+        'jabatan',
         'npsn',
         'email',
         'password',

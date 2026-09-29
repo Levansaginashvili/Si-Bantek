@@ -1,13 +1,15 @@
 import React, { useState, useMemo } from 'react';
-import { useForm, Head } from '@inertiajs/react';
+import { useForm, Head, router } from '@inertiajs/react';
 import AppLayout from '../../Layouts/AppLayout';
-import { Plus, X, Search, Edit2, ShieldAlert, ShieldCheck } from 'lucide-react';
+import { Plus, X, Search, Edit2, ShieldAlert, ShieldCheck, Trash2, FileSpreadsheet, Download } from 'lucide-react';
+import { DAFTAR_PROVINSI, getKabupatenByProvinsi } from '../../data/wilayahIndonesia';
 
 interface UserItem {
     id: number;
     name: string;
     username?: string;
     nip?: string;
+    jabatan?: string;
     npsn?: string;
     email?: string;
     role: string;
@@ -31,6 +33,8 @@ export default function UsersPage({ users }: Props) {
     const [createModalOpen, setCreateModalOpen] = useState(false);
     const [editModalUser, setEditModalUser] = useState<UserItem | null>(null);
     const [statusModalUser, setStatusModalUser] = useState<UserItem | null>(null);
+    const [deleteModalUser, setDeleteModalUser] = useState<UserItem | null>(null);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     const [searchQuery, setSearchQuery] = useState('');
     const [filterRole, setFilterRole] = useState('semua');
@@ -41,6 +45,7 @@ export default function UsersPage({ users }: Props) {
         role: 'verifikator',
         name: '',
         nip: '',
+        jabatan: '',
         npsn: '',
         nama_sekolah: '',
         provinsi: '',
@@ -52,6 +57,7 @@ export default function UsersPage({ users }: Props) {
     const editForm = useForm({
         name: '',
         nip: '',
+        jabatan: '',
         npsn: '',
         password: '',
     });
@@ -89,6 +95,7 @@ export default function UsersPage({ users }: Props) {
         editForm.setData({
             name: u.name || '',
             nip: u.nip || '',
+            jabatan: u.jabatan || '',
             npsn: u.npsn || '',
             password: '',
         });
@@ -99,6 +106,20 @@ export default function UsersPage({ users }: Props) {
         if (!editModalUser) return;
         editForm.post(`/admin/users/${editModalUser.id}`, {
             onSuccess: () => { setEditModalUser(null); editForm.reset(); },
+        });
+    };
+
+    const handleDeleteSubmit = () => {
+        if (!deleteModalUser) return;
+        setIsDeleting(true);
+        router.delete(`/admin/users/${deleteModalUser.id}`, {
+            onSuccess: () => {
+                setDeleteModalUser(null);
+                setIsDeleting(false);
+            },
+            onError: () => {
+                setIsDeleting(false);
+            },
         });
     };
 
@@ -129,13 +150,29 @@ export default function UsersPage({ users }: Props) {
                         <h2 className="text-xl font-bold text-slate-800">Kelola Akun Pengguna</h2>
                         <p className="mt-1 text-sm text-slate-500">Buat, perbarui profil, atau nonaktifkan akun Verifikator dan Operator Sekolah.</p>
                     </div>
-                    <button
-                        onClick={() => setCreateModalOpen(true)}
-                        className="inline-flex items-center gap-2 rounded-lg bg-[#1e2d5a] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#162247] transition-colors"
-                    >
-                        <Plus size={16} />
-                        Tambah Akun
-                    </button>
+                    <div className="flex flex-wrap items-center gap-2">
+                        <a
+                            href="/admin/users/export-excel"
+                            className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-300 bg-emerald-50 px-3.5 py-2 text-xs font-semibold text-emerald-800 hover:bg-emerald-100 transition-colors shadow-sm"
+                        >
+                            <FileSpreadsheet size={15} className="text-emerald-700" />
+                            Unduh Excel (.xls)
+                        </a>
+                        <a
+                            href="/admin/users/export-csv"
+                            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors shadow-sm"
+                        >
+                            <Download size={15} className="text-slate-600" />
+                            Unduh CSV
+                        </a>
+                        <button
+                            onClick={() => setCreateModalOpen(true)}
+                            className="inline-flex items-center gap-2 rounded-lg bg-[#1e2d5a] px-4 py-2 text-xs font-semibold text-white hover:bg-[#162247] transition-colors shadow-sm"
+                        >
+                            <Plus size={15} />
+                            Tambah Akun
+                        </button>
+                    </div>
                 </div>
 
                 <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
@@ -255,6 +292,15 @@ export default function UsersPage({ users }: Props) {
                                                                 {isAktif ? <ShieldAlert size={12} /> : <ShieldCheck size={12} />}
                                                                 {isAktif ? 'Nonaktifkan' : 'Aktifkan'}
                                                             </button>
+
+                                                            <button
+                                                                onClick={() => setDeleteModalUser(u)}
+                                                                className="inline-flex items-center gap-1 rounded border border-slate-200 bg-white px-2 py-1 text-xs font-medium text-slate-500 hover:border-red-300 hover:bg-red-50 hover:text-red-700 transition-colors"
+                                                                title="Hapus Akun Permanen"
+                                                            >
+                                                                <Trash2 size={12} />
+                                                                Hapus
+                                                            </button>
                                                         </div>
                                                     )}
                                                 </td>
@@ -318,6 +364,16 @@ export default function UsersPage({ users }: Props) {
                                         />
                                         {createForm.errors.nip && <p className="mt-1 text-xs text-red-600">{createForm.errors.nip}</p>}
                                     </div>
+                                    <div>
+                                        <label className="block text-xs font-medium text-slate-600 mb-1">Jabatan / Posisi</label>
+                                        <input
+                                            type="text"
+                                            value={createForm.data.jabatan}
+                                            onChange={(e) => createForm.setData('jabatan', e.target.value)}
+                                            placeholder="Contoh: Pejabat Pembuat Komitmen (PPK) Direktorat SMP"
+                                            className="block w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-sm focus:border-[#1e2d5a] focus:outline-none focus:ring-1 focus:ring-[#1e2d5a]"
+                                        />
+                                    </div>
                                 </>
                             )}
 
@@ -350,25 +406,47 @@ export default function UsersPage({ users }: Props) {
                                     <div className="grid grid-cols-2 gap-3">
                                         <div>
                                             <label className="block text-xs font-medium text-slate-600 mb-1">Provinsi</label>
-                                            <input
-                                                type="text"
+                                            <select
                                                 required
                                                 value={createForm.data.provinsi}
-                                                onChange={(e) => createForm.setData('provinsi', e.target.value)}
-                                                placeholder="Prov. Aceh"
-                                                className="block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
-                                            />
+                                                onChange={(e) => {
+                                                    const newProv = e.target.value;
+                                                    createForm.setData((prev) => ({
+                                                        ...prev,
+                                                        provinsi: newProv,
+                                                        kabupaten: '',
+                                                    }));
+                                                }}
+                                                className="block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-[#1e2d5a] focus:outline-none focus:ring-1 focus:ring-[#1e2d5a]"
+                                            >
+                                                <option value="">-- Pilih Provinsi --</option>
+                                                {DAFTAR_PROVINSI.map((prov) => (
+                                                    <option key={prov} value={prov}>
+                                                        {prov}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                            {createForm.errors.provinsi && <p className="mt-1 text-xs text-red-600">{createForm.errors.provinsi}</p>}
                                         </div>
                                         <div>
                                             <label className="block text-xs font-medium text-slate-600 mb-1">Kabupaten / Kota</label>
-                                            <input
-                                                type="text"
+                                            <select
                                                 required
+                                                disabled={!createForm.data.provinsi}
                                                 value={createForm.data.kabupaten}
                                                 onChange={(e) => createForm.setData('kabupaten', e.target.value)}
-                                                placeholder="Kab. Aceh Barat"
-                                                className="block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
-                                            />
+                                                className="block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-[#1e2d5a] focus:outline-none focus:ring-1 focus:ring-[#1e2d5a] disabled:bg-slate-100 disabled:text-slate-400"
+                                            >
+                                                <option value="">
+                                                    {createForm.data.provinsi ? '-- Pilih Kabupaten / Kota --' : '-- Pilih Provinsi Dahulu --'}
+                                                </option>
+                                                {getKabupatenByProvinsi(createForm.data.provinsi).map((kab) => (
+                                                    <option key={kab} value={kab}>
+                                                        {kab}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                            {createForm.errors.kabupaten && <p className="mt-1 text-xs text-red-600">{createForm.errors.kabupaten}</p>}
                                         </div>
                                     </div>
                                 </>
@@ -435,17 +513,29 @@ export default function UsersPage({ users }: Props) {
                             </div>
 
                             {editModalUser.role === 'verifikator' && (
-                                <div>
-                                    <label className="block text-xs font-medium text-slate-600 mb-1">NIP (Nomor Induk Pegawai)</label>
-                                    <input
-                                        type="text"
-                                        required
-                                        value={editForm.data.nip}
-                                        onChange={(e) => editForm.setData('nip', e.target.value)}
-                                        className="block w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-sm focus:border-[#1e2d5a] focus:outline-none focus:ring-1 focus:ring-[#1e2d5a]"
-                                    />
-                                    {editForm.errors.nip && <p className="mt-1 text-xs text-red-600">{editForm.errors.nip}</p>}
-                                </div>
+                                <>
+                                    <div>
+                                        <label className="block text-xs font-medium text-slate-600 mb-1">NIP (Nomor Induk Pegawai)</label>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={editForm.data.nip}
+                                            onChange={(e) => editForm.setData('nip', e.target.value)}
+                                            className="block w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-sm focus:border-[#1e2d5a] focus:outline-none focus:ring-1 focus:ring-[#1e2d5a]"
+                                        />
+                                        {editForm.errors.nip && <p className="mt-1 text-xs text-red-600">{editForm.errors.nip}</p>}
+                                    </div>
+                                    <div>
+                                        <label className="block text-xs font-medium text-slate-600 mb-1">Jabatan / Posisi</label>
+                                        <input
+                                            type="text"
+                                            value={editForm.data.jabatan}
+                                            onChange={(e) => editForm.setData('jabatan', e.target.value)}
+                                            placeholder="Contoh: Pejabat Pembuat Komitmen (PPK) Direktorat SMP"
+                                            className="block w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-sm focus:border-[#1e2d5a] focus:outline-none focus:ring-1 focus:ring-[#1e2d5a]"
+                                        />
+                                    </div>
+                                </>
                             )}
 
                             {editModalUser.role === 'sekolah' && (
@@ -559,6 +649,56 @@ export default function UsersPage({ users }: Props) {
                                 </button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            )}
+
+            {/* Delete Confirmation Modal */}
+            {deleteModalUser && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+                    <div className="w-full max-w-md rounded-xl bg-white shadow-xl overflow-hidden">
+                        <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+                            <h3 className="text-base font-semibold text-red-600 flex items-center gap-2">
+                                <Trash2 size={18} />
+                                Konfirmasi Hapus Akun
+                            </h3>
+                            <button onClick={() => setDeleteModalUser(null)} className="text-slate-400 hover:text-slate-600">
+                                <X size={18} />
+                            </button>
+                        </div>
+
+                        <div className="px-6 py-5 space-y-4">
+                            <p className="text-sm text-slate-700">
+                                Apakah Anda yakin ingin menghapus akun <span className="font-bold text-slate-900">{deleteModalUser.name}</span>?
+                            </p>
+                            {deleteModalUser.role === 'sekolah' && (
+                                <div className="rounded-lg border border-red-200 bg-red-50 p-3.5 text-xs text-red-800 space-y-1">
+                                    <p className="font-bold">⚠️ Perhatian Khusus:</p>
+                                    <p>
+                                        Menghapus akun Operator Sekolah ini akan **menghapus permanen seluruh data sekolah, dokumen yang diunggah, RAB, dan data inventaris laptop** terkait dari database serta daftar Verifikator.
+                                    </p>
+                                </div>
+                            )}
+                            <p className="text-xs text-slate-500">Tindakan ini tidak dapat dibatalkan.</p>
+
+                            <div className="flex justify-end gap-3 pt-2 border-t border-slate-100">
+                                <button
+                                    type="button"
+                                    onClick={() => setDeleteModalUser(null)}
+                                    className="rounded-lg px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 transition-colors"
+                                >
+                                    Batal
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={handleDeleteSubmit}
+                                    disabled={isDeleting}
+                                    className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 disabled:opacity-70 transition-colors"
+                                >
+                                    {isDeleting ? 'Menghapus...' : 'Ya, Hapus Permanen'}
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             )}

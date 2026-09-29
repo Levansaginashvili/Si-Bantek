@@ -38,15 +38,15 @@ export default function AppLayout({ children, title }: AppLayoutProps) {
         admin: [
             { label: 'Dashboard', href: '/admin', icon: <LayoutDashboard size={18} /> },
             { label: 'Kelola Akun', href: '/admin/users', icon: <Users size={18} /> },
-            { label: 'Profil Saya', href: '/profile', icon: <User size={18} /> },
+            { label: 'Profile', href: '/profile', icon: <User size={18} /> },
         ],
         verifikator: [
             { label: 'Dashboard', href: '/verifikator', icon: <LayoutDashboard size={18} /> },
-            { label: 'Profil Saya', href: '/profile', icon: <User size={18} /> },
+            { label: 'Profile', href: '/profile', icon: <User size={18} /> },
         ],
         sekolah: [
             { label: 'Dashboard & Dokumen', href: '/sekolah', icon: <LayoutDashboard size={18} /> },
-            { label: 'Profil Saya', href: '/profile', icon: <User size={18} /> },
+            { label: 'Profile', href: '/profile', icon: <User size={18} /> },
         ],
     };
 

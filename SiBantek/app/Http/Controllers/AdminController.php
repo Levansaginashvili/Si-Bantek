@@ -9,9 +9,11 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class AdminController extends Controller
 {
@@ -38,7 +40,7 @@ class AdminController extends Controller
     public function users(): Response
     {
         $users = User::with('sekolah:id,nama_sekolah,npsn')
-            ->select('id', 'name', 'username', 'nip', 'npsn', 'email', 'role', 'status', 'catatan_nonaktif', 'sekolah_id', 'created_at')
+            ->select('id', 'name', 'username', 'nip', 'jabatan', 'npsn', 'email', 'role', 'status', 'catatan_nonaktif', 'sekolah_id', 'created_at')
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -55,13 +57,15 @@ class AdminController extends Controller
             $validated = $request->validate([
                 'name' => ['required', 'string', 'max:255'],
                 'nip' => ['required', 'string', 'max:50', 'unique:users,nip'],
+                'jabatan' => ['nullable', 'string', 'max:255'],
                 'password' => ['required', 'string', 'min:8'],
             ]);
 
             User::create([
                 'name' => $validated['name'],
                 'nip' => $validated['nip'],
-                'email' => $validated['nip'] . '@sibantek.local',
+                'jabatan' => $validated['jabatan'] ?? 'Pejabat Pembuat Komitmen (PPK)',
+                'email' => $validated['nip'].'@sibantek.local',
                 'password' => Hash::make($validated['password']),
                 'role' => 'verifikator',
                 'status' => 'aktif',
@@ -87,7 +91,7 @@ class AdminController extends Controller
             User::create([
                 'name' => $validated['nama_sekolah'],
                 'npsn' => $validated['npsn'],
-                'email' => $validated['npsn'] . '@sibantek.local',
+                'email' => $validated['npsn'].'@sibantek.local',
                 'password' => Hash::make($validated['password']),
                 'role' => 'sekolah',
                 'sekolah_id' => $sekolah->id,
@@ -96,9 +100,10 @@ class AdminController extends Controller
 
             // Initialize required documents & RAB for new school
             $types = [
-                'pks', 'pakta_integritas', 'sptjm', 'laporan_awal', 'rab',
-                'perbandingan_siplah', 'invoice_siplah', 'bast',
-                'foto_fisik_laptop', 'buku_inventaris', 'dokumentasi_pemanfaatan', 'lpj'
+                'pks', 'pakta_integritas', 'sptjm', 'rab', 'laporan_awal',
+                'perbandingan_siplah', 'surat_pemesanan_siplah', 'invoice_siplah',
+                'bast', 'buku_inventaris', 'dokumentasi_pemanfaatan',
+                'laporan_akhir', 'pengantar_lpj', 'lpj',
             ];
             foreach ($types as $type) {
                 Dokumen::create([
@@ -130,15 +135,17 @@ class AdminController extends Controller
             $validated = $request->validate([
                 'name' => ['required', 'string', 'max:255'],
                 'nip' => ['required', 'string', 'max:50', Rule::unique('users', 'nip')->ignore($user->id)],
+                'jabatan' => ['nullable', 'string', 'max:255'],
                 'password' => ['nullable', 'string', 'min:8'],
             ]);
 
             $userData = [
                 'name' => $validated['name'],
                 'nip' => $validated['nip'],
+                'jabatan' => $validated['jabatan'] ?? $user->jabatan,
             ];
 
-            if (!empty($validated['password'])) {
+            if (! empty($validated['password'])) {
                 $userData['password'] = Hash::make($validated['password']);
             }
 
@@ -155,7 +162,7 @@ class AdminController extends Controller
                 'npsn' => $validated['npsn'],
             ];
 
-            if (!empty($validated['password'])) {
+            if (! empty($validated['password'])) {
                 $userData['password'] = Hash::make($validated['password']);
             }
 
@@ -187,6 +194,54 @@ class AdminController extends Controller
         ]);
 
         $msg = $validated['status'] === 'nonaktif' ? 'Akun telah dinonaktifkan.' : 'Akun berhasil diaktifkan kembali.';
+
         return redirect()->back()->with('success', $msg);
+    }
+
+    public function destroyUser(int $id): RedirectResponse
+    {
+        $user = User::findOrFail($id);
+
+        if ($user->role === 'admin') {
+            return back()->with('error', 'Akun Administrator tidak dapat dihapus.');
+        }
+
+        if ($user->sekolah_id) {
+            $sekolah = Sekolah::find($user->sekolah_id);
+            if ($sekolah) {
+                if (Storage::disk('public')->exists("dokumen/{$sekolah->npsn}")) {
+                    Storage::disk('public')->deleteDirectory("dokumen/{$sekolah->npsn}");
+                }
+                $sekolah->delete();
+            }
+        }
+
+        $user->delete();
+
+        return redirect()->back()->with('success', 'Akun dan seluruh data terkait berhasil dihapus permanen.');
+    }
+
+    public function exportAccountsCsv(): BinaryFileResponse
+    {
+        $filePath = public_path('daftar_akun_173_sekolah_tik_2026.csv');
+        if (! file_exists($filePath)) {
+            abort(404, 'File daftar akun belum dibuat.');
+        }
+
+        return response()->download($filePath, 'Daftar_Akun_173_Sekolah_Bantek_TIK_2026.csv', [
+            'Content-Type' => 'text/csv; charset=UTF-8',
+        ]);
+    }
+
+    public function exportAccountsExcel(): BinaryFileResponse
+    {
+        $filePath = public_path('daftar_akun_173_sekolah_tik_2026.xls');
+        if (! file_exists($filePath)) {
+            abort(404, 'File daftar akun belum dibuat.');
+        }
+
+        return response()->download($filePath, 'Daftar_Akun_173_Sekolah_Bantek_TIK_2026.xls', [
+            'Content-Type' => 'application/vnd.ms-excel; charset=UTF-8',
+        ]);
     }
 }

@@ -15,7 +15,7 @@ export default function Index({
     section,
 }: ModulePageProps) {
     return (
-        <AppLayout role={role}>
+        <AppLayout>
             <PageHeader
                 eyebrow={section ?? 'Modul'}
                 title={title}

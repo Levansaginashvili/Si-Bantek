@@ -14,11 +14,16 @@ class Rab extends Model
         'sekolah_id',
         'merek_tipe_laptop',
         'spesifikasi_ringkas',
+        'items',
         'jumlah_unit',
         'harga_satuan',
         'total_harga',
         'status',
         'catatan_revisi',
+    ];
+
+    protected $casts = [
+        'items' => 'array',
     ];
 
     public function sekolah(): BelongsTo

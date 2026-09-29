@@ -1,0 +1,1399 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><style>
+            table { border-collapse: collapse; width: 100%; font-family: Calibri, sans-serif; font-size: 11pt; }
+            th { background-color: #1e2d5a; color: #ffffff; font-weight: bold; border: 1px solid #000; padding: 6px 10px; text-align: center; }
+            td { border: 1px solid #cccccc; padding: 5px 8px; }
+            .center { text-align: center; }
+            .bold { font-weight: bold; }
+        </style></head><body><h2 style="font-family: Calibri, sans-serif; color: #1e2d5a;">DAFTAR AKUN & KREDENSIAL LOGIN 173 SEKOLAH PENERIMA BANTUAN TIK SMP 2026</h2><p style="font-family: Calibri, sans-serif; font-size: 10pt; color: #555555;">Pola Password: <b>Bantek@[4 digit terakhir NPSN]</b></p><table><thead><tr>
+            <th>No</th>
+            <th>NPSN</th>
+            <th>Nama Sekolah</th>
+            <th>Provinsi</th>
+            <th>Kabupaten / Kota</th>
+            <th>Username Login</th>
+            <th>Password</th>
+        </tr></thead><tbody><tr>
+                <td class='center'>1</td>
+                <td class='center bold'>'10110698</td>
+                <td>SMP NEGERI 3 WOYLA TIMUR</td>
+                <td>Prov. Aceh</td>
+                <td>Kab. Aceh Barat</td>
+                <td class='center bold'>'10110698</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@0698</td>
+            </tr><tr>
+                <td class='center'>2</td>
+                <td class='center bold'>'69945399</td>
+                <td>SMP NEGERI 3 KLUET TENGAH</td>
+                <td>Prov. Aceh</td>
+                <td>Kab. Aceh Selatan</td>
+                <td class='center bold'>'69945399</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@5399</td>
+            </tr><tr>
+                <td class='center'>3</td>
+                <td class='center bold'>'10102697</td>
+                <td>SMP.NEGERI 1 KLUET TENGAH</td>
+                <td>Prov. Aceh</td>
+                <td>Kab. Aceh Selatan</td>
+                <td class='center bold'>'10102697</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@2697</td>
+            </tr><tr>
+                <td class='center'>4</td>
+                <td class='center bold'>'10111445</td>
+                <td>UPTD SPF SMP Negeri 2 Danau Paris</td>
+                <td>Prov. Aceh</td>
+                <td>Kab. Aceh Singkil</td>
+                <td class='center bold'>'10111445</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@1445</td>
+            </tr><tr>
+                <td class='center'>5</td>
+                <td class='center bold'>'10107510</td>
+                <td>SMPN 26 TAKENGON</td>
+                <td>Prov. Aceh</td>
+                <td>Kab. Aceh Tengah</td>
+                <td class='center bold'>'10107510</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@7510</td>
+            </tr><tr>
+                <td class='center'>6</td>
+                <td class='center bold'>'10101926</td>
+                <td>SMPN 1 LOKOP</td>
+                <td>Prov. Aceh</td>
+                <td>Kab. Aceh Timur</td>
+                <td class='center bold'>'10101926</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@1926</td>
+            </tr><tr>
+                <td class='center'>7</td>
+                <td class='center bold'>'69966397</td>
+                <td>SMP PPTQ ACEH UTARA</td>
+                <td>Prov. Aceh</td>
+                <td>Kab. Aceh Utara</td>
+                <td class='center bold'>'69966397</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@6397</td>
+            </tr><tr>
+                <td class='center'>8</td>
+                <td class='center bold'>'70008040</td>
+                <td>SMP TASTAFI TERPADU YAYASAN DAYAH NURUL HUDA</td>
+                <td>Prov. Aceh</td>
+                <td>Kab. Aceh Utara</td>
+                <td class='center bold'>'70008040</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@8040</td>
+            </tr><tr>
+                <td class='center'>9</td>
+                <td class='center bold'>'70035644</td>
+                <td>SMPS IT INSAN MUDA</td>
+                <td>Prov. Aceh</td>
+                <td>Kab. Aceh Utara</td>
+                <td class='center bold'>'70035644</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@5644</td>
+            </tr><tr>
+                <td class='center'>10</td>
+                <td class='center bold'>'10111318</td>
+                <td>SMPN 5 TANGSE</td>
+                <td>Prov. Aceh</td>
+                <td>Kab. Pidie</td>
+                <td class='center bold'>'10111318</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@1318</td>
+            </tr><tr>
+                <td class='center'>11</td>
+                <td class='center bold'>'69754630</td>
+                <td>SMP NEGERI 11 SATU ATAP WONOSARI</td>
+                <td>Prov. Gorontalo</td>
+                <td>Kab. Boalemo</td>
+                <td class='center bold'>'69754630</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@4630</td>
+            </tr><tr>
+                <td class='center'>12</td>
+                <td class='center bold'>'10506847</td>
+                <td>SMP NEGERI 21 SAROLANGUN</td>
+                <td>Prov. Jambi</td>
+                <td>Kab. Sarolangun</td>
+                <td class='center bold'>'10506847</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@6847</td>
+            </tr><tr>
+                <td class='center'>13</td>
+                <td class='center bold'>'10506878</td>
+                <td>SMP NEGERI SATU ATAP 19 SAROLANGUN</td>
+                <td>Prov. Jambi</td>
+                <td>Kab. Sarolangun</td>
+                <td class='center bold'>'10506878</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@6878</td>
+            </tr><tr>
+                <td class='center'>14</td>
+                <td class='center bold'>'10505943</td>
+                <td>SMP Negeri 43 Tanjung Jabung Barat</td>
+                <td>Prov. Jambi</td>
+                <td>Kab. Tanjung Jabung Barat</td>
+                <td class='center bold'>'10505943</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@5943</td>
+            </tr><tr>
+                <td class='center'>15</td>
+                <td class='center bold'>'20217055</td>
+                <td>SMP NEGERI 1 CIASEM</td>
+                <td>Prov. Jawa Barat</td>
+                <td>Kab. Subang</td>
+                <td class='center bold'>'20217055</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@7055</td>
+            </tr><tr>
+                <td class='center'>16</td>
+                <td class='center bold'>'30108572</td>
+                <td>SMP NEGERI 2 LEMBAH BAWANG</td>
+                <td>Prov. Kalimantan Barat</td>
+                <td>Kab. Bengkayang</td>
+                <td class='center bold'>'30108572</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@8572</td>
+            </tr><tr>
+                <td class='center'>17</td>
+                <td class='center bold'>'30107424</td>
+                <td>SMP NEGERI 3 TERENTANG</td>
+                <td>Prov. Kalimantan Barat</td>
+                <td>Kab. Kubu Raya</td>
+                <td class='center bold'>'30107424</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@7424</td>
+            </tr><tr>
+                <td class='center'>18</td>
+                <td class='center bold'>'69762679</td>
+                <td>SMP NEGERI 8 SATAP BATU AMPAR</td>
+                <td>Prov. Kalimantan Barat</td>
+                <td>Kab. Kubu Raya</td>
+                <td class='center bold'>'69762679</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@2679</td>
+            </tr><tr>
+                <td class='center'>19</td>
+                <td class='center bold'>'30107402</td>
+                <td>SMP SANTA URSULA</td>
+                <td>Prov. Kalimantan Barat</td>
+                <td>Kab. Kubu Raya</td>
+                <td class='center bold'>'30107402</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@7402</td>
+            </tr><tr>
+                <td class='center'>20</td>
+                <td class='center bold'>'30109783</td>
+                <td>SMP NEGERI 4 MENYUKE</td>
+                <td>Prov. Kalimantan Barat</td>
+                <td>Kab. Landak</td>
+                <td class='center bold'>'30109783</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@9783</td>
+            </tr><tr>
+                <td class='center'>21</td>
+                <td class='center bold'>'30108099</td>
+                <td>SMP NEGERI 5 SAYAN</td>
+                <td>Prov. Kalimantan Barat</td>
+                <td>Kab. Melawi</td>
+                <td class='center bold'>'30108099</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@8099</td>
+            </tr><tr>
+                <td class='center'>22</td>
+                <td class='center bold'>'30109691</td>
+                <td>SMP NEGERI 5 TANAH PINOH BARAT</td>
+                <td>Prov. Kalimantan Barat</td>
+                <td>Kab. Melawi</td>
+                <td class='center bold'>'30109691</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@9691</td>
+            </tr><tr>
+                <td class='center'>23</td>
+                <td class='center bold'>'60724676</td>
+                <td>SMP NEGERI 8 SATAP MENUKUNG</td>
+                <td>Prov. Kalimantan Barat</td>
+                <td>Kab. Melawi</td>
+                <td class='center bold'>'60724676</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@4676</td>
+            </tr><tr>
+                <td class='center'>24</td>
+                <td class='center bold'>'69831637</td>
+                <td>SMP NEGERI 4 SADANIANG</td>
+                <td>Prov. Kalimantan Barat</td>
+                <td>Kab. Mempawah</td>
+                <td class='center bold'>'69831637</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@1637</td>
+            </tr><tr>
+                <td class='center'>25</td>
+                <td class='center bold'>'30112525</td>
+                <td>SMP NEGERI 03 SATAP NOYAN</td>
+                <td>Prov. Kalimantan Barat</td>
+                <td>Kab. Sanggau</td>
+                <td class='center bold'>'30112525</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@2525</td>
+            </tr><tr>
+                <td class='center'>26</td>
+                <td class='center bold'>'30311979</td>
+                <td>SMP NEGERI 9 MUARA UYA</td>
+                <td>Prov. Kalimantan Selatan</td>
+                <td>Kab. Tabalong</td>
+                <td class='center bold'>'30311979</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@1979</td>
+            </tr><tr>
+                <td class='center'>27</td>
+                <td class='center bold'>'69949257</td>
+                <td>SMP NEGERI 1 TEWEH BARU</td>
+                <td>Prov. Kalimantan Tengah</td>
+                <td>Kab. Barito Utara</td>
+                <td class='center bold'>'69949257</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@9257</td>
+            </tr><tr>
+                <td class='center'>28</td>
+                <td class='center bold'>'30204170</td>
+                <td>SMP NEGERI 6 KATINGAN TENGAH</td>
+                <td>Prov. Kalimantan Tengah</td>
+                <td>Kab. Katingan</td>
+                <td class='center bold'>'30204170</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@4170</td>
+            </tr><tr>
+                <td class='center'>29</td>
+                <td class='center bold'>'30204274</td>
+                <td>SMP NEGERI SATU ATAP 1 CEMPAGA HULU</td>
+                <td>Prov. Kalimantan Tengah</td>
+                <td>Kab. Kotawaringin Timur</td>
+                <td class='center bold'>'30204274</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@4274</td>
+            </tr><tr>
+                <td class='center'>30</td>
+                <td class='center bold'>'30406120</td>
+                <td>SMP NEGERI 4 LONG KALI</td>
+                <td>Prov. Kalimantan Timur</td>
+                <td>Kab. Paser</td>
+                <td class='center bold'>'30406120</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@6120</td>
+            </tr><tr>
+                <td class='center'>31</td>
+                <td class='center bold'>'69864683</td>
+                <td>SMP NEGERI 6 TANJUNG HARAPAN</td>
+                <td>Prov. Kalimantan Timur</td>
+                <td>Kab. Paser</td>
+                <td class='center bold'>'69864683</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@4683</td>
+            </tr><tr>
+                <td class='center'>32</td>
+                <td class='center bold'>'11002810</td>
+                <td>SMP NEGERI 1 KEPULAUAN POSEK</td>
+                <td>Prov. Kepulauan Riau</td>
+                <td>Kab. Lingga</td>
+                <td class='center bold'>'11002810</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@2810</td>
+            </tr><tr>
+                <td class='center'>33</td>
+                <td class='center bold'>'10810844</td>
+                <td>SMP NEGERI 26 KRUI</td>
+                <td>Prov. Lampung</td>
+                <td>Kab. Pesisir Barat</td>
+                <td class='center bold'>'10810844</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@0844</td>
+            </tr><tr>
+                <td class='center'>34</td>
+                <td class='center bold'>'10810846</td>
+                <td>SMP NEGERI SATU ATAP 2 KRUI</td>
+                <td>Prov. Lampung</td>
+                <td>Kab. Pesisir Barat</td>
+                <td class='center bold'>'10810846</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@0846</td>
+            </tr><tr>
+                <td class='center'>35</td>
+                <td class='center bold'>'10811028</td>
+                <td>SMP NEGERI SATU ATAP PEMATANG SAWA</td>
+                <td>Prov. Lampung</td>
+                <td>Kab. Tanggamus</td>
+                <td class='center bold'>'10811028</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@1028</td>
+            </tr><tr>
+                <td class='center'>36</td>
+                <td class='center bold'>'69980311</td>
+                <td>SMP SATU ATAP 2 CUKUH BALAK</td>
+                <td>Prov. Lampung</td>
+                <td>Kab. Tanggamus</td>
+                <td class='center bold'>'69980311</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@0311</td>
+            </tr><tr>
+                <td class='center'>37</td>
+                <td class='center bold'>'69787356</td>
+                <td>SMP NEGERI SATU ATAP 2 DENTE TELADAS</td>
+                <td>Prov. Lampung</td>
+                <td>Kab. Tulang Bawang</td>
+                <td class='center bold'>'69787356</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@7356</td>
+            </tr><tr>
+                <td class='center'>38</td>
+                <td class='center bold'>'60101819</td>
+                <td>SMP KRISTEN 2 LONGGAR APARA</td>
+                <td>Prov. Maluku</td>
+                <td>Kab. Kepulauan Aru</td>
+                <td class='center bold'>'60101819</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@1819</td>
+            </tr><tr>
+                <td class='center'>39</td>
+                <td class='center bold'>'60101825</td>
+                <td>SMP NASKAT KABALSIANG BENJURING</td>
+                <td>Prov. Maluku</td>
+                <td>Kab. Kepulauan Aru</td>
+                <td class='center bold'>'60101825</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@1825</td>
+            </tr><tr>
+                <td class='center'>40</td>
+                <td class='center bold'>'60101360</td>
+                <td>SMP NEGERI 2 TANIMBAR UTARA</td>
+                <td>Prov. Maluku</td>
+                <td>Kab. Kepulauan Tanimbar</td>
+                <td class='center bold'>'60101360</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@1360</td>
+            </tr><tr>
+                <td class='center'>41</td>
+                <td class='center bold'>'69787151</td>
+                <td>SMP NEGERI 2 WERMAKTIAN</td>
+                <td>Prov. Maluku</td>
+                <td>Kab. Kepulauan Tanimbar</td>
+                <td class='center bold'>'69787151</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@7151</td>
+            </tr><tr>
+                <td class='center'>42</td>
+                <td class='center bold'>'70003800</td>
+                <td>SMP NEGERI 3 WERMAKTIAN</td>
+                <td>Prov. Maluku</td>
+                <td>Kab. Kepulauan Tanimbar</td>
+                <td class='center bold'>'70003800</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@3800</td>
+            </tr><tr>
+                <td class='center'>43</td>
+                <td class='center bold'>'60103189</td>
+                <td>SMP NEGERI 6 AHANARI</td>
+                <td>Prov. Maluku</td>
+                <td>Kab. Maluku Barat Daya</td>
+                <td class='center bold'>'60103189</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@3189</td>
+            </tr><tr>
+                <td class='center'>44</td>
+                <td class='center bold'>'60102511</td>
+                <td>SMP NEGERI 21 SERAM BAGIAN TIMUR</td>
+                <td>Prov. Maluku</td>
+                <td>Kab. Seram Bagian Timur</td>
+                <td class='center bold'>'60102511</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@2511</td>
+            </tr><tr>
+                <td class='center'>45</td>
+                <td class='center bold'>'60101656</td>
+                <td>SMP NEGERI 3 SERAM BAGIAN TIMUR</td>
+                <td>Prov. Maluku</td>
+                <td>Kab. Seram Bagian Timur</td>
+                <td class='center bold'>'60101656</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@1656</td>
+            </tr><tr>
+                <td class='center'>46</td>
+                <td class='center bold'>'60103747</td>
+                <td>SMP NEGERI 41 SERAM BAGIAN TIMUR</td>
+                <td>Prov. Maluku</td>
+                <td>Kab. Seram Bagian Timur</td>
+                <td class='center bold'>'60103747</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@3747</td>
+            </tr><tr>
+                <td class='center'>47</td>
+                <td class='center bold'>'60102953</td>
+                <td>SMP PGRI KILGA</td>
+                <td>Prov. Maluku</td>
+                <td>Kab. Seram Bagian Timur</td>
+                <td class='center bold'>'60102953</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@2953</td>
+            </tr><tr>
+                <td class='center'>48</td>
+                <td class='center bold'>'60201615</td>
+                <td>SMP NEGERI 34 HALMAHERA SELATAN</td>
+                <td>Prov. Maluku Utara</td>
+                <td>Kab. Halmahera Selatan</td>
+                <td class='center bold'>'60201615</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@1615</td>
+            </tr><tr>
+                <td class='center'>49</td>
+                <td class='center bold'>'70034146</td>
+                <td>SMP KRISTEN GEORGE RORIWO</td>
+                <td>Prov. Maluku Utara</td>
+                <td>Kab. Halmahera Utara</td>
+                <td class='center bold'>'70034146</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@4146</td>
+            </tr><tr>
+                <td class='center'>50</td>
+                <td class='center bold'>'60202503</td>
+                <td>SMP NEGERI 1 MANGOLI TENGAH</td>
+                <td>Prov. Maluku Utara</td>
+                <td>Kab. Kepulauan Sula</td>
+                <td class='center bold'>'60202503</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@2503</td>
+            </tr><tr>
+                <td class='center'>51</td>
+                <td class='center bold'>'60202279</td>
+                <td>SMP NEGERI 1 SANANA UTARA</td>
+                <td>Prov. Maluku Utara</td>
+                <td>Kab. Kepulauan Sula</td>
+                <td class='center bold'>'60202279</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@2279</td>
+            </tr><tr>
+                <td class='center'>52</td>
+                <td class='center bold'>'60200521</td>
+                <td>SMP NEGERI 1 SULABESI BARAT</td>
+                <td>Prov. Maluku Utara</td>
+                <td>Kab. Kepulauan Sula</td>
+                <td class='center bold'>'60200521</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@0521</td>
+            </tr><tr>
+                <td class='center'>53</td>
+                <td class='center bold'>'60202277</td>
+                <td>SMP NEGERI 1 SULABESI SELATAN</td>
+                <td>Prov. Maluku Utara</td>
+                <td>Kab. Kepulauan Sula</td>
+                <td class='center bold'>'60202277</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@2277</td>
+            </tr><tr>
+                <td class='center'>54</td>
+                <td class='center bold'>'60202559</td>
+                <td>SMP NEGERI 3 SATU ATAP MANGOLI BARAT</td>
+                <td>Prov. Maluku Utara</td>
+                <td>Kab. Kepulauan Sula</td>
+                <td class='center bold'>'60202559</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@2559</td>
+            </tr><tr>
+                <td class='center'>55</td>
+                <td class='center bold'>'60202560</td>
+                <td>SMP NEGERI 3 SATU ATAP MANGOLI UTARA</td>
+                <td>Prov. Maluku Utara</td>
+                <td>Kab. Kepulauan Sula</td>
+                <td class='center bold'>'60202560</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@2560</td>
+            </tr><tr>
+                <td class='center'>56</td>
+                <td class='center bold'>'69787402</td>
+                <td>SMP NEGERI 4 SANANA UTARA</td>
+                <td>Prov. Maluku Utara</td>
+                <td>Kab. Kepulauan Sula</td>
+                <td class='center bold'>'69787402</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@7402</td>
+            </tr><tr>
+                <td class='center'>57</td>
+                <td class='center bold'>'70032463</td>
+                <td>SMP NEGERI 9 TALIABU UTARA</td>
+                <td>Prov. Maluku Utara</td>
+                <td>Kab. Pulau Taliabu</td>
+                <td class='center bold'>'70032463</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@2463</td>
+            </tr><tr>
+                <td class='center'>58</td>
+                <td class='center bold'>'70049624</td>
+                <td>SMP ISLAM AL-JUNARIS BAYANUL HAQ</td>
+                <td>Prov. Nusa Tenggara Barat</td>
+                <td>Kab. Lombok Utara</td>
+                <td class='center bold'>'70049624</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@9624</td>
+            </tr><tr>
+                <td class='center'>59</td>
+                <td class='center bold'>'50219430</td>
+                <td>SMPN SATAP 1 KAYANGAN</td>
+                <td>Prov. Nusa Tenggara Barat</td>
+                <td>Kab. Lombok Utara</td>
+                <td class='center bold'>'50219430</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@9430</td>
+            </tr><tr>
+                <td class='center'>60</td>
+                <td class='center bold'>'50300212</td>
+                <td>UPTD SMP NEGERI 1 AMFOANG UTARA KEC. AMFOANG UTARA</td>
+                <td>Prov. Nusa Tenggara Timur</td>
+                <td>Kab. Kupang</td>
+                <td class='center bold'>'50300212</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@0212</td>
+            </tr><tr>
+                <td class='center'>61</td>
+                <td class='center bold'>'69989069</td>
+                <td>UPTD SMP NEGERI 5 AMARASI TIMUR KEC. AMARASI TIMUR</td>
+                <td>Prov. Nusa Tenggara Timur</td>
+                <td>Kab. Kupang</td>
+                <td class='center bold'>'69989069</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@9069</td>
+            </tr><tr>
+                <td class='center'>62</td>
+                <td class='center bold'>'50309366</td>
+                <td>SMP NEGERI METAMAUK</td>
+                <td>Prov. Nusa Tenggara Timur</td>
+                <td>Kab. Malaka</td>
+                <td class='center bold'>'50309366</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@9366</td>
+            </tr><tr>
+                <td class='center'>63</td>
+                <td class='center bold'>'69899281</td>
+                <td>SMP Negeri Wederok</td>
+                <td>Prov. Nusa Tenggara Timur</td>
+                <td>Kab. Malaka</td>
+                <td class='center bold'>'69899281</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@9281</td>
+            </tr><tr>
+                <td class='center'>64</td>
+                <td class='center bold'>'70051720</td>
+                <td>SMP PLUS ST JHON FISHER WEKBELAR</td>
+                <td>Prov. Nusa Tenggara Timur</td>
+                <td>Kab. Malaka</td>
+                <td class='center bold'>'70051720</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@1720</td>
+            </tr><tr>
+                <td class='center'>65</td>
+                <td class='center bold'>'50308611</td>
+                <td>SMP NEGERI 6 BORONG</td>
+                <td>Prov. Nusa Tenggara Timur</td>
+                <td>Kab. Manggarai Timur</td>
+                <td class='center bold'>'50308611</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@8611</td>
+            </tr><tr>
+                <td class='center'>66</td>
+                <td class='center bold'>'69727394</td>
+                <td>UPTD SMP NEGERI 1 SABU LIAE</td>
+                <td>Prov. Nusa Tenggara Timur</td>
+                <td>Kab. Sabu Raijua</td>
+                <td class='center bold'>'69727394</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@7394</td>
+            </tr><tr>
+                <td class='center'>67</td>
+                <td class='center bold'>'50308043</td>
+                <td>SMP NEGERI 3 LAMBOYA</td>
+                <td>Prov. Nusa Tenggara Timur</td>
+                <td>Kab. Sumba Barat</td>
+                <td class='center bold'>'50308043</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@8043</td>
+            </tr><tr>
+                <td class='center'>68</td>
+                <td class='center bold'>'69727622</td>
+                <td>SMP NEGERI 1 KODI BALAGHAR</td>
+                <td>Prov. Nusa Tenggara Timur</td>
+                <td>Kab. Sumba Barat Daya</td>
+                <td class='center bold'>'69727622</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@7622</td>
+            </tr><tr>
+                <td class='center'>69</td>
+                <td class='center bold'>'50304045</td>
+                <td>SMP NEGERI 1 WEWEWA TIMUR</td>
+                <td>Prov. Nusa Tenggara Timur</td>
+                <td>Kab. Sumba Barat Daya</td>
+                <td class='center bold'>'50304045</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@4045</td>
+            </tr><tr>
+                <td class='center'>70</td>
+                <td class='center bold'>'50304059</td>
+                <td>SMP NEGERI 2 KODI</td>
+                <td>Prov. Nusa Tenggara Timur</td>
+                <td>Kab. Sumba Barat Daya</td>
+                <td class='center bold'>'50304059</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@4059</td>
+            </tr><tr>
+                <td class='center'>71</td>
+                <td class='center bold'>'69727785</td>
+                <td>SMP NEGERI 4 KODI</td>
+                <td>Prov. Nusa Tenggara Timur</td>
+                <td>Kab. Sumba Barat Daya</td>
+                <td class='center bold'>'69727785</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@7785</td>
+            </tr><tr>
+                <td class='center'>72</td>
+                <td class='center bold'>'50304049</td>
+                <td>SMPK WONA KAKA</td>
+                <td>Prov. Nusa Tenggara Timur</td>
+                <td>Kab. Sumba Barat Daya</td>
+                <td class='center bold'>'50304049</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@4049</td>
+            </tr><tr>
+                <td class='center'>73</td>
+                <td class='center bold'>'60300337</td>
+                <td>SMP NEGERI 1 YENDIDORI</td>
+                <td>Prov. Papua</td>
+                <td>Kab. Biak Numfor</td>
+                <td class='center bold'>'60300337</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@0337</td>
+            </tr><tr>
+                <td class='center'>74</td>
+                <td class='center bold'>'60301712</td>
+                <td>SMP NEGERI 4 BIAK BARAT</td>
+                <td>Prov. Papua</td>
+                <td>Kab. Biak Numfor</td>
+                <td class='center bold'>'60301712</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@1712</td>
+            </tr><tr>
+                <td class='center'>75</td>
+                <td class='center bold'>'60303097</td>
+                <td>SMP NEGERI 1 ARSO</td>
+                <td>Prov. Papua</td>
+                <td>Kab. Keerom</td>
+                <td class='center bold'>'60303097</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@3097</td>
+            </tr><tr>
+                <td class='center'>76</td>
+                <td class='center bold'>'60303511</td>
+                <td>SMP NEGERI 5 ARSO</td>
+                <td>Prov. Papua</td>
+                <td>Kab. Keerom</td>
+                <td class='center bold'>'60303511</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@3511</td>
+            </tr><tr>
+                <td class='center'>77</td>
+                <td class='center bold'>'60303099</td>
+                <td>SMP NEGERI 6 ARSO</td>
+                <td>Prov. Papua</td>
+                <td>Kab. Keerom</td>
+                <td class='center bold'>'60303099</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@3099</td>
+            </tr><tr>
+                <td class='center'>78</td>
+                <td class='center bold'>'69725911</td>
+                <td>SMP NEGERI 7 YETTI</td>
+                <td>Prov. Papua</td>
+                <td>Kab. Keerom</td>
+                <td class='center bold'>'69725911</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@5911</td>
+            </tr><tr>
+                <td class='center'>79</td>
+                <td class='center bold'>'69964912</td>
+                <td>SMP SATU ATAP BOMPAI</td>
+                <td>Prov. Papua</td>
+                <td>Kab. Keerom</td>
+                <td class='center bold'>'69964912</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@4912</td>
+            </tr><tr>
+                <td class='center'>80</td>
+                <td class='center bold'>'70037364</td>
+                <td>SMP YPK BETLEHEM</td>
+                <td>Prov. Papua</td>
+                <td>Kab. Keerom</td>
+                <td class='center bold'>'70037364</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@7364</td>
+            </tr><tr>
+                <td class='center'>81</td>
+                <td class='center bold'>'69767772</td>
+                <td>SMP YPK ALFA OMEGA UREIFAISEI</td>
+                <td>Prov. Papua</td>
+                <td>Kab. Waropen</td>
+                <td class='center bold'>'69767772</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@7772</td>
+            </tr><tr>
+                <td class='center'>82</td>
+                <td class='center bold'>'60403622</td>
+                <td>SMP NEGERI 24 DATARAN ISIM</td>
+                <td>Prov. Papua Barat</td>
+                <td>Kab. Manokwari Selatan</td>
+                <td class='center bold'>'60403622</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@3622</td>
+            </tr><tr>
+                <td class='center'>83</td>
+                <td class='center bold'>'69889080</td>
+                <td>SMP SATAP MAWI</td>
+                <td>Prov. Papua Barat</td>
+                <td>Kab. Manokwari Selatan</td>
+                <td class='center bold'>'69889080</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@9080</td>
+            </tr><tr>
+                <td class='center'>84</td>
+                <td class='center bold'>'60403872</td>
+                <td>SMP NEGERI 05 CATUBOUW</td>
+                <td>Prov. Papua Barat</td>
+                <td>Kab. Pegunungan Arfak</td>
+                <td class='center bold'>'60403872</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@3872</td>
+            </tr><tr>
+                <td class='center'>85</td>
+                <td class='center bold'>'60401946</td>
+                <td>SMPN SIBENA</td>
+                <td>Prov. Papua Barat</td>
+                <td>Kab. Teluk Bintuni</td>
+                <td class='center bold'>'60401946</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@1946</td>
+            </tr><tr>
+                <td class='center'>86</td>
+                <td class='center bold'>'70035490</td>
+                <td>SMP Negeri 31 Kabupaten Sorong</td>
+                <td>Prov. Papua Barat Daya</td>
+                <td>Kab. Sorong</td>
+                <td class='center bold'>'70035490</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@5490</td>
+            </tr><tr>
+                <td class='center'>87</td>
+                <td class='center bold'>'60301553</td>
+                <td>SMP KRISTEN BALIEM TERPADU</td>
+                <td>Prov. Papua Pegunungan</td>
+                <td>Kab. Jayawijaya</td>
+                <td class='center bold'>'60301553</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@1553</td>
+            </tr><tr>
+                <td class='center'>88</td>
+                <td class='center bold'>'69896511</td>
+                <td>SMP KRISTEN BIJI SESAWI WAMENA</td>
+                <td>Prov. Papua Pegunungan</td>
+                <td>Kab. Jayawijaya</td>
+                <td class='center bold'>'69896511</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@6511</td>
+            </tr><tr>
+                <td class='center'>89</td>
+                <td class='center bold'>'60301554</td>
+                <td>SMP KRISTEN WAMENA</td>
+                <td>Prov. Papua Pegunungan</td>
+                <td>Kab. Jayawijaya</td>
+                <td class='center bold'>'60301554</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@1554</td>
+            </tr><tr>
+                <td class='center'>90</td>
+                <td class='center bold'>'60300791</td>
+                <td>SMP NEGERI 1 ASOLOGAIMA</td>
+                <td>Prov. Papua Pegunungan</td>
+                <td>Kab. Jayawijaya</td>
+                <td class='center bold'>'60300791</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@0791</td>
+            </tr><tr>
+                <td class='center'>91</td>
+                <td class='center bold'>'60301557</td>
+                <td>SMP NEGERI I KURULU</td>
+                <td>Prov. Papua Pegunungan</td>
+                <td>Kab. Jayawijaya</td>
+                <td class='center bold'>'60301557</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@1557</td>
+            </tr><tr>
+                <td class='center'>92</td>
+                <td class='center bold'>'60303892</td>
+                <td>SMP NEGERI TAGIME</td>
+                <td>Prov. Papua Pegunungan</td>
+                <td>Kab. Jayawijaya</td>
+                <td class='center bold'>'60303892</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@3892</td>
+            </tr><tr>
+                <td class='center'>93</td>
+                <td class='center bold'>'69980270</td>
+                <td>SMP YAPESLI WAMENA</td>
+                <td>Prov. Papua Pegunungan</td>
+                <td>Kab. Jayawijaya</td>
+                <td class='center bold'>'69980270</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@0270</td>
+            </tr><tr>
+                <td class='center'>94</td>
+                <td class='center bold'>'60302960</td>
+                <td>SMP YASORES WAMENA</td>
+                <td>Prov. Papua Pegunungan</td>
+                <td>Kab. Jayawijaya</td>
+                <td class='center bold'>'60302960</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@2960</td>
+            </tr><tr>
+                <td class='center'>95</td>
+                <td class='center bold'>'60301587</td>
+                <td>SMP YPPGI ANIGOU WAMENA</td>
+                <td>Prov. Papua Pegunungan</td>
+                <td>Kab. Jayawijaya</td>
+                <td class='center bold'>'60301587</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@1587</td>
+            </tr><tr>
+                <td class='center'>96</td>
+                <td class='center bold'>'60303329</td>
+                <td>SMP NINIA</td>
+                <td>Prov. Papua Pegunungan</td>
+                <td>Kab. Yahukimo</td>
+                <td class='center bold'>'60303329</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@3329</td>
+            </tr><tr>
+                <td class='center'>97</td>
+                <td class='center bold'>'70034555</td>
+                <td>SMP ANUGERAH TERINDAH</td>
+                <td>Prov. Papua Selatan</td>
+                <td>Kab. Boven Digoel</td>
+                <td class='center bold'>'70034555</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@4555</td>
+            </tr><tr>
+                <td class='center'>98</td>
+                <td class='center bold'>'69980064</td>
+                <td>SMP Negeri 2 Krounjendit Mindiptana</td>
+                <td>Prov. Papua Selatan</td>
+                <td>Kab. Boven Digoel</td>
+                <td class='center bold'>'69980064</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@0064</td>
+            </tr><tr>
+                <td class='center'>99</td>
+                <td class='center bold'>'60303792</td>
+                <td>SMP NEGERI 1 DOGIYAI</td>
+                <td>Prov. Papua Tengah</td>
+                <td>Kab. Dogiyai</td>
+                <td class='center bold'>'60303792</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@3792</td>
+            </tr><tr>
+                <td class='center'>100</td>
+                <td class='center bold'>'60304164</td>
+                <td>SMP NEGERI 1 KAMU TIMUR</td>
+                <td>Prov. Papua Tengah</td>
+                <td>Kab. Dogiyai</td>
+                <td class='center bold'>'60304164</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@4164</td>
+            </tr><tr>
+                <td class='center'>101</td>
+                <td class='center bold'>'60300804</td>
+                <td>SMP YPPGI GOLGUTA IKRAR</td>
+                <td>Prov. Papua Tengah</td>
+                <td>Kab. Dogiyai</td>
+                <td class='center bold'>'60300804</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@0804</td>
+            </tr><tr>
+                <td class='center'>102</td>
+                <td class='center bold'>'60302872</td>
+                <td>SMP NEGERI 6 MIMIKA</td>
+                <td>Prov. Papua Tengah</td>
+                <td>Kab. Mimika</td>
+                <td class='center bold'>'60302872</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@2872</td>
+            </tr><tr>
+                <td class='center'>103</td>
+                <td class='center bold'>'69859734</td>
+                <td>SMP NEGERI 9 MIMIKA</td>
+                <td>Prov. Papua Tengah</td>
+                <td>Kab. Mimika</td>
+                <td class='center bold'>'69859734</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@9734</td>
+            </tr><tr>
+                <td class='center'>104</td>
+                <td class='center bold'>'70013168</td>
+                <td>SMP YAPIS AL-IJTIHAAD MADI</td>
+                <td>Prov. Papua Tengah</td>
+                <td>Kab. Paniai</td>
+                <td class='center bold'>'70013168</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@3168</td>
+            </tr><tr>
+                <td class='center'>105</td>
+                <td class='center bold'>'70013167</td>
+                <td>SMP YPPGI KEPAS KOPO</td>
+                <td>Prov. Papua Tengah</td>
+                <td>Kab. Paniai</td>
+                <td class='center bold'>'70013167</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@3167</td>
+            </tr><tr>
+                <td class='center'>106</td>
+                <td class='center bold'>'60302447</td>
+                <td>SMP YPPK EPOUTO</td>
+                <td>Prov. Papua Tengah</td>
+                <td>Kab. Paniai</td>
+                <td class='center bold'>'60302447</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@2447</td>
+            </tr><tr>
+                <td class='center'>107</td>
+                <td class='center bold'>'10494439</td>
+                <td>SMPN SATU ATAP BELANTARAYA</td>
+                <td>Prov. Riau</td>
+                <td>Kab. Indragiri Hilir</td>
+                <td class='center bold'>'10494439</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@4439</td>
+            </tr><tr>
+                <td class='center'>108</td>
+                <td class='center bold'>'69855408</td>
+                <td>UPT SMP NEGERI SATU ATAP BALUNG</td>
+                <td>Prov. Riau</td>
+                <td>Kab. Kampar</td>
+                <td class='center bold'>'69855408</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@5408</td>
+            </tr><tr>
+                <td class='center'>109</td>
+                <td class='center bold'>'10495302</td>
+                <td>SMP NEGERI 3 PULAU MERBAU</td>
+                <td>Prov. Riau</td>
+                <td>Kab. Kepulauan Meranti</td>
+                <td class='center bold'>'10495302</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@5302</td>
+            </tr><tr>
+                <td class='center'>110</td>
+                <td class='center bold'>'69939832</td>
+                <td>SMP NEGERI 4 MERBAU</td>
+                <td>Prov. Riau</td>
+                <td>Kab. Kepulauan Meranti</td>
+                <td class='center bold'>'69939832</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@9832</td>
+            </tr><tr>
+                <td class='center'>111</td>
+                <td class='center bold'>'69815329</td>
+                <td>SMP NEGERI 5 PULAU MERBAU</td>
+                <td>Prov. Riau</td>
+                <td>Kab. Kepulauan Meranti</td>
+                <td class='center bold'>'69815329</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@5329</td>
+            </tr><tr>
+                <td class='center'>112</td>
+                <td class='center bold'>'10495432</td>
+                <td>SMP NEGERI 6 RANGSANG</td>
+                <td>Prov. Riau</td>
+                <td>Kab. Kepulauan Meranti</td>
+                <td class='center bold'>'10495432</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@5432</td>
+            </tr><tr>
+                <td class='center'>113</td>
+                <td class='center bold'>'10495613</td>
+                <td>SMP NEGERI 6 ROKAN IV KOTO</td>
+                <td>Prov. Riau</td>
+                <td>Kab. Rokan Hulu</td>
+                <td class='center bold'>'10495613</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@5613</td>
+            </tr><tr>
+                <td class='center'>114</td>
+                <td class='center bold'>'69988384</td>
+                <td>SMP SWASTA PUTRI SION YUSMARSAH</td>
+                <td>Prov. Riau</td>
+                <td>Kab. Rokan Hulu</td>
+                <td class='center bold'>'69988384</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@8384</td>
+            </tr><tr>
+                <td class='center'>115</td>
+                <td class='center bold'>'40604265</td>
+                <td>SMP NEGERI 2 SATAP MESSAWA</td>
+                <td>Prov. Sulawesi Barat</td>
+                <td>Kab. Mamasa</td>
+                <td class='center bold'>'40604265</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@4265</td>
+            </tr><tr>
+                <td class='center'>116</td>
+                <td class='center bold'>'69908989</td>
+                <td>SMP NEGERI 3 PANA</td>
+                <td>Prov. Sulawesi Barat</td>
+                <td>Kab. Mamasa</td>
+                <td class='center bold'>'69908989</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@8989</td>
+            </tr><tr>
+                <td class='center'>117</td>
+                <td class='center bold'>'40605711</td>
+                <td>SMP SWASTA BERBUDI KOPIAN</td>
+                <td>Prov. Sulawesi Barat</td>
+                <td>Kab. Mamasa</td>
+                <td class='center bold'>'40605711</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@5711</td>
+            </tr><tr>
+                <td class='center'>118</td>
+                <td class='center bold'>'40602674</td>
+                <td>SMP TUNAS HARAPAN BURANA</td>
+                <td>Prov. Sulawesi Barat</td>
+                <td>Kab. Mamasa</td>
+                <td class='center bold'>'40602674</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@2674</td>
+            </tr><tr>
+                <td class='center'>119</td>
+                <td class='center bold'>'69978925</td>
+                <td>SMPS CAHAYA CLARA</td>
+                <td>Prov. Sulawesi Barat</td>
+                <td>Kab. Mamasa</td>
+                <td class='center bold'>'69978925</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@8925</td>
+            </tr><tr>
+                <td class='center'>120</td>
+                <td class='center bold'>'40604546</td>
+                <td>SMP NEGERI 2 KALUMPANG</td>
+                <td>Prov. Sulawesi Barat</td>
+                <td>Kab. Mamuju</td>
+                <td class='center bold'>'40604546</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@4546</td>
+            </tr><tr>
+                <td class='center'>121</td>
+                <td class='center bold'>'40604823</td>
+                <td>SMPN 3 Kalumpang</td>
+                <td>Prov. Sulawesi Barat</td>
+                <td>Kab. Mamuju</td>
+                <td class='center bold'>'40604823</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@4823</td>
+            </tr><tr>
+                <td class='center'>122</td>
+                <td class='center bold'>'69973024</td>
+                <td>UPTD SMP NEGERI SATU ATAP SALULEBO</td>
+                <td>Prov. Sulawesi Barat</td>
+                <td>Kab. Mamuju Tengah</td>
+                <td class='center bold'>'69973024</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@3024</td>
+            </tr><tr>
+                <td class='center'>123</td>
+                <td class='center bold'>'40605719</td>
+                <td>SMP NEGERI SATAP DAALA TIMUR</td>
+                <td>Prov. Sulawesi Barat</td>
+                <td>Kab. Polewali Mandar</td>
+                <td class='center bold'>'40605719</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@5719</td>
+            </tr><tr>
+                <td class='center'>124</td>
+                <td class='center bold'>'69788001</td>
+                <td>SMP NEGERI SATU ATAP PUPPURING</td>
+                <td>Prov. Sulawesi Barat</td>
+                <td>Kab. Polewali Mandar</td>
+                <td class='center bold'>'69788001</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@8001</td>
+            </tr><tr>
+                <td class='center'>125</td>
+                <td class='center bold'>'40309285</td>
+                <td>SMP NEGERI SATAP KAILI</td>
+                <td>Prov. Sulawesi Selatan</td>
+                <td>Kab. Luwu</td>
+                <td class='center bold'>'40309285</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@9285</td>
+            </tr><tr>
+                <td class='center'>126</td>
+                <td class='center bold'>'40309280</td>
+                <td>SMP PESANTREN SINERGI MULYA</td>
+                <td>Prov. Sulawesi Selatan</td>
+                <td>Kab. Luwu</td>
+                <td class='center bold'>'40309280</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@9280</td>
+            </tr><tr>
+                <td class='center'>127</td>
+                <td class='center bold'>'40314258</td>
+                <td>SMPN 1 ULUSALU</td>
+                <td>Prov. Sulawesi Selatan</td>
+                <td>Kab. Luwu</td>
+                <td class='center bold'>'40314258</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@4258</td>
+            </tr><tr>
+                <td class='center'>128</td>
+                <td class='center bold'>'40318173</td>
+                <td>SMPN SATAP DAMPAN</td>
+                <td>Prov. Sulawesi Selatan</td>
+                <td>Kab. Luwu</td>
+                <td class='center bold'>'40318173</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@8173</td>
+            </tr><tr>
+                <td class='center'>129</td>
+                <td class='center bold'>'69886182</td>
+                <td>UPT SMPN 13 SATAP LIUKANG TANGAYA</td>
+                <td>Prov. Sulawesi Selatan</td>
+                <td>Kab. Pangkajene Dan Kepulauan</td>
+                <td class='center bold'>'69886182</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@6182</td>
+            </tr><tr>
+                <td class='center'>130</td>
+                <td class='center bold'>'40309799</td>
+                <td>UPT SMPN 1 SIMBUANG</td>
+                <td>Prov. Sulawesi Selatan</td>
+                <td>Kab. Tana Toraja</td>
+                <td class='center bold'>'40309799</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@9799</td>
+            </tr><tr>
+                <td class='center'>131</td>
+                <td class='center bold'>'40316759</td>
+                <td>UPT SMPN 3 BONGGAKARADENG</td>
+                <td>Prov. Sulawesi Selatan</td>
+                <td>Kab. Tana Toraja</td>
+                <td class='center bold'>'40316759</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@6759</td>
+            </tr><tr>
+                <td class='center'>132</td>
+                <td class='center bold'>'40309766</td>
+                <td>UPT SMPN SATAP 2 SIMBUANG</td>
+                <td>Prov. Sulawesi Selatan</td>
+                <td>Kab. Tana Toraja</td>
+                <td class='center bold'>'40309766</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@9766</td>
+            </tr><tr>
+                <td class='center'>133</td>
+                <td class='center bold'>'40318116</td>
+                <td>UPT SMPN SATAP 3 MAPPAK</td>
+                <td>Prov. Sulawesi Selatan</td>
+                <td>Kab. Tana Toraja</td>
+                <td class='center bold'>'40318116</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@8116</td>
+            </tr><tr>
+                <td class='center'>134</td>
+                <td class='center bold'>'40318439</td>
+                <td>SMP NEGERI 3 BARUPPU SATAP</td>
+                <td>Prov. Sulawesi Selatan</td>
+                <td>Kab. Toraja Utara</td>
+                <td class='center bold'>'40318439</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@8439</td>
+            </tr><tr>
+                <td class='center'>135</td>
+                <td class='center bold'>'69770321</td>
+                <td>SMP LPPKD Tolongano</td>
+                <td>Prov. Sulawesi Tengah</td>
+                <td>Kab. Donggala</td>
+                <td class='center bold'>'69770321</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@0321</td>
+            </tr><tr>
+                <td class='center'>136</td>
+                <td class='center bold'>'40200663</td>
+                <td>SMP NEGERI 2 SOJOL</td>
+                <td>Prov. Sulawesi Tengah</td>
+                <td>Kab. Donggala</td>
+                <td class='center bold'>'40200663</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@0663</td>
+            </tr><tr>
+                <td class='center'>137</td>
+                <td class='center bold'>'69765063</td>
+                <td>SMP NEGERI 3 LABUAN</td>
+                <td>Prov. Sulawesi Tengah</td>
+                <td>Kab. Donggala</td>
+                <td class='center bold'>'69765063</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@5063</td>
+            </tr><tr>
+                <td class='center'>138</td>
+                <td class='center bold'>'40200637</td>
+                <td>SMP NEGERI 4 DAMPELAS</td>
+                <td>Prov. Sulawesi Tengah</td>
+                <td>Kab. Donggala</td>
+                <td class='center bold'>'40200637</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@0637</td>
+            </tr><tr>
+                <td class='center'>139</td>
+                <td class='center bold'>'69762722</td>
+                <td>SMP NEGERI 8 Satap Mbuwu Banawa Selatan</td>
+                <td>Prov. Sulawesi Tengah</td>
+                <td>Kab. Donggala</td>
+                <td class='center bold'>'69762722</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@2722</td>
+            </tr><tr>
+                <td class='center'>140</td>
+                <td class='center bold'>'69787776</td>
+                <td>SMP NEGERI SATAP 4 SINDUE TOBATA</td>
+                <td>Prov. Sulawesi Tengah</td>
+                <td>Kab. Donggala</td>
+                <td class='center bold'>'69787776</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@7776</td>
+            </tr><tr>
+                <td class='center'>141</td>
+                <td class='center bold'>'69896187</td>
+                <td>SMPN 7 Balaesang Tanjung</td>
+                <td>Prov. Sulawesi Tengah</td>
+                <td>Kab. Donggala</td>
+                <td class='center bold'>'69896187</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@6187</td>
+            </tr><tr>
+                <td class='center'>142</td>
+                <td class='center bold'>'69786467</td>
+                <td>SMPN SATAP 5 BALAESANG</td>
+                <td>Prov. Sulawesi Tengah</td>
+                <td>Kab. Donggala</td>
+                <td class='center bold'>'69786467</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@6467</td>
+            </tr><tr>
+                <td class='center'>143</td>
+                <td class='center bold'>'40206269</td>
+                <td>SMPN SATAP 7 DAMPELAS</td>
+                <td>Prov. Sulawesi Tengah</td>
+                <td>Kab. Donggala</td>
+                <td class='center bold'>'40206269</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@6269</td>
+            </tr><tr>
+                <td class='center'>144</td>
+                <td class='center bold'>'40200669</td>
+                <td>SMP NEGERI 14 SIGI</td>
+                <td>Prov. Sulawesi Tengah</td>
+                <td>Kab. Sigi</td>
+                <td class='center bold'>'40200669</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@0669</td>
+            </tr><tr>
+                <td class='center'>145</td>
+                <td class='center bold'>'69760832</td>
+                <td>SMP NEGERI 25 POLEANG BARAT</td>
+                <td>Prov. Sulawesi Tenggara</td>
+                <td>Kab. Bombana</td>
+                <td class='center bold'>'69760832</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@0832</td>
+            </tr><tr>
+                <td class='center'>146</td>
+                <td class='center bold'>'40404877</td>
+                <td>SMP NEGERI 3 KULISUSU UTARA</td>
+                <td>Prov. Sulawesi Tenggara</td>
+                <td>Kab. Buton Utara</td>
+                <td class='center bold'>'40404877</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@4877</td>
+            </tr><tr>
+                <td class='center'>147</td>
+                <td class='center bold'>'40403724</td>
+                <td>SMP NEGERI 5 WATUBANGGA</td>
+                <td>Prov. Sulawesi Tenggara</td>
+                <td>Kab. Kolaka</td>
+                <td class='center bold'>'40403724</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@3724</td>
+            </tr><tr>
+                <td class='center'>148</td>
+                <td class='center bold'>'69953300</td>
+                <td>SMPN SATAP 1 TANGGETADA</td>
+                <td>Prov. Sulawesi Tenggara</td>
+                <td>Kab. Kolaka</td>
+                <td class='center bold'>'69953300</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@3300</td>
+            </tr><tr>
+                <td class='center'>149</td>
+                <td class='center bold'>'69820628</td>
+                <td>SMP NEGERI SATAP 2 AERE</td>
+                <td>Prov. Sulawesi Tenggara</td>
+                <td>Kab. Kolaka Timur</td>
+                <td class='center bold'>'69820628</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@0628</td>
+            </tr><tr>
+                <td class='center'>150</td>
+                <td class='center bold'>'40405253</td>
+                <td>SMP Negeri Satu Atap 9 Kolaka Utara</td>
+                <td>Prov. Sulawesi Tenggara</td>
+                <td>Kab. Kolaka Utara</td>
+                <td class='center bold'>'40405253</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@5253</td>
+            </tr><tr>
+                <td class='center'>151</td>
+                <td class='center bold'>'69961531</td>
+                <td>SMP KRISTEN CAHAYA BANGSA TUAPEJAT</td>
+                <td>Prov. Sumatera Barat</td>
+                <td>Kab. Kepulauan Mentawai</td>
+                <td class='center bold'>'69961531</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@1531</td>
+            </tr><tr>
+                <td class='center'>152</td>
+                <td class='center bold'>'10310814</td>
+                <td>SMP LENTERA HARAPAN SIBERUT SELATAN</td>
+                <td>Prov. Sumatera Barat</td>
+                <td>Kab. Kepulauan Mentawai</td>
+                <td class='center bold'>'10310814</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@0814</td>
+            </tr><tr>
+                <td class='center'>153</td>
+                <td class='center bold'>'70013741</td>
+                <td>SMP NEGERI 3 SIBERUT BARAT DAYA</td>
+                <td>Prov. Sumatera Barat</td>
+                <td>Kab. Kepulauan Mentawai</td>
+                <td class='center bold'>'70013741</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@3741</td>
+            </tr><tr>
+                <td class='center'>154</td>
+                <td class='center bold'>'10307826</td>
+                <td>SMP N 4 HILIRAN GUMANTI</td>
+                <td>Prov. Sumatera Barat</td>
+                <td>Kab. Solok</td>
+                <td class='center bold'>'10307826</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@7826</td>
+            </tr><tr>
+                <td class='center'>155</td>
+                <td class='center bold'>'10306959</td>
+                <td>SMP NEGERI 18 SOLOK SELATAN</td>
+                <td>Prov. Sumatera Barat</td>
+                <td>Kab. Solok Selatan</td>
+                <td class='center bold'>'10306959</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@6959</td>
+            </tr><tr>
+                <td class='center'>156</td>
+                <td class='center bold'>'70013289</td>
+                <td>SMP NEGERI 14 BAYUNG LENCIR</td>
+                <td>Prov. Sumatera Selatan</td>
+                <td>Kab. Musi Banyuasin</td>
+                <td class='center bold'>'70013289</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@3289</td>
+            </tr><tr>
+                <td class='center'>157</td>
+                <td class='center bold'>'10646488</td>
+                <td>SMP NEGERI PULAU LEBAR</td>
+                <td>Prov. Sumatera Selatan</td>
+                <td>Kab. Musi Rawas Utara</td>
+                <td class='center bold'>'10646488</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@6488</td>
+            </tr><tr>
+                <td class='center'>158</td>
+                <td class='center bold'>'70001923</td>
+                <td>SMP NEGERI SUNGAI LANANG</td>
+                <td>Prov. Sumatera Selatan</td>
+                <td>Kab. Musi Rawas Utara</td>
+                <td class='center bold'>'70001923</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@1923</td>
+            </tr><tr>
+                <td class='center'>159</td>
+                <td class='center bold'>'10645855</td>
+                <td>SMPN 3 CENGAL</td>
+                <td>Prov. Sumatera Selatan</td>
+                <td>Kab. Ogan Komering Ilir</td>
+                <td class='center bold'>'10645855</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@5855</td>
+            </tr><tr>
+                <td class='center'>160</td>
+                <td class='center bold'>'70013629</td>
+                <td>SMP-IP YAYASAN ABDUS SALAM</td>
+                <td>Prov. Sumatera Selatan</td>
+                <td>Kab. Ogan Komering Ulu Selatan</td>
+                <td class='center bold'>'70013629</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@3629</td>
+            </tr><tr>
+                <td class='center'>161</td>
+                <td class='center bold'>'10646106</td>
+                <td>UPT SMP NEGERI 2 BPR RANAU TENGAH</td>
+                <td>Prov. Sumatera Selatan</td>
+                <td>Kab. Ogan Komering Ulu Selatan</td>
+                <td class='center bold'>'10646106</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@6106</td>
+            </tr><tr>
+                <td class='center'>162</td>
+                <td class='center bold'>'10212741</td>
+                <td>SMP NEGERI 1 BOTOMUZOI</td>
+                <td>Prov. Sumatera Utara</td>
+                <td>Kab. Nias</td>
+                <td class='center bold'>'10212741</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@2741</td>
+            </tr><tr>
+                <td class='center'>163</td>
+                <td class='center bold'>'10260046</td>
+                <td>SMP NEGERI 1 MAU</td>
+                <td>Prov. Sumatera Utara</td>
+                <td>Kab. Nias</td>
+                <td class='center bold'>'10260046</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@0046</td>
+            </tr><tr>
+                <td class='center'>164</td>
+                <td class='center bold'>'10260074</td>
+                <td>SMP NEGERI 2 HILIDUHO</td>
+                <td>Prov. Sumatera Utara</td>
+                <td>Kab. Nias</td>
+                <td class='center bold'>'10260074</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@0074</td>
+            </tr><tr>
+                <td class='center'>165</td>
+                <td class='center bold'>'69761856</td>
+                <td>SMP Negeri 2 Ma u</td>
+                <td>Prov. Sumatera Utara</td>
+                <td>Kab. Nias</td>
+                <td class='center bold'>'69761856</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@1856</td>
+            </tr><tr>
+                <td class='center'>166</td>
+                <td class='center bold'>'10258404</td>
+                <td>SMP NEGERI 3 BAWOLATO</td>
+                <td>Prov. Sumatera Utara</td>
+                <td>Kab. Nias</td>
+                <td class='center bold'>'10258404</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@8404</td>
+            </tr><tr>
+                <td class='center'>167</td>
+                <td class='center bold'>'60726295</td>
+                <td>SMP NEGERI 4 GIDO</td>
+                <td>Prov. Sumatera Utara</td>
+                <td>Kab. Nias</td>
+                <td class='center bold'>'60726295</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@6295</td>
+            </tr><tr>
+                <td class='center'>168</td>
+                <td class='center bold'>'69725692</td>
+                <td>SMPN 5 Bawolato</td>
+                <td>Prov. Sumatera Utara</td>
+                <td>Kab. Nias</td>
+                <td class='center bold'>'69725692</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@5692</td>
+            </tr><tr>
+                <td class='center'>169</td>
+                <td class='center bold'>'10258377</td>
+                <td>UPTD SMP NEGERI 1 MORO O</td>
+                <td>Prov. Sumatera Utara</td>
+                <td>Kab. Nias Barat</td>
+                <td class='center bold'>'10258377</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@8377</td>
+            </tr><tr>
+                <td class='center'>170</td>
+                <td class='center bold'>'10260550</td>
+                <td>SMP NEGERI 3 HURUNA</td>
+                <td>Prov. Sumatera Utara</td>
+                <td>Kab. Nias Selatan</td>
+                <td class='center bold'>'10260550</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@0550</td>
+            </tr><tr>
+                <td class='center'>171</td>
+                <td class='center bold'>'10258690</td>
+                <td>SMP N 2 NAMOHALU ESIWA</td>
+                <td>Prov. Sumatera Utara</td>
+                <td>Kab. Nias Utara</td>
+                <td class='center bold'>'10258690</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@8690</td>
+            </tr><tr>
+                <td class='center'>172</td>
+                <td class='center bold'>'10212754</td>
+                <td>SMP N 3 ALASA TALUMUZOI</td>
+                <td>Prov. Sumatera Utara</td>
+                <td>Kab. Nias Utara</td>
+                <td class='center bold'>'10212754</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@2754</td>
+            </tr><tr>
+                <td class='center'>173</td>
+                <td class='center bold'>'69943460</td>
+                <td>SMP NEGERI 5 LAHEWA</td>
+                <td>Prov. Sumatera Utara</td>
+                <td>Kab. Nias Utara</td>
+                <td class='center bold'>'69943460</td>
+                <td class='center bold' style='background-color: #f0fdf4; color: #166534;'>Bantek@3460</td>
+            </tr></tbody></table></body></html>

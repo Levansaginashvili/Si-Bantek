@@ -17,10 +17,22 @@ class Sekolah extends Model
         'provinsi',
         'kabupaten',
         'alamat',
+        'rt',
+        'rw',
+        'nomor_bangunan',
+        'desa_kelurahan',
+        'kecamatan',
+        'kode_pos',
         'nama_kepsek',
         'nip_kepsek',
         'nama_bendahara',
         'nip_bendahara',
+        'nama_bank',
+        'nomor_rekening',
+        'atas_nama_rekening',
+        'no_telepon',
+        'email_sekolah',
+        'nama_ketua_komite',
         'status_dana',
         'status_dokumen',
     ];
@@ -48,7 +60,6 @@ class Sekolah extends Model
     public function updateStatusDokumen(): void
     {
         // Tabel 5.1 Panlak — Dokumen Pendukung Laporan
-        // No. 11 (Bukti Setor Sisa Dana) bersifat opsional
         $requiredTypes = [
             'pks',
             'pakta_integritas',
@@ -64,8 +75,15 @@ class Sekolah extends Model
             'laporan_akhir',
             'pengantar_lpj',
             'lpj',
-            // 'bukti_setor_sisa_dana' — opsional, tidak wajib
         ];
+
+        // Sisa dana logic: Jika total belanja RAB < 69.364.000, bukti_setor_sisa_dana menjadi WAJIB
+        $totalBelanja = $this->rab ? (float) $this->rab->total_harga : 0;
+        $sisaDana = max(0, 69364000 - $totalBelanja);
+
+        if ($sisaDana > 0 && $this->rab && $this->rab->status === 'Disetujui') {
+            $requiredTypes[] = 'bukti_setor_sisa_dana';
+        }
 
         $approvedCount = $this->dokumens()
             ->whereIn('jenis_dokumen', $requiredTypes)

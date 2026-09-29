@@ -75,7 +75,7 @@ return new class extends Migration
         Schema::dropIfExists('inventaris_laptops');
         Schema::dropIfExists('rabs');
         Schema::dropIfExists('dokumens');
-        
+
         Schema::table('users', function (Blueprint $table) {
             $table->dropForeign(['sekolah_id']);
             $table->dropColumn(['username', 'nip', 'npsn', 'role', 'sekolah_id']);
