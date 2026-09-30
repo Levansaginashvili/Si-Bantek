@@ -24,7 +24,7 @@ class VerifikatorController extends Controller
             ->get()
             ->map(function ($s) {
                 $totalRab = $s->rab ? (float) $s->rab->total_harga : 0;
-                $sisaDana = max(0, 69364000 - $totalRab);
+                $rawSisaDana = max(0, 69364000 - $totalRab);
                 $buktiSetorDoc = $s->dokumens->firstWhere('jenis_dokumen', 'bukti_setor_sisa_dana');
 
                 $rabApproved = $s->rab && $s->rab->status === 'Disetujui';
@@ -51,22 +51,29 @@ class VerifikatorController extends Controller
                     }
                 }
 
-                $statusPengembalian = 'Uang Pas';
-                if ($sisaDana > 0) {
-                    if ($buktiSetorDoc && $buktiSetorDoc->status === 'Disetujui') {
-                        $statusPengembalian = 'Sudah Dikembalikan';
-                    } elseif ($buktiSetorDoc && $buktiSetorDoc->status === 'Menunggu Verifikasi') {
-                        $statusPengembalian = 'Menunggu Verifikasi';
-                    } elseif ($buktiSetorDoc && $buktiSetorDoc->status === 'Revisi') {
-                        $statusPengembalian = 'Revisi';
-                    } elseif ($currentStage >= 7) {
-                        $statusPengembalian = 'Belum Dikembalikan';
+                $sisaDana = null;
+                $statusPengembalian = null;
+
+                if ($danaDisalurkan) {
+                    $sisaDana = $rawSisaDana;
+                    if ($sisaDana == 0) {
+                        $statusPengembalian = 'Uang Pas';
                     } else {
-                        $statusPengembalian = 'Belum Tahap LPJ';
+                        if ($buktiSetorDoc && $buktiSetorDoc->status === 'Disetujui') {
+                            $statusPengembalian = 'Sudah Dikembalikan';
+                        } elseif ($buktiSetorDoc && $buktiSetorDoc->status === 'Menunggu Verifikasi') {
+                            $statusPengembalian = 'Menunggu Verifikasi';
+                        } elseif ($buktiSetorDoc && $buktiSetorDoc->status === 'Revisi') {
+                            $statusPengembalian = 'Revisi';
+                        } elseif ($currentStage >= 7) {
+                            $statusPengembalian = 'Belum Dikembalikan';
+                        } else {
+                            $statusPengembalian = null;
+                        }
                     }
                 }
 
-                $targetDokumen = ($sisaDana > 0 && $rabApproved) ? 15 : 14;
+                $targetDokumen = ($rawSisaDana > 0 && $rabApproved) ? 15 : 14;
 
                 return [
                     'id' => $s->id,

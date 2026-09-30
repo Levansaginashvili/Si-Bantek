@@ -25,6 +25,7 @@ class ProfileController extends Controller
                 'username' => $user->username,
                 'nip' => $user->nip,
                 'jabatan' => $user->jabatan,
+                'alamat' => $user->alamat,
                 'npsn' => $user->npsn,
                 'email' => $user->email,
                 'role' => $user->role,
@@ -55,12 +56,14 @@ class ProfileController extends Controller
                 'name' => ['required', 'string', 'max:255'],
                 'nip' => ['required', 'string', 'max:50', Rule::unique('users')->ignore($user->id)],
                 'jabatan' => ['nullable', 'string', 'max:255'],
+                'alamat' => ['nullable', 'string', 'max:500'],
                 'password' => ['nullable', 'string', 'min:8'],
             ]);
 
             $user->name = $validated['name'];
             $user->nip = $validated['nip'];
             $user->jabatan = $validated['jabatan'] ?? null;
+            $user->alamat = $validated['alamat'] ?? null;
             if (! empty($validated['password'])) {
                 $user->password = Hash::make($validated['password']);
             }

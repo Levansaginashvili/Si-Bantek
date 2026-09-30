@@ -40,7 +40,7 @@ class AdminController extends Controller
     public function users(): Response
     {
         $users = User::with('sekolah:id,nama_sekolah,npsn')
-            ->select('id', 'name', 'username', 'nip', 'jabatan', 'npsn', 'email', 'role', 'status', 'catatan_nonaktif', 'sekolah_id', 'created_at')
+            ->select('id', 'name', 'username', 'nip', 'jabatan', 'alamat', 'npsn', 'email', 'role', 'status', 'catatan_nonaktif', 'sekolah_id', 'created_at')
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -58,6 +58,7 @@ class AdminController extends Controller
                 'name' => ['required', 'string', 'max:255'],
                 'nip' => ['required', 'string', 'max:50', 'unique:users,nip'],
                 'jabatan' => ['nullable', 'string', 'max:255'],
+                'alamat' => ['nullable', 'string', 'max:500'],
                 'password' => ['required', 'string', 'min:8'],
             ]);
 
@@ -65,6 +66,7 @@ class AdminController extends Controller
                 'name' => $validated['name'],
                 'nip' => $validated['nip'],
                 'jabatan' => $validated['jabatan'] ?? 'Pejabat Pembuat Komitmen (PPK)',
+                'alamat' => $validated['alamat'] ?? 'Kompleks Kemendikbudristek Gedung E Lt. 17, Jl. Jenderal Sudirman, Senayan, Jakarta Pusat',
                 'email' => $validated['nip'].'@sibantek.local',
                 'password' => Hash::make($validated['password']),
                 'role' => 'verifikator',
@@ -98,7 +100,7 @@ class AdminController extends Controller
                 'status' => 'aktif',
             ]);
 
-            // Initialize required documents & RAB for new school
+            // Initialize required documents for new school (RAB is created when school submits it)
             $types = [
                 'pks', 'pakta_integritas', 'sptjm', 'rab', 'laporan_awal',
                 'perbandingan_siplah', 'surat_pemesanan_siplah', 'invoice_siplah',
@@ -112,16 +114,6 @@ class AdminController extends Controller
                     'status' => 'Belum Diunggah',
                 ]);
             }
-
-            Rab::create([
-                'sekolah_id' => $sekolah->id,
-                'merek_tipe_laptop' => 'Chromebook / Laptop Standar TIK',
-                'spesifikasi_ringkas' => 'Processor 4 Core / 8 Thread, Layar 13-14 inch, RAM 8GB, SSD 256GB, OS GUI Legal',
-                'jumlah_unit' => 8,
-                'harga_satuan' => 8625000.00,
-                'total_harga' => 69000000.00,
-                'status' => 'Draft',
-            ]);
         }
 
         return redirect()->back()->with('success', 'Akun berhasil dibuat.');
@@ -136,6 +128,7 @@ class AdminController extends Controller
                 'name' => ['required', 'string', 'max:255'],
                 'nip' => ['required', 'string', 'max:50', Rule::unique('users', 'nip')->ignore($user->id)],
                 'jabatan' => ['nullable', 'string', 'max:255'],
+                'alamat' => ['nullable', 'string', 'max:500'],
                 'password' => ['nullable', 'string', 'min:8'],
             ]);
 
@@ -143,6 +136,7 @@ class AdminController extends Controller
                 'name' => $validated['name'],
                 'nip' => $validated['nip'],
                 'jabatan' => $validated['jabatan'] ?? $user->jabatan,
+                'alamat' => $validated['alamat'] ?? $user->alamat,
             ];
 
             if (! empty($validated['password'])) {

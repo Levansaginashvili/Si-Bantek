@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Hendro sucipto, S.Kom',
             'nip' => '197803152003121002',
             'jabatan' => 'Pejabat pembuat komitmen',
+            'alamat' => 'Kompleks Kemendikbudristek Gedung E Lt. 17, Jl. Jenderal Sudirman, Senayan, Jakarta Pusat',
             'email' => 'verifikator@kemendikdasmen.go.id',
             'password' => Hash::make('Verifikator#1234'),
             'role' => 'verifikator',

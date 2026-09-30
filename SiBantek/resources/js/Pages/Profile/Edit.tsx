@@ -10,6 +10,7 @@ interface Props {
         username?: string;
         nip?: string;
         jabatan?: string;
+        alamat?: string;
         npsn?: string;
         email?: string;
         role: string;
@@ -48,6 +49,7 @@ export default function ProfileEdit({ user, sekolah }: Props) {
         name: user.name || '',
         nip: user.nip || '',
         jabatan: user.jabatan || '',
+        alamat: user.alamat || '',
         password: '',
     });
 
@@ -187,6 +189,21 @@ export default function ProfileEdit({ user, sekolah }: Props) {
                                     className="block w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-sm focus:border-[#1e2d5a] focus:outline-none focus:ring-1 focus:ring-[#1e2d5a]"
                                 />
                                 {formVerifikator.errors.jabatan && <p className="mt-1 text-xs text-red-600">{formVerifikator.errors.jabatan}</p>}
+                            </div>
+
+                            <div>
+                                <label className="block text-xs font-medium text-slate-600 mb-1">Alamat Kantor / Instansi Verifikator (PPK)</label>
+                                <textarea
+                                    rows={2}
+                                    value={formVerifikator.data.alamat}
+                                    onChange={(e) => formVerifikator.setData('alamat', e.target.value)}
+                                    placeholder="Contoh: Kompleks Kemendikbudristek Gedung E Lt. 17, Jl. Jenderal Sudirman, Senayan, Jakarta Pusat"
+                                    className="block w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-sm focus:border-[#1e2d5a] focus:outline-none focus:ring-1 focus:ring-[#1e2d5a]"
+                                />
+                                <p className="mt-1 text-[11px] text-slate-400">
+                                    Alamat ini otomatis tercantum sebagai alamat PIHAK KEDUA pada Surat Perjanjian Kerjasama (PKS) dan dokumen resmi lainnya.
+                                </p>
+                                {formVerifikator.errors.alamat && <p className="mt-1 text-xs text-red-600">{formVerifikator.errors.alamat}</p>}
                             </div>
 
                             <div>

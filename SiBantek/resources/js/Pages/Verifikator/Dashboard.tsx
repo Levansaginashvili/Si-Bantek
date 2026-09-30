@@ -161,21 +161,25 @@ export default function VerifikatorDashboard({ sekolahs }: Props) {
                                                         </span>
                                                     </td>
                                                     <td className="px-5 py-3.5">
-                                                        {s.sisa_dana && s.sisa_dana > 0 ? (
+                                                        {s.status_dana !== 'Dana Sudah Disalurkan / Ditransfer' ? (
+                                                            <span className="text-xs text-slate-400 font-medium">-</span>
+                                                        ) : s.sisa_dana && s.sisa_dana > 0 ? (
                                                             <div>
                                                                 <p className="text-xs font-bold text-slate-700">Rp {fmt(s.sisa_dana)}</p>
-                                                                <span className={`inline-block mt-0.5 text-[10px] font-semibold px-2 py-0.5 rounded ${
-                                                                    s.status_pengembalian === 'Sudah Dikembalikan'
-                                                                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                                                                        : s.status_pengembalian === 'Menunggu Verifikasi'
-                                                                        ? 'bg-amber-50 text-amber-700 border border-amber-200'
-                                                                        : 'bg-red-50 text-red-700 border border-red-200'
-                                                                }`}>
-                                                                    {s.status_pengembalian}
-                                                                </span>
+                                                                {s.status_pengembalian && (
+                                                                    <span className={`inline-block mt-0.5 text-[10px] font-semibold px-2 py-0.5 rounded ${
+                                                                        s.status_pengembalian === 'Sudah Dikembalikan'
+                                                                            ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                                                                            : s.status_pengembalian === 'Menunggu Verifikasi'
+                                                                            ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                                                                            : 'bg-red-50 text-red-700 border border-red-200'
+                                                                    }`}>
+                                                                        {s.status_pengembalian}
+                                                                    </span>
+                                                                )}
                                                             </div>
                                                         ) : (
-                                                            <span className="text-xs text-slate-400">Uang Pas (Rp 0)</span>
+                                                            <span className="text-xs text-slate-500 font-medium">Uang Pas (Rp 0)</span>
                                                         )}
                                                     </td>
                                                     <td className="px-5 py-3.5">

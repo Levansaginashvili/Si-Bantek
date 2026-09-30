@@ -10,6 +10,7 @@ interface UserItem {
     username?: string;
     nip?: string;
     jabatan?: string;
+    alamat?: string;
     npsn?: string;
     email?: string;
     role: string;
@@ -46,6 +47,7 @@ export default function UsersPage({ users }: Props) {
         name: '',
         nip: '',
         jabatan: '',
+        alamat: '',
         npsn: '',
         nama_sekolah: '',
         provinsi: '',
@@ -58,6 +60,7 @@ export default function UsersPage({ users }: Props) {
         name: '',
         nip: '',
         jabatan: '',
+        alamat: '',
         npsn: '',
         password: '',
     });
@@ -96,6 +99,7 @@ export default function UsersPage({ users }: Props) {
             name: u.name || '',
             nip: u.nip || '',
             jabatan: u.jabatan || '',
+            alamat: u.alamat || '',
             npsn: u.npsn || '',
             password: '',
         });
@@ -374,6 +378,16 @@ export default function UsersPage({ users }: Props) {
                                             className="block w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-sm focus:border-[#1e2d5a] focus:outline-none focus:ring-1 focus:ring-[#1e2d5a]"
                                         />
                                     </div>
+                                    <div>
+                                        <label className="block text-xs font-medium text-slate-600 mb-1">Alamat Kantor / Instansi PPK</label>
+                                        <input
+                                            type="text"
+                                            value={createForm.data.alamat}
+                                            onChange={(e) => createForm.setData('alamat', e.target.value)}
+                                            placeholder="Contoh: Kompleks Kemendikbudristek Gedung E Lt. 17, Jl. Jenderal Sudirman, Senayan"
+                                            className="block w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-sm focus:border-[#1e2d5a] focus:outline-none focus:ring-1 focus:ring-[#1e2d5a]"
+                                        />
+                                    </div>
                                 </>
                             )}
 
@@ -532,6 +546,16 @@ export default function UsersPage({ users }: Props) {
                                             value={editForm.data.jabatan}
                                             onChange={(e) => editForm.setData('jabatan', e.target.value)}
                                             placeholder="Contoh: Pejabat Pembuat Komitmen (PPK) Direktorat SMP"
+                                            className="block w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-sm focus:border-[#1e2d5a] focus:outline-none focus:ring-1 focus:ring-[#1e2d5a]"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-xs font-medium text-slate-600 mb-1">Alamat Kantor / Instansi PPK</label>
+                                        <input
+                                            type="text"
+                                            value={editForm.data.alamat}
+                                            onChange={(e) => editForm.setData('alamat', e.target.value)}
+                                            placeholder="Contoh: Kompleks Kemendikbudristek Gedung E Lt. 17, Jl. Jenderal Sudirman, Senayan"
                                             className="block w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-sm focus:border-[#1e2d5a] focus:outline-none focus:ring-1 focus:ring-[#1e2d5a]"
                                         />
                                     </div>

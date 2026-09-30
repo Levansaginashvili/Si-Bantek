@@ -140,6 +140,11 @@ export default function VerifikasiSekolah({ sekolah }: Props) {
 
     const totalRab = sekolah.rab?.total_harga ?? 0;
     const sisaDana = PAGU - totalRab;
+    const isRabSubmitted = Boolean(
+        sekolah.rab &&
+        sekolah.rab.status !== 'Draft' &&
+        (sekolah.rab.total_harga > 0 || Boolean(sekolah.rab.merek_tipe_laptop))
+    );
     const rabApproved = sekolah.rab?.status === 'Disetujui';
     const sudahDisalurkan = sekolah.status_dana === 'Dana Sudah Disalurkan / Ditransfer';
     const hasSisaDana = sisaDana > 0 && rabApproved;
@@ -200,7 +205,7 @@ export default function VerifikasiSekolah({ sekolah }: Props) {
                                 <span className={`px-2.5 py-1 text-xs rounded-md ${sekolah.status_dokumen === 'Lengkap' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold' : 'bg-slate-100 text-slate-600 border border-slate-200 font-medium'}`}>
                                     {sekolah.status_dokumen === 'Lengkap' ? 'Berkas Lengkap' : 'Berkas Belum Lengkap'}
                                 </span>
-                                {hasSisaDana && (
+                                {sudahDisalurkan && hasSisaDana && currentStage >= 7 && (
                                     <span className={`px-2.5 py-1 text-xs rounded-md font-semibold ${
                                         buktiSetorDoc?.status === 'Disetujui'
                                             ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
@@ -215,7 +220,12 @@ export default function VerifikasiSekolah({ sekolah }: Props) {
                                             : `Sisa Rp ${fmt(sisaDana)} (Belum Dikembalikan)`}
                                     </span>
                                 )}
-                                {isUangPas && (
+                                {sudahDisalurkan && hasSisaDana && currentStage < 7 && (
+                                    <span className="px-2.5 py-1 text-xs rounded-md font-semibold bg-slate-100 text-slate-700 border border-slate-200">
+                                        Sisa Dana: Rp {fmt(sisaDana)}
+                                    </span>
+                                )}
+                                {sudahDisalurkan && isUangPas && (
                                     <span className="px-2.5 py-1 text-xs rounded-md font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
                                         Uang Pas (Rp 0 Sisa Dana)
                                     </span>
@@ -319,47 +329,52 @@ export default function VerifikasiSekolah({ sekolah }: Props) {
                 <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
                     <div className="border-b border-slate-100 bg-slate-50 px-5 py-3.5 flex items-center justify-between">
                         <h3 className="text-sm font-bold text-slate-800">Rencana Anggaran Biaya (RAB) Laptop</h3>
-                        {sekolah.rab && (
-                            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs rounded-md ${statusStyle[sekolah.rab.status] ?? 'bg-slate-100 text-slate-600'}`}>
-                                {statusIcon[sekolah.rab.status]}
-                                {sekolah.rab.status}
+                        {isRabSubmitted ? (
+                            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs rounded-md ${statusStyle[sekolah.rab!.status] ?? 'bg-slate-100 text-slate-600'}`}>
+                                {statusIcon[sekolah.rab!.status]}
+                                {sekolah.rab!.status}
+                            </span>
+                        ) : (
+                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs rounded-md bg-slate-100 text-slate-500 font-medium">
+                                <Clock size={12} />
+                                Belum Diajukan
                             </span>
                         )}
                     </div>
                     <div className="p-5">
-                        {sekolah.rab ? (
+                        {isRabSubmitted ? (
                             <>
                                 <div className="grid grid-cols-2 gap-4 text-sm sm:grid-cols-5">
                                     <div>
                                         <p className="text-xs text-slate-400 uppercase font-medium">Merek & Tipe</p>
-                                        <p className="mt-0.5 font-semibold text-slate-800">{sekolah.rab.merek_tipe_laptop}</p>
+                                        <p className="mt-0.5 font-semibold text-slate-800">{sekolah.rab!.merek_tipe_laptop}</p>
                                     </div>
                                     <div>
                                         <p className="text-xs text-slate-400 uppercase font-medium">Jumlah Unit</p>
-                                        <p className="mt-0.5 font-semibold text-slate-800">{sekolah.rab.jumlah_unit} unit</p>
+                                        <p className="mt-0.5 font-semibold text-slate-800">{sekolah.rab!.jumlah_unit} unit</p>
                                     </div>
                                     <div>
                                         <p className="text-xs text-slate-400 uppercase font-medium">Harga Satuan</p>
-                                        <p className="mt-0.5 font-semibold text-slate-800">Rp {fmt(sekolah.rab.harga_satuan)}</p>
+                                        <p className="mt-0.5 font-semibold text-slate-800">Rp {fmt(sekolah.rab!.harga_satuan)}</p>
                                     </div>
                                     <div>
                                         <p className="text-xs text-slate-400 uppercase font-medium">Total Anggaran</p>
-                                        <p className="mt-0.5 font-bold text-[#1e2d5a]">Rp {fmt(sekolah.rab.total_harga)}</p>
+                                        <p className="mt-0.5 font-bold text-[#1e2d5a]">Rp {fmt(sekolah.rab!.total_harga)}</p>
                                     </div>
                                     <div>
                                         <p className="text-xs text-slate-400 uppercase font-medium">Sisa Dana</p>
-                                        <p className={`mt-0.5 font-bold ${sisaDana >= 0 ? 'text-emerald-700' : 'text-red-600'}`}>
-                                            Rp {fmt(sisaDana)}
+                                        <p className={`mt-0.5 font-bold ${sudahDisalurkan ? (sisaDana >= 0 ? 'text-emerald-700' : 'text-red-600') : 'text-slate-400'}`}>
+                                            {sudahDisalurkan ? `Rp ${fmt(sisaDana)}` : '-'}
                                         </p>
                                     </div>
                                 </div>
 
                                 <div className="mt-4 rounded-lg border border-slate-100 bg-slate-50 px-4 py-3">
                                     <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide">Spesifikasi Laptop</p>
-                                    <p className="mt-1 text-sm text-slate-700">{sekolah.rab.spesifikasi_ringkas}</p>
+                                    <p className="mt-1 text-sm text-slate-700">{sekolah.rab!.spesifikasi_ringkas}</p>
                                 </div>
 
-                                 {sisaDana > 0 && (
+                                {hasSisaDana && sudahDisalurkan && currentStage >= 7 && (
                                     <div className="mt-3 rounded-lg border border-blue-200 bg-blue-50 px-4 py-3 text-xs text-blue-800 flex items-start gap-2">
                                         <Info size={15} className="flex-shrink-0 mt-0.5" />
                                         <div>
@@ -369,14 +384,14 @@ export default function VerifikasiSekolah({ sekolah }: Props) {
                                     </div>
                                 )}
 
-                                {sekolah.rab.catatan_revisi && (
+                                {sekolah.rab!.catatan_revisi && (
                                     <div className="mt-3 rounded-lg border border-red-100 bg-red-50 px-4 py-3 text-xs text-red-700">
-                                        <span className="font-bold">Catatan Revisi: </span>{sekolah.rab.catatan_revisi}
+                                        <span className="font-bold">Catatan Revisi: </span>{sekolah.rab!.catatan_revisi}
                                     </div>
                                 )}
 
                                 <div className="mt-4 pt-1">
-                                    {sekolah.rab.status === 'Disetujui' ? (
+                                    {sekolah.rab!.status === 'Disetujui' ? (
                                         <span className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1.5 text-xs font-semibold">
                                             <CheckCircle size={14} />
                                             RAB Telah Disetujui
@@ -402,7 +417,10 @@ export default function VerifikasiSekolah({ sekolah }: Props) {
                                 </div>
                             </>
                         ) : (
-                            <p className="text-sm text-slate-400 py-2">Belum ada data RAB dari sekolah.</p>
+                            <div className="py-6 text-center text-slate-400">
+                                <p className="text-sm font-medium">Sekolah belum menyusun dan mengajukan Rencana Anggaran Biaya (RAB).</p>
+                                <p className="text-xs mt-1 text-slate-400">Verifikator dapat memeriksa dan menyetujui setelah sekolah mengirimkan pengajuan RAB pada aplikasi.</p>
+                            </div>
                         )}
                     </div>
                 </div>

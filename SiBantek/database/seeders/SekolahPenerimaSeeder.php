@@ -266,19 +266,6 @@ class SekolahPenerimaSeeder extends Seeder
                 );
             }
 
-            // 4. Initialize Default Draft RAB
-            Rab::firstOrCreate(
-                ['sekolah_id' => $sekolah->id],
-                [
-                    'merek_tipe_laptop' => '',
-                    'spesifikasi_ringkas' => '',
-                    'jumlah_unit' => 8,
-                    'harga_satuan' => 0,
-                    'total_harga' => 0,
-                    'status' => 'Draft',
-                ]
-            );
-
             $csvRows[] = [$no, $npsn, $namaSekolah, $provinsi, $kabupaten, $npsn, $plainPassword];
         }
 

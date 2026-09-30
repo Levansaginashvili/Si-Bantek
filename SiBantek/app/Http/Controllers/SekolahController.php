@@ -339,6 +339,9 @@ class SekolahController extends Controller
             $sekolahData['nama_ppk'] = $verifikator->name;
             $sekolahData['nip_ppk'] = $verifikator->nip;
             $sekolahData['jabatan_ppk'] = $verifikator->jabatan ?? 'Pejabat Pembuat Komitmen (PPK)';
+            if (! empty($verifikator->alamat)) {
+                $sekolahData['alamat_ppk'] = $verifikator->alamat;
+            }
         }
 
         $filledPath = $docxService->fill($filePath, $type, $sekolahData, $rabData);

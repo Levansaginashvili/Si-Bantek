@@ -18,6 +18,7 @@ class User extends Authenticatable
         'username',
         'nip',
         'jabatan',
+        'alamat',
         'npsn',
         'email',
         'password',
