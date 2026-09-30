@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
         Route::post('/users', [AdminController::class, 'storeUser'])->name('admin.users.store');
         Route::post('/users/{id}', [AdminController::class, 'updateUser'])->name('admin.users.update');
+        Route::post('/users/{id}/status', [AdminController::class, 'toggleStatusUser'])->name('admin.users.status');
         Route::get('/users/export-csv', [AdminController::class, 'exportAccountsCsv'])->name('admin.users.export.csv');
         Route::get('/users/export-excel', [AdminController::class, 'exportAccountsExcel'])->name('admin.users.export.excel');
         Route::delete('/users/{id}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy');
