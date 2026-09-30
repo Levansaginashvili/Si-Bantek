@@ -149,10 +149,10 @@ export default function VerifikatorDashboard({ sekolahs }: Props) {
                                                     </td>
                                                     <td className="px-5 py-3.5 text-xs text-slate-500">{s.kabupaten}, {s.provinsi}</td>
                                                     <td className="px-5 py-3.5">
-                                                        <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium ${
+                                                        <span className={`inline-flex items-center gap-1.5 rounded border px-2 py-0.5 text-xs font-semibold ${
                                                             s.status_dana === 'Dana Sudah Disalurkan / Ditransfer'
-                                                                ? 'bg-emerald-50 text-emerald-700'
-                                                                : 'bg-amber-50 text-amber-700'
+                                                                ? 'border-emerald-300 bg-emerald-50 text-emerald-800'
+                                                                : 'border-amber-300 bg-amber-50 text-amber-800'
                                                         }`}>
                                                             {s.status_dana === 'Dana Sudah Disalurkan / Ditransfer'
                                                                 ? <><CheckCircle size={11} /> Disalurkan</>

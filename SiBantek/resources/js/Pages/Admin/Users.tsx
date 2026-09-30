@@ -25,9 +25,9 @@ interface Props {
 }
 
 const roleBadge: Record<string, string> = {
-    admin: 'bg-slate-100 text-slate-700',
-    verifikator: 'bg-blue-50 text-blue-700',
-    sekolah: 'bg-indigo-50 text-indigo-700',
+    admin: 'border border-slate-300 bg-slate-100 text-slate-700',
+    verifikator: 'border border-blue-300 bg-blue-50 text-blue-800',
+    sekolah: 'border border-indigo-300 bg-indigo-50 text-indigo-800',
 };
 
 export default function UsersPage({ users }: Props) {
@@ -252,22 +252,22 @@ export default function UsersPage({ users }: Props) {
                                                      u.npsn ? `NPSN: ${u.npsn}` : u.email}
                                                 </td>
                                                 <td className="px-5 py-3.5">
-                                                    <span className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-medium capitalize ${roleBadge[u.role] ?? 'bg-slate-100 text-slate-700'}`}>
-                                                        {u.role === 'sekolah' ? 'Operator Sekolah' : u.role === 'verifikator' ? 'Verifikator' : 'Admin'}
+                                                    <span className={`inline-block rounded px-2 py-0.5 text-xs font-semibold capitalize ${roleBadge[u.role] ?? 'border border-slate-300 bg-slate-100 text-slate-700'}`}>
+                                                        {u.role === 'sekolah' ? 'Sekolah' : u.role === 'verifikator' ? 'Verifikator' : 'Admin'}
                                                     </span>
                                                 </td>
                                                 <td className="px-5 py-3.5">
                                                     {isAktif ? (
-                                                        <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-700">
+                                                        <span className="inline-flex items-center gap-1 rounded border border-emerald-300 bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-800">
                                                             Aktif
                                                         </span>
                                                     ) : (
                                                         <div>
-                                                            <span className="inline-flex items-center gap-1 rounded-full bg-red-50 px-2.5 py-0.5 text-xs font-medium text-red-700">
+                                                            <span className="inline-flex items-center gap-1 rounded border border-red-300 bg-red-50 px-2 py-0.5 text-xs font-semibold text-red-800">
                                                                 Nonaktif
                                                             </span>
                                                             {u.catatan_nonaktif && (
-                                                                <p className="mt-0.5 text-[11px] text-red-500 max-w-xs truncate" title={u.catatan_nonaktif}>
+                                                                <p className="mt-0.5 text-[11px] text-red-600 max-w-xs truncate" title={u.catatan_nonaktif}>
                                                                     Ket: {u.catatan_nonaktif}
                                                                 </p>
                                                             )}
@@ -337,8 +337,8 @@ export default function UsersPage({ users }: Props) {
                                     onChange={(e) => createForm.setData('role', e.target.value)}
                                     className="block w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm focus:border-[#1e2d5a] focus:outline-none focus:ring-1 focus:ring-[#1e2d5a]"
                                 >
-                                    <option value="verifikator">Verifikator (Login via NIP)</option>
-                                    <option value="sekolah">Operator Sekolah (Login via NPSN)</option>
+                                    <option value="verifikator">Verifikator</option>
+                                    <option value="sekolah">Sekolah</option>
                                 </select>
                             </div>
 

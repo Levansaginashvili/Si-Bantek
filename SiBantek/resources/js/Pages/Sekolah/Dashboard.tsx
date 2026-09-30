@@ -366,10 +366,10 @@ export default function SekolahDashboard({ sekolah }: Props) {
                         <div className="flex-shrink-0 space-y-2 text-sm sm:text-right">
                             <div>
                                 <p className="text-xs text-slate-400 uppercase tracking-wide">Status Dana</p>
-                                <span className={`inline-block mt-0.5 rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                                <span className={`inline-block mt-0.5 rounded border px-2 py-0.5 text-xs font-semibold ${
                                     sekolah.status_dana === 'Dana Sudah Disalurkan / Ditransfer'
-                                        ? 'bg-emerald-50 text-emerald-700'
-                                        : 'bg-amber-50 text-amber-700'
+                                        ? 'border-emerald-300 bg-emerald-50 text-emerald-800'
+                                        : 'border-amber-300 bg-amber-50 text-amber-800'
                                 }`}>
                                     {sekolah.status_dana === 'Dana Sudah Disalurkan / Ditransfer' ? 'Sudah Disalurkan' : 'Belum Disalurkan'}
                                 </span>

@@ -74,7 +74,7 @@ export default function Dashboard({ stats, sekolah_lengkap_list }: Props) {
                     <div className="border-b border-slate-100 px-5 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                         <h3 className="text-sm font-semibold text-slate-800">
                             Sekolah dengan Dokumen Lengkap
-                            <span className="ml-2 rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600">
+                            <span className="ml-2 rounded border border-slate-300 bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-700">
                                 {filteredList.length} dari {sekolah_lengkap_list.length}
                             </span>
                         </h3>
@@ -132,10 +132,10 @@ export default function Dashboard({ stats, sekolah_lengkap_list }: Props) {
                                             <td className="px-5 py-3.5 font-medium text-slate-800">{s.nama_sekolah}</td>
                                             <td className="px-5 py-3.5 text-slate-500">{s.kabupaten}, {s.provinsi}</td>
                                             <td className="px-5 py-3.5">
-                                                <span className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                                                <span className={`inline-block rounded border px-2 py-0.5 text-xs font-semibold ${
                                                     s.status_dana === 'Dana Sudah Disalurkan / Ditransfer'
-                                                        ? 'bg-emerald-50 text-emerald-700'
-                                                        : 'bg-amber-50 text-amber-700'
+                                                        ? 'border-emerald-300 bg-emerald-50 text-emerald-800'
+                                                        : 'border-amber-300 bg-amber-50 text-amber-800'
                                                 }`}>
                                                     {s.status_dana === 'Dana Sudah Disalurkan / Ditransfer' ? 'Sudah Disalurkan' : 'Belum Disalurkan'}
                                                 </span>
